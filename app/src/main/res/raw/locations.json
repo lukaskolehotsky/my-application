@@ -1,0 +1,190 @@
+{
+   "ageWithBmis": [
+      {
+         "ageFrom": 18,
+         "ageTo": 24,
+         "bmis": [
+            {
+               "from":0,
+               "to":19,
+               "category":"Podvaha"
+            },
+            {
+               "from":19,
+               "to":24,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":24,
+               "to":29,
+               "category":"Nadvaha"
+            },
+            {
+               "from":29,
+               "to":39,
+               "category":"Obezita"
+            },
+            {
+               "from":39,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      },
+      {
+         "ageFrom": 25,
+         "ageTo": 34,
+         "bmis": [
+            {
+               "from":0,
+               "to":20,
+               "category":"Podvaha"
+            },
+            {
+               "from":20,
+               "to":25,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":25,
+               "to":30,
+               "category":"Nadvaha"
+            },
+            {
+               "from":30,
+               "to":40,
+               "category":"Obezita"
+            },
+            {
+               "from":40,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      },
+      {
+         "ageFrom": 35,
+         "ageTo": 44,
+         "bmis": [
+            {
+               "from":0,
+               "to":21,
+               "category":"Podvaha"
+            },
+            {
+               "from":21,
+               "to":26,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":26,
+               "to":31,
+               "category":"Nadvaha"
+            },
+            {
+               "from":31,
+               "to":41,
+               "category":"Obezita"
+            },
+            {
+               "from":41,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      },
+      {
+         "ageFrom": 45,
+         "ageTo": 54,
+         "bmis": [
+            {
+               "from":0,
+               "to":22,
+               "category":"Podvaha"
+            },
+            {
+               "from":22,
+               "to":27,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":27,
+               "to":32,
+               "category":"Nadvaha"
+            },
+            {
+               "from":32,
+               "to":42,
+               "category":"Obezita"
+            },
+            {
+               "from":42,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      },
+      {
+         "ageFrom": 55,
+         "ageTo": 64,
+         "bmis": [
+            {
+               "from":0,
+               "to":23,
+               "category":"Podvaha"
+            },
+            {
+               "from":23,
+               "to":28,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":28,
+               "to":33,
+               "category":"Nadvaha"
+            },
+            {
+               "from":33,
+               "to":43,
+               "category":"Obezita"
+            },
+            {
+               "from":43,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      },
+      {
+         "ageFrom": 65,
+         "ageTo": 1000,
+         "bmis": [
+            {
+               "from":0,
+               "to":24,
+               "category":"Podvaha"
+            },
+            {
+               "from":24,
+               "to":29,
+               "category":"Optimalna vaha"
+            },
+            {
+               "from":29,
+               "to":34,
+               "category":"Nadvaha"
+            },
+            {
+               "from":34,
+               "to":44,
+               "category":"Obezita"
+            },
+            {
+               "from":44,
+               "to":1000,
+               "category":"Morbidna obezita"
+            }
+         ]
+      }
+   ]
+}
