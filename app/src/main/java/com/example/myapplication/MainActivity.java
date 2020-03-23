@@ -25,15 +25,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button = (Button) findViewById(R.id.addButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button rfmActivityButton = (Button) findViewById(R.id.rfmActivityButton);
+        rfmActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText ageEditText = (EditText) findViewById(R.id.ageEditText);
-                TextView resultTextView = (TextView) findViewById(R.id.bmiTextView);
-
-                resultTextView.setText(ageEditText.getText());
+                Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
+                startActivity(startIntent);
             }
         });
+
     }
 }

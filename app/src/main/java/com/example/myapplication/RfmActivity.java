@@ -14,47 +14,56 @@ import com.example.myapplication.utilities.FileReader;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
-public class BmiActivity extends AppCompatActivity {
+public class RfmActivity extends AppCompatActivity {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmi);
+        setContentView(R.layout.activity_rfm);
 
         Button resultButton = (Button) findViewById(R.id.resultButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText weightEditText = (EditText) findViewById(R.id.weightEditText);
+                EditText genderEditText = (EditText) findViewById(R.id.genderEditText);
                 EditText heightEditText = (EditText) findViewById(R.id.heightEditText);
+                EditText waistCircumferenceEditText = (EditText) findViewById(R.id.waistCircumferenceEditText);
                 EditText ageEditText = (EditText) findViewById(R.id.ageEditText);
-                TextView bmiTextView = (TextView) findViewById(R.id.bmiTextView);
+
+                TextView rfmTextView = (TextView) findViewById(R.id.rfmTextView);
                 TextView categoryTextView = (TextView) findViewById(R.id.categoryTextView);
 
-                double weight = Double.parseDouble(weightEditText.getText().toString());
+                String gender = genderEditText.getText().toString();
                 double height = Double.parseDouble(heightEditText.getText().toString());
+                double waistCircumference = Double.parseDouble(waistCircumferenceEditText.getText().toString());
                 int age = Integer.parseInt(ageEditText.getText().toString());
 
                 ArrayList<AgeWithBmis> ageWithBmisList = new FileReader(getBaseContext()).processFile(R.raw.locations);
 
-                double calculatedBmi = weight / ((height / 100) * (height / 100));
-                String cat = null;
+                double rfm;
+                String category = null;
+
+                if(gender.equals("woman")) {
+                    rfm = 76 - (20 * height) / waistCircumference;
+                } else {
+                    rfm = 64 - (20 * height) / waistCircumference;
+                }
+
                 for(AgeWithBmis ageWithBmis: ageWithBmisList) {
                     if(ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
                         for(Bmi bmi: ageWithBmis.getBmis()) {
-                            if(bmi.getFrom() < calculatedBmi && bmi.getTo() > calculatedBmi) {
-                                cat = bmi.getCategory();
+                            if(bmi.getFrom() < rfm && bmi.getTo() > rfm) {
+                                category = bmi.getCategory();
                             }
                         }
                     }
                 }
 
-                bmiTextView.setText(df2.format(calculatedBmi));
-                categoryTextView.setText(cat);
+                rfmTextView.setText(df2.format(rfm));
+                categoryTextView.setText(category);
             }
         });
     }
