@@ -2,8 +2,10 @@ package com.example.myapplication.utilities;
 
 import android.content.Context;
 
+import com.example.myapplication.config.JsonProperty;
 import com.example.myapplication.model.AgeWithBmis;
 import com.example.myapplication.model.Bmi;
+import com.example.myapplication.model.Vitamin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +65,9 @@ public class FileReader {
             throws JSONException {
 
         ArrayList ageWithBmisList = new ArrayList();
+        ArrayList womanVitaminsList = new ArrayList();
+        ArrayList manVitaminsList = new ArrayList();
+        ArrayList jsonPropertyList = new ArrayList();
 
         try {
             JSONObject contentJson = new JSONObject(jsonString);
@@ -99,10 +104,57 @@ public class FileReader {
                 ageWithBmisList.add(ageWithBmis);
             }
 
+            JSONObject womanJsonObject = contentJson.getJSONObject("woman");
+            JSONArray womanVitaminsArray = womanJsonObject.getJSONArray("vitamins");
+
+            for(int i = 0; i < womanVitaminsArray.length(); i++) {
+                String name = "";
+                double from = 0.0f;
+                double to = 0.0f;
+                double amount = 0.0f;
+                String unit = "";
+
+                JSONObject womanVitaminsDetails = womanVitaminsArray.getJSONObject(i);
+
+                if (!womanVitaminsDetails.isNull("name")) { name = womanVitaminsDetails.getString("name"); }
+                if (!womanVitaminsDetails.isNull("from")) { from = womanVitaminsDetails.getDouble("from"); }
+                if (!womanVitaminsDetails.isNull("to")) { to = womanVitaminsDetails.getDouble("to"); }
+                if (!womanVitaminsDetails.isNull("amount")) { amount = womanVitaminsDetails.getDouble("amount"); }
+                if (!womanVitaminsDetails.isNull("unit")) { unit = womanVitaminsDetails.getString("unit"); }
+
+                Vitamin womanVitamin = new Vitamin(name, from, to, amount, unit);
+                womanVitaminsList.add(womanVitamin);
+            }
+
+            JSONObject manJsonObject = contentJson.getJSONObject("woman");
+            JSONArray manVitaminsArray = manJsonObject.getJSONArray("vitamins");
+
+            for(int i = 0; i < manVitaminsArray.length(); i++) {
+                String name = "";
+                double from = 0.0f;
+                double to = 0.0f;
+                double amount = 0.0f;
+                String unit = "";
+
+                JSONObject manVitaminsDetails = manVitaminsArray.getJSONObject(i);
+
+                if (!manVitaminsDetails.isNull("name")) { name = manVitaminsDetails.getString("name"); }
+                if (!manVitaminsDetails.isNull("from")) { from = manVitaminsDetails.getDouble("from"); }
+                if (!manVitaminsDetails.isNull("to")) { to = manVitaminsDetails.getDouble("to"); }
+                if (!manVitaminsDetails.isNull("amount")) { amount = manVitaminsDetails.getDouble("amount"); }
+                if (!manVitaminsDetails.isNull("unit")) { unit = manVitaminsDetails.getString("unit"); }
+
+                Vitamin manVitamin = new Vitamin(name, from, to, amount, unit);
+                manVitaminsList.add(manVitamin);
+            }
+
+            JsonProperty jsonProperty = new JsonProperty(ageWithBmisList, womanVitaminsList, manVitaminsList);
+            jsonPropertyList.add(jsonProperty);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return ageWithBmisList;
+        return jsonPropertyList;
     }
 }

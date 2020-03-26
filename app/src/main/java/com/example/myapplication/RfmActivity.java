@@ -1,13 +1,18 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myapplication.config.JsonProperty;
 import com.example.myapplication.model.AgeWithBmis;
 import com.example.myapplication.model.Bmi;
 import com.example.myapplication.utilities.FileReader;
@@ -41,7 +46,7 @@ public class RfmActivity extends AppCompatActivity {
                 double waistCircumference = Double.parseDouble(waistCircumferenceEditText.getText().toString());
                 int age = Integer.parseInt(ageEditText.getText().toString());
 
-                ArrayList<AgeWithBmis> ageWithBmisList = new FileReader(getBaseContext()).processFile(R.raw.locations);
+                ArrayList<JsonProperty> jsonPropertyList = new FileReader(getBaseContext()).processFile(R.raw.locations);
 
                 double rfm;
                 String category = null;
@@ -52,7 +57,7 @@ public class RfmActivity extends AppCompatActivity {
                     rfm = 64 - (20 * height) / waistCircumference;
                 }
 
-                for(AgeWithBmis ageWithBmis: ageWithBmisList) {
+                for(AgeWithBmis ageWithBmis: jsonPropertyList.get(0).getAgeWithBmis()) {
                     if(ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
                         for(Bmi bmi: ageWithBmis.getBmis()) {
                             if(bmi.getFrom() < rfm && bmi.getTo() > rfm) {
@@ -67,4 +72,31 @@ public class RfmActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.bmiItem){
+            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
+            startActivity(startIntent);
+        }
+
+        if(item.getItemId() == R.id.rfmItem){
+            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
+            startActivity(startIntent);
+        }
+
+        if(item.getItemId() == R.id.vitaminsItem){
+            Intent startIntent = new Intent(getApplicationContext(), DailyFeedActivity.class);
+            startActivity(startIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
