@@ -1,16 +1,22 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Spinner;
 
+import androidx.annotation.ArrayRes;
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
 import com.example.myapplication.config.JsonProperty;
 import com.example.myapplication.model.Vitamin;
 import com.example.myapplication.utilities.FileReader;
@@ -18,22 +24,27 @@ import com.example.myapplication.utilities.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailyFeedActivity extends AppCompatActivity {
+public class DailyFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String GENDER = "gender";
+    public static final String AGE = "age";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_feed);
 
+        createArrayAdapter(R.id.genderSpinner, R.array.genderList);
+        createArrayAdapter(R.id.ageSpinner, R.array.ageList);
+
         Button listViewButton = (Button) findViewById(R.id.listViewButton);
         listViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText genderEditText = (EditText) findViewById(R.id.genderEditText);
-                EditText ageEditText = (EditText) findViewById(R.id.ageEditText);
 
-                String gender = genderEditText.getText().toString();
-                int age = Integer.parseInt(ageEditText.getText().toString());
+                String gender = loadData(GENDER);
+                int age = Integer.parseInt(loadData(AGE));
 
                 ArrayList<JsonProperty> jsonPropertyList = new FileReader(getBaseContext()).processFile(R.raw.locations);
                 List<Vitamin> vitamins = gender.equals("woman") ? jsonPropertyList.get(0).getWomanVitamins() : jsonPropertyList.get(0).getManVitamins();
@@ -77,6 +88,57 @@ public class DailyFeedActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId){
+        Spinner spinner = findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.custom_spinner,
+                getResources().getStringArray(resourceListId)
+        );
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        String firstItemName = parent.getAdapter().getItem(0).toString();
+
+        if(firstItemName.equals("Gender")){
+            saveData(GENDER, text);
+        }
+
+        if(firstItemName.equals("Age")){
+            saveData(AGE, text);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    private void saveData(String name, String value){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(name, value);
+
+        editor.apply();
+
+        System.out.println("SAVING" + name + " " + value);
+    }
+
+    private String loadData(String name){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String value = sharedPreferences.getString(name, "no value");
+
+        System.out.println("LOADING" + name);
+
+        return value;
     }
 
 }

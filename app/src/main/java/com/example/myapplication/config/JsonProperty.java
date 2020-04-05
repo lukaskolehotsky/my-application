@@ -1,7 +1,9 @@
 package com.example.myapplication.config;
 
 import com.example.myapplication.model.AgeWithBmis;
+import com.example.myapplication.model.Fruit;
 import com.example.myapplication.model.Man;
+import com.example.myapplication.model.Vegetable;
 import com.example.myapplication.model.Vitamin;
 import com.example.myapplication.model.Woman;
 
@@ -15,10 +17,16 @@ public class JsonProperty {
 
     private List<Vitamin> manVitamins;
 
-    public JsonProperty(List<AgeWithBmis> ageWithBmis, List<Vitamin> womanVitamins, List<Vitamin> manVitamins) {
+    private List<Vegetable> vegetables;
+
+    private List<Fruit> fruits;
+
+    public JsonProperty(List<AgeWithBmis> ageWithBmis, List<Vitamin> womanVitamins, List<Vitamin> manVitamins, List<Vegetable> vegetables, List<Fruit> fruits) {
         this.ageWithBmis = ageWithBmis;
         this.womanVitamins = womanVitamins;
         this.manVitamins = manVitamins;
+        this.vegetables = vegetables;
+        this.fruits = fruits;
     }
 
     public List<AgeWithBmis> getAgeWithBmis() {
@@ -45,12 +53,30 @@ public class JsonProperty {
         this.manVitamins = manVitamins;
     }
 
+    public List<Vegetable> getVegetables() {
+        return vegetables;
+    }
+
+    public void setVegetables(List<Vegetable> vegetables) {
+        this.vegetables = vegetables;
+    }
+
+    public List<Fruit> getFruits() {
+        return fruits;
+    }
+
+    public void setFruits(List<Fruit> fruits) {
+        this.fruits = fruits;
+    }
+
     @Override
     public String toString() {
         return "JsonProperty{" +
                 "ageWithBmis=" + ageWithBmis +
                 ", womanVitamins=" + womanVitamins +
                 ", manVitamins=" + manVitamins +
+                ", vegetables=" + vegetables +
+                ", fruits=" + fruits +
                 '}';
     }
 }

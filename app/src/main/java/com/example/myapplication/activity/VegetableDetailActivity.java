@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,14 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.adapter.ListViewAdapter;
+import com.example.myapplication.config.JsonProperty;
+import com.example.myapplication.model.Fruit;
+import com.example.myapplication.model.Vegetable;
 import com.example.myapplication.model.Vitamin;
+import com.example.myapplication.utilities.FileReader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VitaminListActivity extends AppCompatActivity {
+public class VegetableDetailActivity extends AppCompatActivity {
 
     public static final String FIRST_COLUMN = "First";
     public static final String SECOND_COLUMN = "Second";
@@ -24,25 +29,45 @@ public class VitaminListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vitamin_list);
-
-        ListView listView = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.activity_vegetable_detail);
 
         Intent intent = getIntent();
-        List<Vitamin> vitamins = (List) intent.getParcelableArrayListExtra ("VITAMIN_LIST");
+        String vegetableName = (String) intent.getStringExtra ("VEGETABLE_NAME");
 
+        ListView listView = (ListView) findViewById(R.id.listView);
         ArrayList<HashMap<String, String>> hashMapArrayList = new ArrayList<>();
         HashMap<String, String> columnNamesHashMap = new HashMap<>();
-        columnNamesHashMap.put(FIRST_COLUMN, "Name");
-        columnNamesHashMap.put(SECOND_COLUMN, "Daily Amount");
+        columnNamesHashMap.put(FIRST_COLUMN, vegetableName);
+        columnNamesHashMap.put(SECOND_COLUMN, "amount / 100g");
         hashMapArrayList.add(columnNamesHashMap);
 
-        for(Vitamin vitamin: vitamins){
-            HashMap<String, String> vitaminHashMap = new HashMap<>();
-            vitaminHashMap.put(FIRST_COLUMN, vitamin.getName());
-            vitaminHashMap.put(SECOND_COLUMN, vitamin.getAmount() + "" + vitamin.getUnit());
-            hashMapArrayList.add(vitaminHashMap);
+        ArrayList<JsonProperty> jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
+
+        for(Vegetable veg: jsonProperty.get(0).getVegetables()){
+            if(veg.getVegetableName().equals(vegetableName)){
+
+                for(Vitamin vitamin: veg.getVitamins()){
+                    HashMap<String, String> vegetableHashMap = new HashMap<>();
+                    vegetableHashMap.put(FIRST_COLUMN, vitamin.getName());
+                    vegetableHashMap.put(SECOND_COLUMN, vitamin.getAmount() + " " + vitamin.getUnit());
+                    hashMapArrayList.add(vegetableHashMap);
+                }
+
+            }
         }
+
+//        for(Fruit fruit: jsonProperty.get(0).getFruits()){
+//            if(fruit.getFruitName().equals(vegetableName)){
+//
+//                for(Vitamin vitamin: veg.getVitamins()){
+//                    HashMap<String, String> vegetableHashMap = new HashMap<>();
+//                    vegetableHashMap.put(FIRST_COLUMN, vitamin.getName());
+//                    vegetableHashMap.put(SECOND_COLUMN, vitamin.getAmount() + " " + vitamin.getUnit());
+//                    hashMapArrayList.add(vegetableHashMap);
+//                }
+//
+//            }
+//        }
 
         ListViewAdapter listViewAdapter = new ListViewAdapter(hashMapArrayList, this);
 
@@ -74,5 +99,4 @@ public class VitaminListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

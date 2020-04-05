@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.myapplication.config.JsonProperty;
 import com.example.myapplication.model.AgeWithBmis;
 import com.example.myapplication.model.Bmi;
+import com.example.myapplication.model.Fruit;
+import com.example.myapplication.model.Vegetable;
 import com.example.myapplication.model.Vitamin;
 
 import org.json.JSONArray;
@@ -61,40 +63,58 @@ public class FileReader {
         return text.toString();
     }
 
-    private ArrayList parseJsonFromString(String jsonString)
-            throws JSONException {
+    private ArrayList parseJsonFromString(String jsonString) throws JSONException {
+        ArrayList ageWithBmisList = getBmisWithDetails(jsonString);
+        ArrayList womanVitaminsList = getWomanVitaminsList(jsonString);
+        ArrayList manVitaminsList = getManVitaminsList(jsonString);
+        ArrayList vegetablesList = getVegetablesList(jsonString);
+        ArrayList fruitsList = getFruitsList(jsonString);
 
-        ArrayList ageWithBmisList = new ArrayList();
-        ArrayList womanVitaminsList = new ArrayList();
-        ArrayList manVitaminsList = new ArrayList();
         ArrayList jsonPropertyList = new ArrayList();
+        JsonProperty jsonProperty = new JsonProperty(ageWithBmisList, womanVitaminsList, manVitaminsList, vegetablesList, fruitsList);
+        jsonPropertyList.add(jsonProperty);
+
+        return jsonPropertyList;
+    }
+
+    private ArrayList getBmisWithDetails(String jsonString) throws JSONException {
+        ArrayList ageWithBmisList = new ArrayList();
 
         try {
             JSONObject contentJson = new JSONObject(jsonString);
-
             JSONArray ageWithBmisArray = contentJson.getJSONArray("ageWithBmis");
 
-            for(int i = 0; i < ageWithBmisArray.length(); i++) {
+            for (int i = 0; i < ageWithBmisArray.length(); i++) {
                 int ageFrom = 0;
                 int ageTo = 0;
                 List<Bmi> bmiList = new ArrayList<>();
 
                 JSONObject ageWithBmiDetails = ageWithBmisArray.getJSONObject(i);
 
-                if (!ageWithBmiDetails.isNull("ageFrom")) { ageFrom = ageWithBmiDetails.getInt("ageFrom"); }
-                if (!ageWithBmiDetails.isNull("ageTo")) { ageTo = ageWithBmiDetails.getInt("ageTo"); }
+                if (!ageWithBmiDetails.isNull("ageFrom")) {
+                    ageFrom = ageWithBmiDetails.getInt("ageFrom");
+                }
+                if (!ageWithBmiDetails.isNull("ageTo")) {
+                    ageTo = ageWithBmiDetails.getInt("ageTo");
+                }
 
                 JSONArray bmiArray = ageWithBmiDetails.getJSONArray("bmis");
-                for(int j = 0; j < bmiArray.length(); j++) {
-                    String category="";
+                for (int j = 0; j < bmiArray.length(); j++) {
+                    String category = "";
                     double from = 0;
                     double to = 0;
 
                     JSONObject bmiDetails = bmiArray.getJSONObject(j);
 
-                    if (!bmiDetails.isNull("from")) { from = bmiDetails.getDouble("from"); }
-                    if (!bmiDetails.isNull("to")) { to = bmiDetails.getDouble("to"); }
-                    if (!bmiDetails.isNull("category")) { category = bmiDetails.getString("category"); }
+                    if (!bmiDetails.isNull("from")) {
+                        from = bmiDetails.getDouble("from");
+                    }
+                    if (!bmiDetails.isNull("to")) {
+                        to = bmiDetails.getDouble("to");
+                    }
+                    if (!bmiDetails.isNull("category")) {
+                        category = bmiDetails.getString("category");
+                    }
 
                     Bmi bmi = new Bmi(from, to, category);
                     bmiList.add(bmi);
@@ -103,7 +123,18 @@ public class FileReader {
                 AgeWithBmis ageWithBmis = new AgeWithBmis(ageFrom, ageTo, bmiList);
                 ageWithBmisList.add(ageWithBmis);
             }
+            return ageWithBmisList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    private ArrayList getWomanVitaminsList(String jsonString){
+        ArrayList womanVitaminsList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
             JSONObject womanJsonObject = contentJson.getJSONObject("woman");
             JSONArray womanVitaminsArray = womanJsonObject.getJSONArray("vitamins");
 
@@ -125,8 +156,19 @@ public class FileReader {
                 Vitamin womanVitamin = new Vitamin(name, from, to, amount, unit);
                 womanVitaminsList.add(womanVitamin);
             }
+            return womanVitaminsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            JSONObject manJsonObject = contentJson.getJSONObject("woman");
+    private ArrayList getManVitaminsList(String jsonString){
+        ArrayList manVitaminsList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONObject manJsonObject = contentJson.getJSONObject("man");
             JSONArray manVitaminsArray = manJsonObject.getJSONArray("vitamins");
 
             for(int i = 0; i < manVitaminsArray.length(); i++) {
@@ -147,14 +189,95 @@ public class FileReader {
                 Vitamin manVitamin = new Vitamin(name, from, to, amount, unit);
                 manVitaminsList.add(manVitamin);
             }
-
-            JsonProperty jsonProperty = new JsonProperty(ageWithBmisList, womanVitaminsList, manVitaminsList);
-            jsonPropertyList.add(jsonProperty);
-
+            return manVitaminsList;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return jsonPropertyList;
+        return null;
     }
+
+    private ArrayList getVegetablesList(String jsonString) {
+        ArrayList vegetablesList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONArray vegetablesArray = contentJson.getJSONArray("vegetables");
+
+            for(int i = 0; i < vegetablesArray.length(); i++) {
+                String vegetableName = "";
+                List<Vitamin> vitamins = new ArrayList<>();
+
+                JSONObject vegetablesDetails = vegetablesArray.getJSONObject(i);
+
+                if (!vegetablesDetails.isNull("vegetableName")) { vegetableName = vegetablesDetails.getString("vegetableName"); }
+
+                JSONArray vitaminsArray = vegetablesDetails.getJSONArray("vitamins");
+                for(int j = 0; j < vitaminsArray.length(); j++) {
+                    String name = "";
+                    double amount = 0.0f;
+                    String unit = "";
+                    int from = 0;
+                    int to = 0;
+
+                    JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
+                    if (!vitaminsDetails.isNull("name")) { name = vitaminsDetails.getString("name"); }
+                    if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
+                    if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
+
+                    Vitamin vitamin = new Vitamin(name, from, to, amount, unit);
+                    vitamins.add(vitamin);
+                }
+
+                Vegetable vegetable = new Vegetable(vegetableName, vitamins);
+                vegetablesList.add(vegetable);
+            }
+            return vegetablesList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ArrayList getFruitsList(String jsonString) {
+        ArrayList fruitsList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONArray fruitsArray = contentJson.getJSONArray("fruits");
+
+            for(int i = 0; i < fruitsArray.length(); i++) {
+                String fruitName = "";
+                List<Vitamin> vitamins = new ArrayList<>();
+
+                JSONObject fruitsDetails = fruitsArray.getJSONObject(i);
+
+                if (!fruitsDetails.isNull("fruitName")) { fruitName = fruitsDetails.getString("fruitName"); }
+
+                JSONArray vitaminsArray = fruitsDetails.getJSONArray("vitamins");
+                for(int j = 0; j < vitaminsArray.length(); j++) {
+                    String name = "";
+                    double amount = 0.0f;
+                    String unit = "";
+                    int from = 0;
+                    int to = 0;
+
+                    JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
+                    if (!vitaminsDetails.isNull("name")) { name = vitaminsDetails.getString("name"); }
+                    if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
+                    if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
+
+                    Vitamin vitamin = new Vitamin(name, from, to, amount, unit);
+                    vitamins.add(vitamin);
+                }
+
+                Fruit fruit = new Fruit(fruitName, vitamins);
+                fruitsList.add(fruit);
+            }
+            return fruitsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

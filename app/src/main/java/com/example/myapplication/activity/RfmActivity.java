@@ -1,4 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
+
+import androidx.annotation.ArrayRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,78 +14,74 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.myapplication.R;
 import com.example.myapplication.config.JsonProperty;
 import com.example.myapplication.model.AgeWithBmis;
 import com.example.myapplication.model.Bmi;
-import com.example.myapplication.model.Vitamin;
 import com.example.myapplication.utilities.FileReader;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class BmiActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class RfmActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String GENDER = "gender";
+    public static final String HEIGHT = "height";
+    public static final String WAIST_CIRCUMFERENCE = "waistCircumference";
     public static final String AGE = "age";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmi);
+        setContentView(R.layout.activity_rfm);
 
-        Spinner ageSpinner = (Spinner) findViewById(R.id.ageSpinner);
-        ArrayAdapter<CharSequence> ageAdapter = ArrayAdapter.createFromResource(this, R.array.ages, android.R.layout.simple_spinner_item);
-        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ageSpinner.setAdapter(ageAdapter);
-
-        ageSpinner.setOnItemSelectedListener(this);
+        createArrayAdapter(R.id.genderSpinner, R.array.genderList);
+        createArrayAdapter(R.id.ageSpinner, R.array.ageList);
+        createArrayAdapter(R.id.heightSpinner, R.array.heightList);
+        createArrayAdapter(R.id.waistCircumferenceSpinner, R.array.waistCircumferenceList);
 
         Button resultButton = (Button) findViewById(R.id.resultButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText weightEditText = (EditText) findViewById(R.id.weightEditText);
-                EditText heightEditText = (EditText) findViewById(R.id.heightEditText);
-                TextView bmiTextView = (TextView) findViewById(R.id.bmiTextView);
+
+                TextView rfmTextView = (TextView) findViewById(R.id.rfmTextView);
                 TextView categoryTextView = (TextView) findViewById(R.id.categoryTextView);
 
-                double weight = Double.parseDouble(weightEditText.getText().toString());
-                double height = Double.parseDouble(heightEditText.getText().toString());
-                int age = Integer.parseInt(loadData(AGE).toString());
+                String gender = loadData(GENDER);
+                double height = Double.parseDouble(loadData(HEIGHT));
+                double waistCircumference = Double.parseDouble(loadData(WAIST_CIRCUMFERENCE));
+                int age = Integer.parseInt(loadData(AGE));
 
-                ArrayList<JsonProperty> jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
+                ArrayList<JsonProperty> jsonPropertyList = new FileReader(getBaseContext()).processFile(R.raw.locations);
 
-                for(Vitamin vitamin: jsonProperty.get(0).getWomanVitamins()){
-                    System.out.println(vitamin);
+                double rfm;
+                String category = null;
+
+                if(gender.equals("woman")) {
+                    rfm = 76 - (20 * height) / waistCircumference;
+                } else {
+                    rfm = 64 - (20 * height) / waistCircumference;
                 }
-                for(Vitamin vitamin: jsonProperty.get(0).getManVitamins()){
-                    System.out.println(vitamin);
-                }
 
-                double calculatedBmi = weight / ((height / 100) * (height / 100));
-                String cat = null;
-                for(AgeWithBmis ageWithBmis: jsonProperty.get(0).getAgeWithBmis()) {
+                for(AgeWithBmis ageWithBmis: jsonPropertyList.get(0).getAgeWithBmis()) {
                     if(ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
                         for(Bmi bmi: ageWithBmis.getBmis()) {
-                            if(bmi.getFrom() < calculatedBmi && bmi.getTo() > calculatedBmi) {
-                                cat = bmi.getCategory();
+                            if(bmi.getFrom() < rfm && bmi.getTo() > rfm) {
+                                category = bmi.getCategory();
                             }
                         }
                     }
                 }
 
-                bmiTextView.setText(df2.format(calculatedBmi));
-                categoryTextView.setText(cat);
+                rfmTextView.setText(df2.format(rfm));
+                categoryTextView.setText(category);
             }
         });
     }
@@ -111,10 +112,38 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
         return super.onOptionsItemSelected(item);
     }
 
+    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId){
+        Spinner spinner = findViewById(spinnerId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.custom_spinner,
+                getResources().getStringArray(resourceListId)
+        );
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        saveData(AGE, text);
+        String firstItemName = parent.getAdapter().getItem(0).toString();
+
+        if(firstItemName.equals("Gender")){
+            saveData(GENDER, text);
+        }
+
+        if(firstItemName.equals("Height")){
+            saveData(HEIGHT, text);
+        }
+
+        if(firstItemName.equals("Waist circumference")){
+            saveData(WAIST_CIRCUMFERENCE, text);
+        }
+
+        if(firstItemName.equals("Age")){
+            saveData(AGE, text);
+        }
     }
 
     @Override
@@ -129,11 +158,15 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
         editor.putString(name, value);
 
         editor.apply();
+
+        System.out.println("SAVING" + name + " " + value);
     }
 
     private String loadData(String name){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String value = sharedPreferences.getString(name, "no value");
+
+        System.out.println("LOADING" + name);
 
         return value;
     }
