@@ -7,7 +7,9 @@
         android:id="@+id/TextFirst"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10sp"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:text="First"
         android:textSize="20sp" />
 
@@ -15,7 +17,9 @@
         android:id="@+id/TextSecond"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10sp"
         android:layout_weight="1"
+        android:gravity="clip_vertical|center_vertical"
         android:text="Second"
         android:textSize="20sp" />
 

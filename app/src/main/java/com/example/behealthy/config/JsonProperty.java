@@ -1,11 +1,9 @@
-package com.example.myapplication.config;
+package com.example.behealthy.config;
 
-import com.example.myapplication.model.AgeWithBmis;
-import com.example.myapplication.model.Fruit;
-import com.example.myapplication.model.Man;
-import com.example.myapplication.model.Vegetable;
-import com.example.myapplication.model.Vitamin;
-import com.example.myapplication.model.Woman;
+import com.example.behealthy.model.AgeWithBmis;
+import com.example.behealthy.model.Fruit;
+import com.example.behealthy.model.Vegetable;
+import com.example.behealthy.model.Vitamin;
 
 import java.util.List;
 

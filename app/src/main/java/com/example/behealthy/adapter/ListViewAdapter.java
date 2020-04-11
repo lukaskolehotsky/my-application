@@ -1,4 +1,4 @@
-package com.example.myapplication.adapter;
+package com.example.behealthy.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.myapplication.R;
+import com.example.behealthy.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

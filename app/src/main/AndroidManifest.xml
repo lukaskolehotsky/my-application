@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.example.behealthy">
 
     <application
         android:allowBackup="true"
@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.VegetableDetailActivity"></activity>
-        <activity android:name=".activity.VitaminsActivity" />
-        <activity android:name=".activity.VitaminListActivity" />
-        <activity android:name=".activity.DailyFeedActivity" />
-        <activity android:name=".activity.RfmActivity" />
-        <activity android:name=".activity.BmiActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name="com.example.behealthy.activity.VegetableDetailActivity"></activity>
+        <activity android:name="com.example.behealthy.activity.VitaminsActivity" />
+        <activity android:name="com.example.behealthy.activity.VitaminListActivity" />
+        <activity android:name="com.example.behealthy.activity.DailyFeedActivity" />
+        <activity android:name="com.example.behealthy.activity.RfmActivity" />
+        <activity android:name="com.example.behealthy.activity.BmiActivity" />
+        <activity android:name="com.example.behealthy.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

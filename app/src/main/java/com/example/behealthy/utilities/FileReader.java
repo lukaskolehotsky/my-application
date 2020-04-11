@@ -1,13 +1,13 @@
-package com.example.myapplication.utilities;
+package com.example.behealthy.utilities;
 
 import android.content.Context;
 
-import com.example.myapplication.config.JsonProperty;
-import com.example.myapplication.model.AgeWithBmis;
-import com.example.myapplication.model.Bmi;
-import com.example.myapplication.model.Fruit;
-import com.example.myapplication.model.Vegetable;
-import com.example.myapplication.model.Vitamin;
+import com.example.behealthy.config.JsonProperty;
+import com.example.behealthy.model.AgeWithBmis;
+import com.example.behealthy.model.Bmi;
+import com.example.behealthy.model.Fruit;
+import com.example.behealthy.model.Vegetable;
+import com.example.behealthy.model.Vitamin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,10 +28,10 @@ public class FileReader {
     private static Context mContext;
     private static int mResourceId;
 
-    public ArrayList processFile(int resourceId)
+    public JsonProperty processFile(int resourceId)
     {
         mResourceId = resourceId;
-        ArrayList contentList = new ArrayList();
+        JsonProperty contentList = null;
 
         String jsonStr = this.readRawTextFile();
         try {
@@ -63,18 +63,15 @@ public class FileReader {
         return text.toString();
     }
 
-    private ArrayList parseJsonFromString(String jsonString) throws JSONException {
+    private JsonProperty parseJsonFromString(String jsonString) throws JSONException {
         ArrayList ageWithBmisList = getBmisWithDetails(jsonString);
         ArrayList womanVitaminsList = getWomanVitaminsList(jsonString);
         ArrayList manVitaminsList = getManVitaminsList(jsonString);
         ArrayList vegetablesList = getVegetablesList(jsonString);
         ArrayList fruitsList = getFruitsList(jsonString);
 
-        ArrayList jsonPropertyList = new ArrayList();
         JsonProperty jsonProperty = new JsonProperty(ageWithBmisList, womanVitaminsList, manVitaminsList, vegetablesList, fruitsList);
-        jsonPropertyList.add(jsonProperty);
-
-        return jsonPropertyList;
+        return jsonProperty;
     }
 
     private ArrayList getBmisWithDetails(String jsonString) throws JSONException {
