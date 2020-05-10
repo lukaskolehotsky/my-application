@@ -739,4 +739,29 @@
         <item>250</item>
     </string-array>
 
+    <string-array name="grams">
+        <item>Grams</item>
+        <item>50g</item>
+        <item>100g</item>
+        <item>150g</item>
+        <item>200g</item>
+        <item>250g</item>
+    </string-array>
+
+    <string-array name="vegetables">
+        <item>Vegetables</item>
+        <item>Pepper Sweet Yellow</item>
+        <item>Pepper Sweet Red</item>
+        <item>Pepper Sweet Green</item>
+        <item>Broccoli</item>
+        <item>Brussels Sprouts</item>
+        <item>Kohlrabi</item>
+        <item>Lettuce Iceberg</item>
+        <item>Tomatoes Red</item>
+        <item>Carrot</item>
+        <item>Cabbage</item>
+        <item>Spring Onion</item>
+        <item>Mung Beans</item>
+    </string-array>
+
 </resources>

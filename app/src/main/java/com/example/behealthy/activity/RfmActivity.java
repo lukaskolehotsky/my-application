@@ -25,6 +25,7 @@ import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.AgeWithBmis;
 import com.example.behealthy.model.Bmi;
 import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
 
@@ -33,6 +34,8 @@ import java.text.DecimalFormat;
 public class RfmActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
+
+    private MenuHelper menuHelper;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
@@ -106,20 +109,9 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.bmiItem){
-            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.rfmItem){
-            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.vitaminsItem){
-            Intent startIntent = new Intent(getApplicationContext(), DailyFeedActivity.class);
-            startActivity(startIntent);
-        }
+        menuHelper = new MenuHelper(getApplicationContext());
+        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
+        startActivity(startIntent);
 
         return super.onOptionsItemSelected(item);
     }
@@ -138,25 +130,10 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
+        String value = parent.getItemAtPosition(position).toString();
         String firstItemName = parent.getAdapter().getItem(0).toString();
 
-        if(firstItemName.equals(Constants.GENDER.label)){
-            sharedPreferenceEntry.setGender(text);
-        }
-
-        if(firstItemName.equals(Constants.HEIGHT.label)){
-            sharedPreferenceEntry.setHeight(text);
-        }
-
-        if(firstItemName.equals(Constants.WAIST_CIRCUMFERENCE.label)){
-            sharedPreferenceEntry.setWaistCircumference(text);
-        }
-
-        if(firstItemName.equals(Constants.AGE.label)){
-            sharedPreferenceEntry.setAge(text);
-        }
-
+        sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, firstItemName, value);
         sharedPreferencesHelper.save(sharedPreferenceEntry);
     }
 

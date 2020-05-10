@@ -9,8 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
+import com.example.behealthy.utilities.MenuHelper;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.bmiItem){
-            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.rfmItem){
-            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.vitaminsItem){
-            Intent startIntent = new Intent(getApplicationContext(), DailyFeedActivity.class);
-            startActivity(startIntent);
-        }
+        menuHelper = new MenuHelper(getApplicationContext());
+        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
+        startActivity(startIntent);
 
         return super.onOptionsItemSelected(item);
     }

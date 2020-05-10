@@ -15,6 +15,9 @@ public class Vitamin implements Parcelable {
 
 	private String unit;
 
+	public Vitamin() {
+	}
+
 	public Vitamin(String name, double from, double to, double amount, String unit) {
 		this.name = name;
 		this.from = from;

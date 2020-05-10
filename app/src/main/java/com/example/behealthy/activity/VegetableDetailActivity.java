@@ -16,6 +16,7 @@ import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.utilities.MenuHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ import static com.example.behealthy.constants.Constants.FIRST_COLUMN;
 import static com.example.behealthy.constants.Constants.SECOND_COLUMN;
 
 public class VegetableDetailActivity extends AppCompatActivity {
+
+    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +71,9 @@ public class VegetableDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.bmiItem){
-            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.rfmItem){
-            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.vitaminsItem){
-            Intent startIntent = new Intent(getApplicationContext(), DailyFeedActivity.class);
-            startActivity(startIntent);
-        }
+        menuHelper = new MenuHelper(getApplicationContext());
+        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
+        startActivity(startIntent);
 
         return super.onOptionsItemSelected(item);
     }

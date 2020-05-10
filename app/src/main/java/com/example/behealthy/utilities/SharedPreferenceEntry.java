@@ -12,6 +12,8 @@ public class SharedPreferenceEntry {
 
     private String waistCircumference;
 
+    private String vegetablesJson;
+
     public String getGender() {
         return gender;
     }
@@ -52,6 +54,14 @@ public class SharedPreferenceEntry {
         this.waistCircumference = waistCircumference;
     }
 
+    public String getVegetablesJson() {
+        return vegetablesJson;
+    }
+
+    public void setVegetablesJson(String vegetablesJson) {
+        this.vegetablesJson = vegetablesJson;
+    }
+
     @Override
     public String toString() {
         return "SharedPreferenceEntry{" +
@@ -60,6 +70,7 @@ public class SharedPreferenceEntry {
                 ", weight='" + weight + '\'' +
                 ", height='" + height + '\'' +
                 ", waistCircumference='" + waistCircumference + '\'' +
+                ", vegetablesJson='" + vegetablesJson + '\'' +
                 '}';
     }
 }

@@ -24,6 +24,7 @@ import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 
@@ -35,6 +36,8 @@ import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.AGE;
 
 public class DailyFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private MenuHelper menuHelper;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
@@ -90,20 +93,9 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.bmiItem){
-            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.rfmItem){
-            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
-            startActivity(startIntent);
-        }
-
-        if(item.getItemId() == R.id.vitaminsItem){
-            Intent startIntent = new Intent(getApplicationContext(), DailyFeedActivity.class);
-            startActivity(startIntent);
-        }
+        menuHelper = new MenuHelper(getApplicationContext());
+        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
+        startActivity(startIntent);
 
         return super.onOptionsItemSelected(item);
     }
@@ -122,12 +114,10 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
+        String value = parent.getItemAtPosition(position).toString();
         String firstItemName = parent.getAdapter().getItem(0).toString();
 
-        if(firstItemName.equals(Constants.GENDER.label)){ sharedPreferenceEntry.setGender(text); }
-        if(firstItemName.equals(Constants.AGE.label)){ sharedPreferenceEntry.setAge(text); }
-
+        sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, firstItemName, value);
         sharedPreferencesHelper.save(sharedPreferenceEntry);
     }
 
