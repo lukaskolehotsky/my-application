@@ -27,6 +27,7 @@ import com.example.behealthy.utilities.FileReader;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +54,8 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
 
-        Button listViewButton = findViewById(R.id.listViewButton);
-        listViewButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferenceEntry entry = sharedPreferencesHelper.get();
@@ -62,15 +63,15 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
                 String loadedAge = entry.getAge();
 
                 boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedAge);
-                if(validateSpinnersClick){
+                if (validateSpinnersClick) {
                     int age = Integer.parseInt(loadedAge);
 
                     JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
                     List<Vitamin> vitamins = loadedGender.equals(Constants.WOMAN.label) ? jsonProperty.getWomanVitamins() : jsonProperty.getManVitamins();
 
                     List<Vitamin> vitaminList = new ArrayList<>();
-                    for(Vitamin vitamin: vitamins) {
-                        if(vitamin.getFrom() <= age && vitamin.getTo() >= age) {
+                    for (Vitamin vitamin : vitamins) {
+                        if (vitamin.getFrom() <= age && vitamin.getTo() >= age) {
                             vitaminList.add(vitamin);
                         }
                     }
@@ -100,7 +101,7 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
         return super.onOptionsItemSelected(item);
     }
 
-    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId){
+    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId) {
         Spinner spinner = findViewById(spinnerId);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -126,14 +127,14 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-    private boolean validateSpinnersClick(String loadedGender, String loadedAge){
-        if(loadedGender.equals(Constants.GENDER.label) && loadedAge.equals(Constants.AGE.label)){
+    private boolean validateSpinnersClick(String loadedGender, String loadedAge) {
+        if (loadedGender.equals(Constants.GENDER.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender", Toast.LENGTH_SHORT).show();
             return false;
         } else {

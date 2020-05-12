@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ import com.example.behealthy.utilities.FileReader;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 
@@ -53,11 +53,10 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
         createArrayAdapter(R.id.heightSpinner, R.array.heightList);
         createArrayAdapter(R.id.waistCircumferenceSpinner, R.array.waistCircumferenceList);
 
-        Button resultButton = findViewById(R.id.resultButton);
-        resultButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 TextView rfmTextView = findViewById(R.id.rfmTextView);
                 TextView categoryTextView = findViewById(R.id.categoryTextView);
 
@@ -68,7 +67,7 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
                 String loadedAge = entry.getAge();
 
                 boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedHeight, loadedWaistCircumference, loadedAge);
-                if(validateSpinnersClick){
+                if (validateSpinnersClick) {
                     double height = Double.parseDouble(loadedHeight);
                     double waistCircumference = Double.parseDouble(loadedWaistCircumference);
                     int age = Integer.parseInt(loadedAge);
@@ -78,16 +77,16 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
                     double rfm;
                     String category = null;
 
-                    if(loadedGender.equals(Constants.WOMAN.label)) {
+                    if (loadedGender.equals(Constants.WOMAN.label)) {
                         rfm = 76 - (20 * height) / waistCircumference;
                     } else {
                         rfm = 64 - (20 * height) / waistCircumference;
                     }
 
-                    for(AgeWithBmis ageWithBmis: jsonProperty.getAgeWithBmis()) {
-                        if(ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
-                            for(Bmi bmi: ageWithBmis.getBmis()) {
-                                if(bmi.getFrom() < rfm && bmi.getTo() > rfm) {
+                    for (AgeWithBmis ageWithBmis : jsonProperty.getAgeWithBmis()) {
+                        if (ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
+                            for (Bmi bmi : ageWithBmis.getBmis()) {
+                                if (bmi.getFrom() < rfm && bmi.getTo() > rfm) {
                                     category = bmi.getCategory();
                                 }
                             }
@@ -116,7 +115,7 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
         return super.onOptionsItemSelected(item);
     }
 
-    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId){
+    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId) {
         Spinner spinner = findViewById(spinnerId);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -139,53 +138,53 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        
+
     }
 
-    private boolean validateSpinnersClick(String loadedGender, String loadedHeight, String loadedWaistCircumference, String loadedAge){
-        if(loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+    private boolean validateSpinnersClick(String loadedGender, String loadedHeight, String loadedWaistCircumference, String loadedAge) {
+        if (loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, height, waist circumference, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose height, waist circumference, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, waist circumference, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, height, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, height, waist circumference", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose waist circumference, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose height, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)) {
             Toast.makeText(getBaseContext(), "Please choose height, waist circumference", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, waist circumference", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && !loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && !loadedHeight.equals(Constants.HEIGHT.label) && loadedWaistCircumference.equals(Constants.WAIST_CIRCUMFERENCE.label)) {
             Toast.makeText(getBaseContext(), "Please choose waist circumference", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label)){
+        } else if (!loadedGender.equals(Constants.GENDER.label) && loadedHeight.equals(Constants.HEIGHT.label)) {
             Toast.makeText(getBaseContext(), "Please choose height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedGender.equals(Constants.GENDER.label)){
+        } else if (loadedGender.equals(Constants.GENDER.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender", Toast.LENGTH_SHORT).show();
             return false;
         } else {

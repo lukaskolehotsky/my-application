@@ -1,16 +1,13 @@
 package com.example.behealthy.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
 import com.example.behealthy.adapter.ListViewAdapter;
@@ -21,12 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.behealthy.constants.Constants.AGE;
 import static com.example.behealthy.constants.Constants.FIRST_COLUMN;
-import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.SECOND_COLUMN;
 import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
-import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
 public class FoodFeedActivity  extends AppCompatActivity {
 

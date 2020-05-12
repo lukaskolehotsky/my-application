@@ -35,8 +35,11 @@ import com.example.behealthy.utilities.SharedPreferencesHelper;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.behealthy.constants.Constants.VEGETABLES_JSON;
 import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
@@ -59,19 +62,24 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
+        Button resultButton = findViewById(R.id.resultButton);
+        resultButton.setVisibility(View.INVISIBLE);
+
         Button addLayoutButton = findViewById(R.id.addLayoutButton);
+        addLayoutButton.setTextColor(Color.WHITE);
+        addLayoutButton.setBackgroundColor(Color.MAGENTA);
         addLayoutButton.setVisibility(View.INVISIBLE);
         addLayoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(check(Optional.empty(), Optional.empty())){
+                if (check(Optional.empty(), Optional.empty())) {
                     addLayout();
                     addLayoutButton.setVisibility(View.INVISIBLE);
+                    resultButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
-        Button resultButton = findViewById(R.id.resultButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,15 +92,22 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                 String vegetablesJson = sharedPreferenceEntry.getVegetablesJson();
                 List<JsonVegetable> jsonVegetableList = JsonVegetable.toList(vegetablesJson);
 
-                for(JsonVegetable jsonVegetable: jsonVegetableList){
-                    for(Vegetable vegetable: vegetables){
-                        if(jsonVegetable.getVegetableName().equals(vegetable.getVegetableName())){
+                for (JsonVegetable jsonVegetable : jsonVegetableList) {
+                    for (Vegetable vegetable : vegetables) {
+                        if (jsonVegetable.getVegetableName().equals(vegetable.getVegetableName())) {
 
-                            List<Vitamin> vitamins = vegetable.getVitamins();
-                            for(Vitamin vitamin: vitamins){
+                            List<Vitamin> vitamins = new ArrayList<>();
+                            for (Vitamin vitamin : vegetable.getVitamins()) {
                                 double amount = Double.parseDouble(jsonVegetable.getGrams().replace("g", ""));
-                                double calculatedAmount = vitamin.getAmount()*(amount/100);
-                                vitamin.setAmount(calculatedAmount);
+                                double calculatedAmount = vitamin.getAmount() * (amount / 100);
+
+                                Vitamin vit = new Vitamin();
+                                vit.setName(vitamin.getName());
+                                vit.setUnit(vitamin.getUnit());
+                                vit.setFrom(vitamin.getFrom());
+                                vit.setTo(vitamin.getTo());
+                                vit.setAmount(calculatedAmount);
+                                vitamins.add(vit);
                             }
 
                             allVitamins.addAll(vitamins);
@@ -101,7 +116,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
                 List<Vitamin> calculatedVitamins = new ArrayList<>();
-                for(Vitamin ukazkovyVitamin: vegetables.get(0).getVitamins()) {
+                for (Vitamin ukazkovyVitamin : vegetables.get(0).getVitamins()) {
 
                     Vitamin calculatedVitamin = new Vitamin();
                     calculatedVitamin.setName(ukazkovyVitamin.getName());
@@ -111,12 +126,15 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     double calculatedAmount = 0;
 
-                    for(Vitamin vit: allVitamins){
-                        if(ukazkovyVitamin.getName().equals(vit.getName())){
+                    for (Vitamin vit : allVitamins) {
+                        if (ukazkovyVitamin.getName().equals(vit.getName())) {
                             calculatedAmount = calculatedAmount + vit.getAmount();
                         }
                     }
-                    calculatedVitamin.setAmount(calculatedAmount);
+
+                    String formattedCalculatedAmount = String.format("%.2f", calculatedAmount).replace(",", ".");
+
+                    calculatedVitamin.setAmount(Double.parseDouble(formattedCalculatedAmount));
                     calculatedVitamins.add(calculatedVitamin);
                 }
 
@@ -135,11 +153,11 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         String value = parent.getItemAtPosition(position).toString();
         String firstItemName = parent.getAdapter().getItem(0).toString();
 
-        if(firstItemName.equals("Vegetables")){
+        if (firstItemName.equals("Vegetables")) {
             vegetableName = value;
         }
 
-        if(firstItemName.equals("Grams")){
+        if (firstItemName.equals("Grams")) {
             grams = value;
         }
     }
@@ -173,13 +191,14 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setGravity(Gravity.LEFT);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(20, 0, 20, 0);
-
         ArrayAdapter<String> vegetablesArrayAdapter = createArrayAdapter(R.array.vegetables);
         ArrayAdapter<String> gramsArrayAdapter = createArrayAdapter(R.array.grams);
 
         Spinner vegetablesSpinner = createSpinner(vegetablesArrayAdapter);
+        vegetablesSpinner.setDropDownWidth(450);
+
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
+        vegetablesSpinner.setLayoutParams(lp);
         Spinner gramsSpinner = createSpinner(gramsArrayAdapter);
 
         Button addVegetableButton = new Button(getApplicationContext());
@@ -187,15 +206,15 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         addVegetableButton.setTextColor(Color.WHITE);
         addVegetableButton.setBackgroundColor(Color.GREEN);
 
-        int width=100;
-        int heigth=100;
-        ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, heigth);
+        int width = 100;
+        int height = 100;
+        ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, height);
         addVegetableButton.setLayoutParams(layoutParams2);
 
         addVegetableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(check(Optional.empty(), Optional.empty())){
+                if (check(Optional.empty(), Optional.empty())) {
                     String vegetablesJson = sharedPreferenceEntry.getVegetablesJson();
                     List<JsonVegetable> jsonVegetableList = JsonVegetable.toList(vegetablesJson);
 
@@ -211,9 +230,19 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     v.setVisibility(View.INVISIBLE);
 
-                    // Disallow addButton
                     Button addButtonView = findViewById(R.id.addLayoutButton);
                     addButtonView.setVisibility(View.VISIBLE);
+
+                    Button resultButtonView = findViewById(R.id.resultButton);
+                    resultButtonView.setVisibility(View.VISIBLE);
+
+                    View vegetableSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+                    Spinner vegSpinner = (Spinner) vegetableSpinnerView;
+                    vegSpinner.setEnabled(false);
+
+                    View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+                    Spinner grmsSpinner = (Spinner) gramsSpinnerView;
+                    grmsSpinner.setEnabled(false);
                 }
             }
         });
@@ -223,8 +252,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         removeVegetableButton.setTextColor(Color.WHITE);
         removeVegetableButton.setBackgroundColor(Color.RED);
 
-        ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, heigth);
-        addVegetableButton.setLayoutParams(layoutParams3);
+        ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
+        removeVegetableButton.setLayoutParams(layoutParams3);
 
         removeVegetableButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,26 +261,26 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                 String vegetableSpinnerValue = null;
                 String gramsSpinnerValue = null;
 
-                View vegetableSpinnerView = ((ViewGroup)v.getParent()).getChildAt(0);
+                View vegetableSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
 
-                if (vegetableSpinnerView instanceof Spinner){
+                if (vegetableSpinnerView instanceof Spinner) {
                     vegetableSpinnerValue = ((Spinner) vegetableSpinnerView).getSelectedItem().toString();
                 }
 
-                View gramsSpinnerView = ((ViewGroup)v.getParent()).getChildAt(1);
+                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
 
-                if (gramsSpinnerView instanceof Spinner){
+                if (gramsSpinnerView instanceof Spinner) {
                     gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
                 }
 
-                if(check(Optional.of(vegetableSpinnerValue), Optional.of(gramsSpinnerValue))){
+                if (check(Optional.of(vegetableSpinnerValue), Optional.of(gramsSpinnerValue))) {
                     String vegetablesJson = sharedPreferenceEntry.getVegetablesJson();
                     List<JsonVegetable> vegList = JsonVegetable.toList(vegetablesJson);
 
                     int index = 0;
 
-                    for(int i=0;i<vegList.size();i++){
-                        if(vegList.get(i).getVegetableName().equals(vegetableSpinnerValue)){
+                    for (int i = 0; i < vegList.size(); i++) {
+                        if (vegList.get(i).getVegetableName().equals(vegetableSpinnerValue)) {
                             index = (i++);
                         }
                     }
@@ -262,7 +291,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                     sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, VEGETABLES_JSON.label, vegListJsonArray.toString());
                     sharedPreferencesHelper.save(sharedPreferenceEntry);
 
-                    ((ViewGroup)v.getParent().getParent()).removeView((ViewGroup)v.getParent());
+                    ((ViewGroup) v.getParent().getParent()).removeView((ViewGroup) v.getParent());
                 }
             }
         });
@@ -284,14 +313,44 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private ArrayAdapter<String> createArrayAdapter(@ArrayRes int resourceListId) {
-        return new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(resourceListId));
+        String[] resourceArray = null;
+
+        List<String> resources = Arrays.asList(getResources().getStringArray(resourceListId));
+
+        if (resources.contains("Vegetables")) {
+            List<String> sortedResources = resources.stream().sorted().collect(Collectors.toList());
+
+            boolean remove = false;
+            int index = 0;
+            for (int i = 0; i < sortedResources.size(); i++) {
+                if (sortedResources.get(i).equals("Vegetables")) {
+                    index = i;
+                    remove = true;
+                }
+            }
+
+            if (remove) {
+                sortedResources.remove(index);
+                Collections.reverse(sortedResources);
+                sortedResources.add("Vegetables");
+                Collections.reverse(sortedResources);
+            }
+
+            String[] itemsArray = new String[sortedResources.size()];
+            itemsArray = sortedResources.toArray(itemsArray);
+            resourceArray = itemsArray;
+        } else {
+            resourceArray = getResources().getStringArray(resourceListId);
+        }
+
+        return new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, resourceArray);
     }
 
-    private boolean check(Optional<String> vegetableNameOpt, Optional<String> gramsOpt){
+    private boolean check(Optional<String> vegetableNameOpt, Optional<String> gramsOpt) {
         String vgtblNm = null;
         String grms = null;
 
-        if(vegetableNameOpt.isPresent() && gramsOpt.isPresent()){
+        if (vegetableNameOpt.isPresent() && gramsOpt.isPresent()) {
             vgtblNm = vegetableNameOpt.get();
             grms = gramsOpt.get();
         } else {
@@ -299,13 +358,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             grms = grams;
         }
 
-        if(vgtblNm.equals("Vegetables") && grms.equals("Grams")){
+        if (vgtblNm.equals("Vegetables") && grms.equals("Grams")) {
             Toast.makeText(getApplicationContext(), "Choose vegetable and grams", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(vgtblNm.equals("Vegetables")){
+        } else if (vgtblNm.equals("Vegetables")) {
             Toast.makeText(getApplicationContext(), "Choose vegetable", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(grms.equals("Grams")){
+        } else if (grms.equals("Grams")) {
             Toast.makeText(getApplicationContext(), "Choose grams", Toast.LENGTH_SHORT).show();
             return false;
         } else {

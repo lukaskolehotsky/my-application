@@ -1,6 +1,5 @@
 package com.example.behealthy.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +27,7 @@ import com.example.behealthy.utilities.FileReader;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 
@@ -53,11 +52,10 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
         createArrayAdapter(R.id.weightSpinner, R.array.weightList);
         createArrayAdapter(R.id.heightSpinner, R.array.heightList);
 
-        Button resultButton = findViewById(R.id.resultButton);
-        resultButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 TextView bmiTextView = findViewById(R.id.bmiTextView);
                 TextView categoryTextView = findViewById(R.id.categoryTextView);
 
@@ -67,7 +65,7 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
                 String loadedAge = entry.getAge();
 
                 boolean validateSpinnersClick = validateSpinnersClick(loadedAge, loadedWeight, loadedHeight);
-                if(validateSpinnersClick){
+                if (validateSpinnersClick) {
                     double weight = Double.parseDouble(loadedWeight);
                     double height = Double.parseDouble(loadedHeight);
                     int age = Integer.parseInt(loadedAge);
@@ -76,10 +74,10 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
                     double calculatedBmi = weight / ((height / 100) * (height / 100));
                     String cat = null;
-                    for(AgeWithBmis ageWithBmis: jsonProperty.getAgeWithBmis()) {
-                        if(ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
-                            for(Bmi bmi: ageWithBmis.getBmis()) {
-                                if(bmi.getFrom() < calculatedBmi && bmi.getTo() > calculatedBmi) {
+                    for (AgeWithBmis ageWithBmis : jsonProperty.getAgeWithBmis()) {
+                        if (ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
+                            for (Bmi bmi : ageWithBmis.getBmis()) {
+                                if (bmi.getFrom() < calculatedBmi && bmi.getTo() > calculatedBmi) {
                                     cat = bmi.getCategory();
                                 }
                             }
@@ -91,6 +89,7 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
                 }
             }
         });
+
     }
 
     @Override
@@ -122,7 +121,7 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId){
+    public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId) {
         Spinner spinner = findViewById(spinnerId);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -134,26 +133,26 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
         spinner.setOnItemSelectedListener(this);
     }
 
-    private boolean validateSpinnersClick(String loadedAge, String loadedWeight, String loadedHeight){
-        if(loadedWeight.equals(Constants.WEIGHT.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedAge.equals(Constants.AGE.label)){
+    private boolean validateSpinnersClick(String loadedAge, String loadedWeight, String loadedHeight) {
+        if (loadedWeight.equals(Constants.WEIGHT.label) && loadedHeight.equals(Constants.HEIGHT.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age, weight, height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedWeight.equals(Constants.WEIGHT.label) && loadedHeight.equals(Constants.HEIGHT.label)){
+        } else if (loadedWeight.equals(Constants.WEIGHT.label) && loadedHeight.equals(Constants.HEIGHT.label)) {
             Toast.makeText(getBaseContext(), "Please choose weight, height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedWeight.equals(Constants.WEIGHT.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedWeight.equals(Constants.WEIGHT.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age, weight", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedHeight.equals(Constants.HEIGHT.label) && loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedHeight.equals(Constants.HEIGHT.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age, height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedWeight.equals(Constants.WEIGHT.label)){
+        } else if (loadedWeight.equals(Constants.WEIGHT.label)) {
             Toast.makeText(getBaseContext(), "Please choose weight", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedHeight.equals(Constants.HEIGHT.label)){
+        } else if (loadedHeight.equals(Constants.HEIGHT.label)) {
             Toast.makeText(getBaseContext(), "Please choose height", Toast.LENGTH_SHORT).show();
             return false;
-        } else if(loadedAge.equals(Constants.AGE.label)){
+        } else if (loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose age", Toast.LENGTH_SHORT).show();
             return false;
         } else {
