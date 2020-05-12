@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.behealthy.R;
 import com.example.behealthy.config.JsonProperty;
@@ -31,6 +32,7 @@ import com.example.behealthy.utilities.FileReader;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 
@@ -62,28 +64,11 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
-        Button resultButton = findViewById(R.id.resultButton);
-        resultButton.setVisibility(View.INVISIBLE);
-
-        Button addLayoutButton = findViewById(R.id.addLayoutButton);
-        addLayoutButton.setTextColor(Color.WHITE);
-        addLayoutButton.setBackgroundColor(Color.MAGENTA);
-        addLayoutButton.setVisibility(View.INVISIBLE);
-        addLayoutButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+        floatingActionButton.setVisibility(View.INVISIBLE);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (check(Optional.empty(), Optional.empty())) {
-                    addLayout();
-                    addLayoutButton.setVisibility(View.INVISIBLE);
-                    resultButton.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        resultButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
                 JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
                 List<Vegetable> vegetables = jsonProperty.getVegetables();
 
@@ -142,7 +127,19 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                 startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) calculatedVitamins);
                 startActivity(startIntent);
             }
+        });
 
+        FloatingActionButton addLayoutButton = findViewById(R.id.addLayoutButton);
+        addLayoutButton.setVisibility(View.INVISIBLE);
+        addLayoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (check(Optional.empty(), Optional.empty())) {
+                    addLayout();
+                    addLayoutButton.setVisibility(View.INVISIBLE);
+                    floatingActionButton.setVisibility(View.INVISIBLE);
+                }
+            }
         });
 
         addLayout();
@@ -206,6 +203,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         addVegetableButton.setTextColor(Color.WHITE);
         addVegetableButton.setBackgroundColor(Color.GREEN);
 
+//        addVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_circle_black_24dp));
+
         int width = 100;
         int height = 100;
         ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, height);
@@ -230,11 +229,11 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     v.setVisibility(View.INVISIBLE);
 
-                    Button addButtonView = findViewById(R.id.addLayoutButton);
+                    FloatingActionButton addButtonView = findViewById(R.id.addLayoutButton);
                     addButtonView.setVisibility(View.VISIBLE);
 
-                    Button resultButtonView = findViewById(R.id.resultButton);
-                    resultButtonView.setVisibility(View.VISIBLE);
+                    FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+                    floatingActionButton.setVisibility(View.VISIBLE);
 
                     View vegetableSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
                     Spinner vegSpinner = (Spinner) vegetableSpinnerView;
@@ -251,6 +250,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         removeVegetableButton.setText("-");
         removeVegetableButton.setTextColor(Color.WHITE);
         removeVegetableButton.setBackgroundColor(Color.RED);
+
+//        removeVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_forever_black_24dp));
 
         ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
         removeVegetableButton.setLayoutParams(layoutParams3);
