@@ -5,7 +5,9 @@ import android.content.Context;
 import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.AgeWithBmis;
 import com.example.behealthy.model.Bmi;
+import com.example.behealthy.model.DayJsonVegetable;
 import com.example.behealthy.model.Fruit;
+import com.example.behealthy.model.JsonVegetable;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 
@@ -17,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -271,6 +274,50 @@ public class FileReader {
                 fruitsList.add(fruit);
             }
             return fruitsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList getDayJsonVegetablesList(String jsonString) {
+        ArrayList dayJsonVegetablesList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONArray dayJsonVegetablesArray = contentJson.getJSONArray("dayJsonVegetables");
+
+            for(int i = 0; i < dayJsonVegetablesArray.length(); i++) {
+                String date = "";
+                List<Vitamin> vitamins = new ArrayList<>();
+
+                JSONObject dayJsonVegetablesDetails = dayJsonVegetablesArray.getJSONObject(i);
+
+                JSONObject dayJsonVegetableDetails = dayJsonVegetablesDetails.getJSONObject("dayJsonVegetable");
+
+                if (!dayJsonVegetableDetails.isNull("date")) { date = dayJsonVegetableDetails.getString("date"); }
+
+                List<JsonVegetable> jsonVegetableList = new ArrayList<>();
+                JSONArray jsonVegetablesArray = dayJsonVegetableDetails.getJSONArray("jsonVegetables");
+                for(int j = 0; j < jsonVegetablesArray.length(); j++) {
+                    String vegetableName = "";
+                    String grams = "";
+
+                    JSONObject jsonVegetableDetails = jsonVegetablesArray.getJSONObject(j);
+                    if (!jsonVegetableDetails.isNull("vegetableName")) { vegetableName = jsonVegetableDetails.getString("vegetableName"); }
+                    if (!jsonVegetableDetails.isNull("grams")) { grams = jsonVegetableDetails.getString("grams"); }
+
+                    JsonVegetable jsonVegetable = new JsonVegetable(vegetableName, grams);
+                    jsonVegetableList.add(jsonVegetable);
+                }
+
+                DayJsonVegetable dayJsonVegetable = new DayJsonVegetable();
+                dayJsonVegetable.setDate(LocalDate.parse(date));
+                dayJsonVegetable.setJsonVegetables(jsonVegetableList);
+
+                dayJsonVegetablesList.add(dayJsonVegetable);
+            }
+            return dayJsonVegetablesList;
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -72,7 +72,6 @@ public class SharedPreferencesHelper {
         }
 
         if(firstItemName.equals(Constants.VEGETABLES_JSON.label)){
-            System.out.println("ADDING LIST INTO SH_PRFCS - " + value);
             sharedPreferenceEntry.setVegetablesJson(value);
         }
 

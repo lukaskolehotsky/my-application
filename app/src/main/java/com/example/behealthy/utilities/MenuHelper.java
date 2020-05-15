@@ -3,12 +3,10 @@ package com.example.behealthy.utilities;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.behealthy.R;
 import com.example.behealthy.activity.BmiActivity;
+import com.example.behealthy.activity.CalendarActivity;
 import com.example.behealthy.activity.DailyFeedActivity;
-import com.example.behealthy.activity.FoodActivity;
 import com.example.behealthy.activity.RfmActivity;
 
 public class MenuHelper {
@@ -32,8 +30,8 @@ public class MenuHelper {
             return new Intent(packageContext, BmiActivity.class);
         }
 
-        if(itemId == R.id.foodItem){
-            return new Intent(packageContext, FoodActivity.class);
+        if(itemId == R.id.calendarItem){
+            return new Intent(packageContext, CalendarActivity.class);
         }
 
         return null;

@@ -762,6 +762,16 @@
         <item>Cabbage</item>
         <item>Spring Onion</item>
         <item>Mung Beans</item>
+        <item>Spinach</item>
+        <item>Beans Snap Yellow</item>
+        <item>Beans Snap Green</item>
+        <item>Beans Fava</item>
+        <item>Beans Kidney</item>
+        <item>Lentils Sprouted</item>
+        <item>Radish</item>
+        <item>Cucumber</item>
+        <item>Pumpkin</item>
+        <item>Peas Green</item>
     </string-array>
 
 </resources>

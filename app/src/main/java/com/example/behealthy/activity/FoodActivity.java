@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.ArrayRes;
@@ -25,6 +26,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.behealthy.R;
 import com.example.behealthy.config.JsonProperty;
+import com.example.behealthy.model.DayJsonVegetable;
 import com.example.behealthy.model.JsonVegetable;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
@@ -36,6 +38,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,16 +66,31 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     private String vegetableName = "Vegetables";
     private String grams = "Grams";
 
+    private static final String FILE_NAME = "foods.txt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
-
+//delete();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
+        Intent intent = getIntent();
+        String year = intent.getStringExtra("YEAR");
+        String month = intent.getStringExtra("MONTH");
+        String day = intent.getStringExtra("DAY");
+        LocalDate choosedDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        titleTextView.setText(day + "." + month + "." + year);
+
+        // TODO - start fill layouts
+        populateLayouts(choosedDate);
+        // TODO - end fill layouts
+
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-        floatingActionButton.setVisibility(View.INVISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +148,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                     calculatedVitamins.add(calculatedVitamin);
                 }
 
+                populateInternalStorage(choosedDate, jsonVegetableList);
+
                 Intent startIntent = new Intent(FoodActivity.this, FoodFeedActivity.class);
                 startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) calculatedVitamins);
                 startActivity(startIntent);
@@ -130,19 +157,82 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         FloatingActionButton addLayoutButton = findViewById(R.id.addLayoutButton);
-        addLayoutButton.setVisibility(View.INVISIBLE);
+        addLayoutButton.setVisibility(View.VISIBLE);
         addLayoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (check(Optional.empty(), Optional.empty())) {
-                    addLayout();
-                    addLayoutButton.setVisibility(View.INVISIBLE);
-                    floatingActionButton.setVisibility(View.INVISIBLE);
-                }
+                addLayout();
+                addLayoutButton.setVisibility(View.INVISIBLE);
+                floatingActionButton.setVisibility(View.INVISIBLE);
             }
         });
+    }
 
-        addLayout();
+    private void populateLayouts(LocalDate choosedDate) {
+        createFoodsTextFile();
+
+        String loadedDayJsonVegetables = load();
+        List<DayJsonVegetable> dayJsonVegetableList = new ArrayList<>();
+        if (!loadedDayJsonVegetables.isEmpty()) {
+            dayJsonVegetableList = FileReader.getDayJsonVegetablesList(loadedDayJsonVegetables);
+        }
+
+        for (DayJsonVegetable dayJsonVegetable : dayJsonVegetableList) {
+            if (dayJsonVegetable.getDate().equals(choosedDate)) {
+
+                // TODO - populate layout
+                List<JsonVegetable> jsonVegetables = dayJsonVegetable.getJsonVegetables();
+                for (JsonVegetable jsonVegetable : jsonVegetables) {
+                    addSavedLayout(jsonVegetable);
+                }
+
+                // Pridaj do shared preferences
+                JSONArray jsonVegetableListJsonArray = JsonVegetable.toJson(jsonVegetables);
+                sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, VEGETABLES_JSON.label, jsonVegetableListJsonArray.toString());
+                sharedPreferencesHelper.save(sharedPreferenceEntry);
+            }
+        }
+
+    }
+
+    private void populateInternalStorage(LocalDate choosedDate, List<JsonVegetable> jsonVegetableList) {
+        createFoodsTextFile();
+        String loadedDayJsonVegetablesString = load();
+
+        List<DayJsonVegetable> loadedDayJsonVegetables = new ArrayList<>();
+        if (loadedDayJsonVegetablesString != null) {
+            if (!loadedDayJsonVegetablesString.isEmpty()) {
+                loadedDayJsonVegetables = FileReader.getDayJsonVegetablesList(loadedDayJsonVegetablesString);
+            }
+        }
+
+        delete();
+
+        DayJsonVegetable newDay = new DayJsonVegetable();
+        newDay.setDate(choosedDate);
+        newDay.setJsonVegetables(jsonVegetableList);
+
+        List<DayJsonVegetable> recalculatedDayJsonVegetableList = new ArrayList<>();
+        if (loadedDayJsonVegetables.isEmpty()) {
+            recalculatedDayJsonVegetableList.add(newDay);
+        } else {
+            loadedDayJsonVegetables.forEach(loadedDayJsonVegetable -> {
+                if (loadedDayJsonVegetable.getDate().equals(choosedDate)) {
+                    loadedDayJsonVegetable.setJsonVegetables(jsonVegetableList);
+                    recalculatedDayJsonVegetableList.add(loadedDayJsonVegetable);
+                } else {
+                    recalculatedDayJsonVegetableList.add(loadedDayJsonVegetable);
+                }
+            });
+
+            Optional<DayJsonVegetable> dayJsonVegetableOpt = loadedDayJsonVegetables.stream().filter(dayJsonVegetable -> dayJsonVegetable.getDate().equals(choosedDate)).findAny();
+            if (!dayJsonVegetableOpt.isPresent()) {
+                recalculatedDayJsonVegetableList.add(newDay);
+            }
+        }
+
+        save(DayJsonVegetable.toJson(recalculatedDayJsonVegetableList).toString());
+        load();  // TODO - mozes vymazat
     }
 
     @Override
@@ -179,31 +269,34 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         return super.onOptionsItemSelected(item);
     }
 
-    private void addLayout() {
+    private void addSavedLayout(JsonVegetable jsonVegetable) {
         LinearLayout linearLayout = findViewById(R.id.rootLayout);
-        linearLayout.addView(createLayout());
+        linearLayout.addView(createSavedLayout(jsonVegetable));
     }
 
-    private LinearLayout createLayout() {
+    private LinearLayout createSavedLayout(JsonVegetable jsonVegetable) {
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setGravity(Gravity.LEFT);
 
-        ArrayAdapter<String> vegetablesArrayAdapter = createArrayAdapter(R.array.vegetables);
-        ArrayAdapter<String> gramsArrayAdapter = createArrayAdapter(R.array.grams);
+        String[] vegetablesResourceArray = {jsonVegetable.getVegetableName()};
+        ArrayAdapter<String> vegetablesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vegetablesResourceArray);
+
+        String[] gramsResourceArray = {jsonVegetable.getGrams()};
+        ArrayAdapter<String> gramsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, gramsResourceArray);
 
         Spinner vegetablesSpinner = createSpinner(vegetablesArrayAdapter);
         vegetablesSpinner.setDropDownWidth(450);
+        vegetablesSpinner.setEnabled(false);
 
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
         vegetablesSpinner.setLayoutParams(lp);
         Spinner gramsSpinner = createSpinner(gramsArrayAdapter);
+        gramsSpinner.setEnabled(false);
 
-        Button addVegetableButton = new Button(getApplicationContext());
-        addVegetableButton.setText("+");
-        addVegetableButton.setTextColor(Color.WHITE);
-        addVegetableButton.setBackgroundColor(Color.GREEN);
-
-//        addVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_circle_black_24dp));
+        ImageButton addVegetableButton = new ImageButton(this);
+        addVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_circle_black_24dp));
+        addVegetableButton.setBackgroundColor(Color.TRANSPARENT);
+        addVegetableButton.setVisibility(View.INVISIBLE);
 
         int width = 100;
         int height = 100;
@@ -224,9 +317,6 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                     sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, VEGETABLES_JSON.label, jsonVegetableListJsonArray.toString());
                     sharedPreferencesHelper.save(sharedPreferenceEntry);
 
-                    System.out.println("ADDED new jsonVegetable into jsonVegetableList" + jsonVegetable);
-                    System.out.println("jsonVegetableList contains " + jsonVegetableList);
-
                     v.setVisibility(View.INVISIBLE);
 
                     FloatingActionButton addButtonView = findViewById(R.id.addLayoutButton);
@@ -242,16 +332,19 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                     View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
                     Spinner grmsSpinner = (Spinner) gramsSpinnerView;
                     grmsSpinner.setEnabled(false);
+
+                    View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
+                    ImageButton removeImageButton = (ImageButton) removeImageButtonView;
+                    removeImageButton.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        Button removeVegetableButton = new Button(getApplicationContext());
-        removeVegetableButton.setText("-");
-        removeVegetableButton.setTextColor(Color.WHITE);
-        removeVegetableButton.setBackgroundColor(Color.RED);
-
-//        removeVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_forever_black_24dp));
+        ImageButton removeVegetableButton = new ImageButton(getApplicationContext());
+        removeVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_forever_black_24dp));
+        removeVegetableButton.setBackgroundColor(Color.TRANSPARENT);
+        // REMOVE
+        removeVegetableButton.setVisibility(View.VISIBLE);
 
         ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
         removeVegetableButton.setLayoutParams(layoutParams3);
@@ -281,7 +374,130 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
                     int index = 0;
 
                     for (int i = 0; i < vegList.size(); i++) {
-                        if (vegList.get(i).getVegetableName().equals(vegetableSpinnerValue)) {
+                        if (vegList.get(i).getVegetableName().equals(vegetableSpinnerValue) && vegList.get(i).getGrams().equals(gramsSpinnerValue)) {
+                            index = (i++);
+                        }
+                    }
+
+                    vegList.remove(index);
+
+                    JSONArray vegListJsonArray = JsonVegetable.toJson(vegList);
+                    sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, VEGETABLES_JSON.label, vegListJsonArray.toString());
+                    sharedPreferencesHelper.save(sharedPreferenceEntry);
+
+                    ((ViewGroup) v.getParent().getParent()).removeView((ViewGroup) v.getParent());
+                }
+            }
+        });
+
+        linearLayout.addView(vegetablesSpinner);
+        linearLayout.addView(gramsSpinner);
+        linearLayout.addView(addVegetableButton);
+        linearLayout.addView(removeVegetableButton);
+
+        return linearLayout;
+    }
+
+    private void addLayout() {
+        LinearLayout linearLayout = findViewById(R.id.rootLayout);
+        linearLayout.addView(createLayout());
+    }
+
+    private LinearLayout createLayout() {
+        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        linearLayout.setGravity(Gravity.LEFT);
+
+        ArrayAdapter<String> vegetablesArrayAdapter = createArrayAdapter(R.array.vegetables);
+        ArrayAdapter<String> gramsArrayAdapter = createArrayAdapter(R.array.grams);
+
+        Spinner vegetablesSpinner = createSpinner(vegetablesArrayAdapter);
+        vegetablesSpinner.setDropDownWidth(450);
+
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
+        vegetablesSpinner.setLayoutParams(lp);
+        Spinner gramsSpinner = createSpinner(gramsArrayAdapter);
+
+        ImageButton addVegetableButton = new ImageButton(this);
+        addVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_circle_black_24dp));
+        addVegetableButton.setBackgroundColor(Color.TRANSPARENT);
+
+        int width = 100;
+        int height = 100;
+        ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, height);
+        addVegetableButton.setLayoutParams(layoutParams2);
+
+        addVegetableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (check(Optional.empty(), Optional.empty())) {
+                    String vegetablesJson = sharedPreferenceEntry.getVegetablesJson();
+                    List<JsonVegetable> jsonVegetableList = JsonVegetable.toList(vegetablesJson);
+
+                    JsonVegetable jsonVegetable = new JsonVegetable(vegetableName, grams);
+                    jsonVegetableList.add(jsonVegetable);
+
+                    JSONArray jsonVegetableListJsonArray = JsonVegetable.toJson(jsonVegetableList);
+                    sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, VEGETABLES_JSON.label, jsonVegetableListJsonArray.toString());
+                    sharedPreferencesHelper.save(sharedPreferenceEntry);
+
+                    v.setVisibility(View.INVISIBLE);
+
+                    FloatingActionButton addButtonView = findViewById(R.id.addLayoutButton);
+                    addButtonView.setVisibility(View.VISIBLE);
+
+                    FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+                    floatingActionButton.setVisibility(View.VISIBLE);
+
+                    View vegetableSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+                    Spinner vegSpinner = (Spinner) vegetableSpinnerView;
+                    vegSpinner.setEnabled(false);
+
+                    View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+                    Spinner grmsSpinner = (Spinner) gramsSpinnerView;
+                    grmsSpinner.setEnabled(false);
+
+                    View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
+                    ImageButton removeImageButton = (ImageButton) removeImageButtonView;
+                    removeImageButton.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        ImageButton removeVegetableButton = new ImageButton(getApplicationContext());
+        removeVegetableButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_forever_black_24dp));
+        removeVegetableButton.setBackgroundColor(Color.TRANSPARENT);
+        // REMOVE
+        removeVegetableButton.setVisibility(View.INVISIBLE);
+
+        ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
+        removeVegetableButton.setLayoutParams(layoutParams3);
+
+        removeVegetableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String vegetableSpinnerValue = null;
+                String gramsSpinnerValue = null;
+
+                View vegetableSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+
+                if (vegetableSpinnerView instanceof Spinner) {
+                    vegetableSpinnerValue = ((Spinner) vegetableSpinnerView).getSelectedItem().toString();
+                }
+
+                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+
+                if (gramsSpinnerView instanceof Spinner) {
+                    gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
+                }
+
+                if (check(Optional.of(vegetableSpinnerValue), Optional.of(gramsSpinnerValue))) {
+                    String vegetablesJson = sharedPreferenceEntry.getVegetablesJson();
+                    List<JsonVegetable> vegList = JsonVegetable.toList(vegetablesJson);
+
+                    int index = 0;
+
+                    for (int i = 0; i < vegList.size(); i++) {
+                        if (vegList.get(i).getVegetableName().equals(vegetableSpinnerValue) && vegList.get(i).getGrams().equals(gramsSpinnerValue)) {
                             index = (i++);
                         }
                     }
@@ -369,9 +585,93 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(getApplicationContext(), "Choose grams", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            System.out.println("VEGETABLE_NAME " + vegetableNameOpt + " GRAMS " + gramsOpt);
             return true;
         }
+    }
+
+    public void delete() {
+        File file = new File(getFilesDir(), FILE_NAME);
+        if (file.exists()) {
+            deleteFile(FILE_NAME);
+            System.out.println();
+            System.out.println("DELETUJEM" + FILE_NAME);
+            System.out.println();
+        }
+    }
+
+    public void createFoodsTextFile() {
+        File file = new File(getFilesDir(), FILE_NAME);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                System.out.println();
+                System.out.println("CREATUJEM" + FILE_NAME);
+                System.out.println();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void save(String text) {
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            System.out.println();
+            System.out.println("SAVEUJEM" + text);
+            System.out.println();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public String load() {
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+            System.out.println();
+            System.out.println("LOADUJEM" + sb.toString());
+            System.out.println();
+
+            return sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
     }
 
 }
