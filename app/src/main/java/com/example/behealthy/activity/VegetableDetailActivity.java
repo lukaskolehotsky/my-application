@@ -46,7 +46,7 @@ public class VegetableDetailActivity extends AppCompatActivity {
         JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
 
         for(Vegetable veg: jsonProperty.getVegetables()){
-            if(veg.getVegetableName().equals(vegetableName)){
+            if(veg.getName().equals(vegetableName)){
 
                 for(Vitamin vitamin: veg.getVitamins()){
                     HashMap<String, String> vegetableHashMap = new HashMap<>();

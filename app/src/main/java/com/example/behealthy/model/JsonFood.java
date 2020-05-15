@@ -7,23 +7,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonVegetable {
+public class JsonFood {
 
-    private String vegetableName;
+    private String name;
 
     private String grams;
 
-    public JsonVegetable(String vegetableName, String grams) {
-        this.vegetableName = vegetableName;
+    public JsonFood(String name, String grams) {
+        this.name = name;
         this.grams = grams;
     }
 
-    public String getVegetableName() {
-        return vegetableName;
+    public String getName() {
+        return name;
     }
 
-    public void setVegetableName(String vegetableName) {
-        this.vegetableName = vegetableName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getGrams() {
@@ -34,13 +34,13 @@ public class JsonVegetable {
         this.grams = grams;
     }
 
-    public static JSONArray toJson(List<JsonVegetable> list){
+    public static JSONArray toJson(List<JsonFood> list){
         JSONArray jsonArray = new JSONArray();
 
-        for(JsonVegetable v: list){
+        for(JsonFood v: list){
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("vegetableName", v.getVegetableName());
+                jsonObject.put("name", v.getName());
                 jsonObject.put("grams", v.getGrams());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -51,28 +51,28 @@ public class JsonVegetable {
         return jsonArray;
     }
 
-    public static List<JsonVegetable> toList(String jsonString){
-        List<JsonVegetable> jsonVegetableList = new ArrayList<>();
+    public static List<JsonFood> toList(String jsonString){
+        List<JsonFood> jsonFoodList = new ArrayList<>();
         if(jsonString != null){
             try {
                 JSONArray jsonArray = new JSONArray(jsonString);
                 for(int i=0; i<jsonArray.length(); i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    JsonVegetable v = new JsonVegetable(jsonObject.getString("vegetableName"), jsonObject.getString("grams"));
-                    jsonVegetableList.add(v);
+                    JsonFood v = new JsonFood(jsonObject.getString("name"), jsonObject.getString("grams"));
+                    jsonFoodList.add(v);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        return jsonVegetableList;
+        return jsonFoodList;
     }
 
     @Override
     public String toString() {
-        return "JsonVegetable{" +
-                "vegetableName='" + vegetableName + '\'' +
+        return "JsonFood{" +
+                "name='" + name + '\'' +
                 ", grams='" + grams + '\'' +
                 '}';
     }

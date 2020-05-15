@@ -3,14 +3,13 @@ package com.example.behealthy.utilities;
 import android.content.SharedPreferences;
 
 import com.example.behealthy.constants.Constants;
-import java.util.Set;
 
-import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.AGE;
+import static com.example.behealthy.constants.Constants.FOODS_JSON;
+import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.HEIGHT;
-import static com.example.behealthy.constants.Constants.WEIGHT;
 import static com.example.behealthy.constants.Constants.WAIST_CIRCUMFERENCE;
-import static com.example.behealthy.constants.Constants.VEGETABLES_JSON;
+import static com.example.behealthy.constants.Constants.WEIGHT;
 
 public class SharedPreferencesHelper {
 
@@ -20,14 +19,14 @@ public class SharedPreferencesHelper {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public boolean save(SharedPreferenceEntry sharedPreferenceEntry){
+    public boolean save(SharedPreferenceEntry sharedPreferenceEntry) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(GENDER.label, sharedPreferenceEntry.getGender());
         editor.putString(AGE.label, sharedPreferenceEntry.getAge());
         editor.putString(HEIGHT.label, sharedPreferenceEntry.getHeight());
         editor.putString(WEIGHT.label, sharedPreferenceEntry.getWeight());
         editor.putString(WAIST_CIRCUMFERENCE.label, sharedPreferenceEntry.getWaistCircumference());
-        editor.putString(VEGETABLES_JSON.label, sharedPreferenceEntry.getVegetablesJson());
+        editor.putString(FOODS_JSON.label, sharedPreferenceEntry.getFoodsJson());
         return editor.commit();
     }
 
@@ -37,7 +36,7 @@ public class SharedPreferencesHelper {
         String height = sharedPreferences.getString(HEIGHT.label, "");
         String weight = sharedPreferences.getString(WEIGHT.label, "");
         String waistCircumference = sharedPreferences.getString(WAIST_CIRCUMFERENCE.label, "");
-        String vegetablesJson = sharedPreferences.getString(VEGETABLES_JSON.label, "");
+        String vegetablesJson = sharedPreferences.getString(FOODS_JSON.label, "");
 
         SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
         sharedPreferenceEntry.setGender(gender);
@@ -45,34 +44,34 @@ public class SharedPreferencesHelper {
         sharedPreferenceEntry.setHeight(height);
         sharedPreferenceEntry.setWeight(weight);
         sharedPreferenceEntry.setWaistCircumference(waistCircumference);
-        sharedPreferenceEntry.setVegetablesJson(vegetablesJson);
+        sharedPreferenceEntry.setFoodsJson(vegetablesJson);
 
         return sharedPreferenceEntry;
     }
 
-    public void populateSharedPreferenceEntry(SharedPreferenceEntry sharedPreferenceEntry, String firstItemName, String value){
-        if(firstItemName.equals(Constants.AGE.label)){
+    public void populateSharedPreferenceEntry(SharedPreferenceEntry sharedPreferenceEntry, String firstItemName, String value) {
+        if (firstItemName.equals(Constants.AGE.label)) {
             sharedPreferenceEntry.setAge(value);
         }
 
-        if(firstItemName.equals(Constants.WEIGHT.label)){
+        if (firstItemName.equals(Constants.WEIGHT.label)) {
             sharedPreferenceEntry.setWeight(value);
         }
 
-        if(firstItemName.equals(Constants.HEIGHT.label)){
+        if (firstItemName.equals(Constants.HEIGHT.label)) {
             sharedPreferenceEntry.setHeight(value);
         }
 
-        if(firstItemName.equals(Constants.GENDER.label)){
+        if (firstItemName.equals(Constants.GENDER.label)) {
             sharedPreferenceEntry.setGender(value);
         }
 
-        if(firstItemName.equals(Constants.WAIST_CIRCUMFERENCE.label)){
+        if (firstItemName.equals(Constants.WAIST_CIRCUMFERENCE.label)) {
             sharedPreferenceEntry.setWaistCircumference(value);
         }
 
-        if(firstItemName.equals(Constants.VEGETABLES_JSON.label)){
-            sharedPreferenceEntry.setVegetablesJson(value);
+        if (firstItemName.equals(Constants.FOODS_JSON.label)) {
+            sharedPreferenceEntry.setFoodsJson(value);
         }
 
     }

@@ -57,7 +57,7 @@ public class VitaminsActivity extends AppCompatActivity {
             for(Vitamin vitamin: vegetable.getVitamins()){
                 if(vitamin.getName().equals(vitaminName)){
                     HashMap<String, String> vegetableHashMap = new HashMap<>();
-                    vegetableHashMap.put(FIRST_COLUMN.label, vegetable.getVegetableName());
+                    vegetableHashMap.put(FIRST_COLUMN.label, vegetable.getName());
                     vegetableHashMap.put(SECOND_COLUMN.label, vitamin.getAmount() + " " + vitamin.getUnit());
                     hashMapArrayList.add(vegetableHashMap);
                 }

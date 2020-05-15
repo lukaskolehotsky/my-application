@@ -7,11 +7,11 @@ import org.json.JSONObject;
 import java.time.LocalDate;
 import java.util.List;
 
-public class DayJsonVegetable {
+public class DateJsonFood {
 
     private LocalDate date;
 
-    private List<JsonVegetable> jsonVegetables;
+    private List<JsonFood> jsonFoods;
 
     public LocalDate getDate() {
         return date;
@@ -21,19 +21,19 @@ public class DayJsonVegetable {
         this.date = date;
     }
 
-    public List<JsonVegetable> getJsonVegetables() {
-        return jsonVegetables;
+    public List<JsonFood> getJsonFoods() {
+        return jsonFoods;
     }
 
-    public void setJsonVegetables(List<JsonVegetable> jsonVegetables) {
-        this.jsonVegetables = jsonVegetables;
+    public void setJsonFoods(List<JsonFood> jsonFoods) {
+        this.jsonFoods = jsonFoods;
     }
 
-    public static JSONObject toJson(DayJsonVegetable dayJsonVegetable){
+    public static JSONObject toJson(DateJsonFood dateJsonFood){
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("date", dayJsonVegetable.getDate());
-            jsonObject.put("jsonVegetables", JsonVegetable.toJson(dayJsonVegetable.getJsonVegetables()));
+            jsonObject.put("date", dateJsonFood.getDate());
+            jsonObject.put("jsonFoods", JsonFood.toJson(dateJsonFood.getJsonFoods()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,14 +41,14 @@ public class DayJsonVegetable {
         return jsonObject;
     }
 
-    public static JSONObject toJson(List<DayJsonVegetable> list){
+    public static JSONObject toJson(List<DateJsonFood> list){
         JSONObject jsonObjectKKK = new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
-        for(DayJsonVegetable v: list){
+        for(DateJsonFood v: list){
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("dayJsonVegetable", DayJsonVegetable.toJson(v));
+                jsonObject.put("dateJsonFood", DateJsonFood.toJson(v));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -57,7 +57,7 @@ public class DayJsonVegetable {
 
         JSONObject jsonObjectXX = new JSONObject();
         try {
-            jsonObjectXX.put("dayJsonVegetables", jsonArray);
+            jsonObjectXX.put("dateJsonFoods", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,9 +68,9 @@ public class DayJsonVegetable {
 
     @Override
     public String toString() {
-        return "DayJsonVegetable{" +
+        return "DateJsonFood{" +
                 "date=" + date +
-                ", jsonVegetables=" + jsonVegetables +
+                ", jsonFoods=" + jsonFoods +
                 '}';
     }
 

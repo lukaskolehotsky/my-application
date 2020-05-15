@@ -11,7 +11,7 @@ public enum Constants {
     FIRST_COLUMN("First"),
     SECOND_COLUMN("Second"),
     FIRST_COLUMN_NAME_VEGETABLE("Vegetable"),
-    VEGETABLES_JSON("VegetablesJson"),
+    FOODS_JSON("FoodsJson"),
     VITAMIN_LIST("VITAMIN_LIST"),
     VITAMIN_NAME("VITAMIN_NAME"),
     VEGETABLE_NAME("VEGETABLE_NAME")

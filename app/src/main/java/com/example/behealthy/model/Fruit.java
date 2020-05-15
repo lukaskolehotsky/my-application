@@ -4,21 +4,21 @@ import java.util.List;
 
 public class Fruit {
 
-    private String fruitName;
+    private String name;
 
     private List<Vitamin> vitamins;
 
-    public Fruit(String fruitName, List<Vitamin> vitamins) {
-        this.fruitName = fruitName;
+    public Fruit(String name, List<Vitamin> vitamins) {
+        this.name = name;
         this.vitamins = vitamins;
     }
 
-    public String getFruitName() {
-        return fruitName;
+    public String getName() {
+        return name;
     }
 
-    public void setFruitName(String fruitName) {
-        this.fruitName = fruitName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Vitamin> getVitamins() {
@@ -32,7 +32,7 @@ public class Fruit {
     @Override
     public String toString() {
         return "Fruit{" +
-                "fruitName='" + fruitName + '\'' +
+                "name='" + name + '\'' +
                 ", vitamins=" + vitamins +
                 '}';
     }

@@ -5,9 +5,9 @@ import android.content.Context;
 import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.AgeWithBmis;
 import com.example.behealthy.model.Bmi;
-import com.example.behealthy.model.DayJsonVegetable;
+import com.example.behealthy.model.DateJsonFood;
 import com.example.behealthy.model.Fruit;
-import com.example.behealthy.model.JsonVegetable;
+import com.example.behealthy.model.JsonFood;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 
@@ -204,31 +204,31 @@ public class FileReader {
             JSONArray vegetablesArray = contentJson.getJSONArray("vegetables");
 
             for(int i = 0; i < vegetablesArray.length(); i++) {
-                String vegetableName = "";
+                String name = "";
                 List<Vitamin> vitamins = new ArrayList<>();
 
                 JSONObject vegetablesDetails = vegetablesArray.getJSONObject(i);
 
-                if (!vegetablesDetails.isNull("vegetableName")) { vegetableName = vegetablesDetails.getString("vegetableName"); }
+                if (!vegetablesDetails.isNull("name")) { name = vegetablesDetails.getString("name"); }
 
                 JSONArray vitaminsArray = vegetablesDetails.getJSONArray("vitamins");
                 for(int j = 0; j < vitaminsArray.length(); j++) {
-                    String name = "";
+                    String name2 = "";
                     double amount = 0.0f;
                     String unit = "";
                     int from = 0;
                     int to = 0;
 
                     JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
-                    if (!vitaminsDetails.isNull("name")) { name = vitaminsDetails.getString("name"); }
+                    if (!vitaminsDetails.isNull("name")) { name2 = vitaminsDetails.getString("name"); }
                     if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
                     if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
 
-                    Vitamin vitamin = new Vitamin(name, from, to, amount, unit);
+                    Vitamin vitamin = new Vitamin(name2, from, to, amount, unit);
                     vitamins.add(vitamin);
                 }
 
-                Vegetable vegetable = new Vegetable(vegetableName, vitamins);
+                Vegetable vegetable = new Vegetable(name, vitamins);
                 vegetablesList.add(vegetable);
             }
             return vegetablesList;
@@ -246,31 +246,31 @@ public class FileReader {
             JSONArray fruitsArray = contentJson.getJSONArray("fruits");
 
             for(int i = 0; i < fruitsArray.length(); i++) {
-                String fruitName = "";
+                String name = "";
                 List<Vitamin> vitamins = new ArrayList<>();
 
                 JSONObject fruitsDetails = fruitsArray.getJSONObject(i);
 
-                if (!fruitsDetails.isNull("fruitName")) { fruitName = fruitsDetails.getString("fruitName"); }
+                if (!fruitsDetails.isNull("name")) { name = fruitsDetails.getString("name"); }
 
                 JSONArray vitaminsArray = fruitsDetails.getJSONArray("vitamins");
                 for(int j = 0; j < vitaminsArray.length(); j++) {
-                    String name = "";
+                    String name2 = "";
                     double amount = 0.0f;
                     String unit = "";
                     int from = 0;
                     int to = 0;
 
                     JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
-                    if (!vitaminsDetails.isNull("name")) { name = vitaminsDetails.getString("name"); }
+                    if (!vitaminsDetails.isNull("name")) { name2 = vitaminsDetails.getString("name"); }
                     if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
                     if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
 
-                    Vitamin vitamin = new Vitamin(name, from, to, amount, unit);
+                    Vitamin vitamin = new Vitamin(name2, from, to, amount, unit);
                     vitamins.add(vitamin);
                 }
 
-                Fruit fruit = new Fruit(fruitName, vitamins);
+                Fruit fruit = new Fruit(name, vitamins);
                 fruitsList.add(fruit);
             }
             return fruitsList;
@@ -280,44 +280,49 @@ public class FileReader {
         return null;
     }
 
-    public static ArrayList getDayJsonVegetablesList(String jsonString) {
-        ArrayList dayJsonVegetablesList = new ArrayList();
+    public static ArrayList getDateJsonFoodList(String jsonString) {
+        ArrayList dateJsonFoodList = new ArrayList();
 
-        try{
+        try {
             JSONObject contentJson = new JSONObject(jsonString);
-            JSONArray dayJsonVegetablesArray = contentJson.getJSONArray("dayJsonVegetables");
+            JSONArray dateJsonFoodsArray = contentJson.getJSONArray("dateJsonFoods");
 
-            for(int i = 0; i < dayJsonVegetablesArray.length(); i++) {
+            for (int i = 0; i < dateJsonFoodsArray.length(); i++) {
                 String date = "";
-                List<Vitamin> vitamins = new ArrayList<>();
 
-                JSONObject dayJsonVegetablesDetails = dayJsonVegetablesArray.getJSONObject(i);
+                JSONObject dateJsonFoodsDetails = dateJsonFoodsArray.getJSONObject(i);
 
-                JSONObject dayJsonVegetableDetails = dayJsonVegetablesDetails.getJSONObject("dayJsonVegetable");
+                JSONObject dateJsonFoodDetails = dateJsonFoodsDetails.getJSONObject("dateJsonFood");
 
-                if (!dayJsonVegetableDetails.isNull("date")) { date = dayJsonVegetableDetails.getString("date"); }
-
-                List<JsonVegetable> jsonVegetableList = new ArrayList<>();
-                JSONArray jsonVegetablesArray = dayJsonVegetableDetails.getJSONArray("jsonVegetables");
-                for(int j = 0; j < jsonVegetablesArray.length(); j++) {
-                    String vegetableName = "";
-                    String grams = "";
-
-                    JSONObject jsonVegetableDetails = jsonVegetablesArray.getJSONObject(j);
-                    if (!jsonVegetableDetails.isNull("vegetableName")) { vegetableName = jsonVegetableDetails.getString("vegetableName"); }
-                    if (!jsonVegetableDetails.isNull("grams")) { grams = jsonVegetableDetails.getString("grams"); }
-
-                    JsonVegetable jsonVegetable = new JsonVegetable(vegetableName, grams);
-                    jsonVegetableList.add(jsonVegetable);
+                if (!dateJsonFoodDetails.isNull("date")) {
+                    date = dateJsonFoodDetails.getString("date");
                 }
 
-                DayJsonVegetable dayJsonVegetable = new DayJsonVegetable();
-                dayJsonVegetable.setDate(LocalDate.parse(date));
-                dayJsonVegetable.setJsonVegetables(jsonVegetableList);
+                List<JsonFood> jsonFoodList = new ArrayList<>();
+                JSONArray jsonFoodsArray = dateJsonFoodDetails.getJSONArray("jsonFoods");
+                for (int j = 0; j < jsonFoodsArray.length(); j++) {
+                    String name = "";
+                    String grams = "";
 
-                dayJsonVegetablesList.add(dayJsonVegetable);
+                    JSONObject jsonFoodDetails = jsonFoodsArray.getJSONObject(j);
+                    if (!jsonFoodDetails.isNull("name")) {
+                        name = jsonFoodDetails.getString("name");
+                    }
+                    if (!jsonFoodDetails.isNull("grams")) {
+                        grams = jsonFoodDetails.getString("grams");
+                    }
+
+                    JsonFood jsonFood = new JsonFood(name, grams);
+                    jsonFoodList.add(jsonFood);
+                }
+
+                DateJsonFood dateJsonFood = new DateJsonFood();
+                dateJsonFood.setDate(LocalDate.parse(date));
+                dateJsonFood.setJsonFoods(jsonFoodList);
+
+                dateJsonFoodList.add(dateJsonFood);
             }
-            return dayJsonVegetablesList;
+            return dateJsonFoodList;
         } catch (JSONException e) {
             e.printStackTrace();
         }

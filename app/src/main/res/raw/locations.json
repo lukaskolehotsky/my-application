@@ -1,2976 +1,3138 @@
 {
-   "fruits": [
-      {
-         "fruitName": "",
-         "vitamins": [
-            {
-               "name":"",
-               "amount":0,
-               "unit":""
-            },
-            {
-               "name":"",
-               "amount":0,
-               "unit":""
-            }
-         ]
-      },
-      {
-         "fruitName": "",
-         "vitamins": [
-            {
-               "name":"",
-               "amount":0,
-               "unit":""
-            },
-            {
-               "name":"",
-               "amount":0,
-               "unit":""
-            }
-         ]
-      }
-   ],
-   "vegetables":[
-      {
-         "vegetableName":"Peas Green",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":40,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":765,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":2.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":65,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":24.8,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":28.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":2477,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Pumpkin",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":9,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":7385,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.6,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":16,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":1.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":1.1,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":8.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":1500,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Spinach",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":28.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":9376,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.7,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":194,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":483,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":18,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":12197,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Beans Snap Yellow",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":16.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":108,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.8,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":37,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Beans Snap Green",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":16.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":690,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.8,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":37,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":14.4,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":15.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":640,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Beans Fava",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":3.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":333,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":2.2,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":148,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Beans Kidney",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":38.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":2,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":2.9,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":59,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Lentils Sprouted",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":16.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":45,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":1.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.6,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":100,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Radish",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":14.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":7,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":25,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":1.3,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":6.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":10,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Cucumber",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":2.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":105,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":7,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0.0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":16.4,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":6.0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":23,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0.0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {
-         "vegetableName":"Pepper Sweet Yellow",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":183.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":200,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.9,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":26,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]
-      },
-      {"vegetableName":"Pepper Sweet Red",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":128,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":3131,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":46,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":1.6,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":4.9,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":5.6,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":51,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Pepper Sweet Green",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":80.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":370,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.5,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":10,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":7.4,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":5.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":341,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Broccoli",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":89.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":623,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.6,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.6,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":63,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":102,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":18.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":1403,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Brussels Sprouts",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":85,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":754,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.7,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":61,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.9,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":177,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":19.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":1590,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Kohlrabi",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":62,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":36,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":16,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":0.1,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":12.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Lettuce Iceberg",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":2.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":502,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":29,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":24.1,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":6.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":277,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Tomatoes Red",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":12.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":833,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.6,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":15,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":7.9,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":6.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":123,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":2573,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Carrot",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":5.9,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":16705,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":1,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.3,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":19,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":13.2,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":8.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":256,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":1,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Cabbage",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":36.6,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":98,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":43,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":76,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":10.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":30,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Spring Onion",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":18.8,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":997,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.5,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":64,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.5,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":207,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":5.7,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":1137,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]},
-      {"vegetableName":"Mung Beans",
-         "vitamins": [
-            {
-               "name":"Vitamin C",
-               "amount":13.2,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin A",
-               "amount":21,
-               "unit":"IU"
-            },
-            {
-               "name":"B1 - Thiamin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B2 - Riboflavin",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"B3 - Niacin",
-               "amount":0.7,
-               "unit":"mg"
-            },
-            {
-               "name":"B5 - Pantothenic Acid",
-               "amount":0.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin B6",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"b7",
-               "amount":0.00,
-               "unit":"µg"
-            },
-            {
-               "name":"B9 - Folate",
-               "amount":61,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin B12",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Vitamin D",
-               "amount":0,
-               "unit":"IU"
-            },
-            {
-               "name":"Vitamin E",
-               "amount":0.1,
-               "unit":"mg"
-            },
-            {
-               "name":"Vitamin K",
-               "amount":33,
-               "unit":"µg"
-            },
-            {
-               "name":"Choline",
-               "amount":14.4,
-               "unit":"mg"
-            },
-            {
-               "name":"Lutein + Zeaxanthin",
-               "amount":0,
-               "unit":"µg"
-            },
-            {
-               "name":"Lycopene",
-               "amount":0,
-               "unit":"µg"
-            }
-         ]}
-   ],
-   "ageWithBmis":[
-      {
-         "ageFrom":18,
-         "ageTo":24,
-         "bmis":[
-            {
-               "from":0,
-               "to":19,
-               "category":"Podvaha"
-            },
-            {
-               "from":19,
-               "to":24,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":24,
-               "to":29,
-               "category":"Nadvaha"
-            },
-            {
-               "from":29,
-               "to":39,
-               "category":"Obezita"
-            },
-            {
-               "from":39,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      },
-      {
-         "ageFrom":25,
-         "ageTo":34,
-         "bmis":[
-            {
-               "from":0,
-               "to":20,
-               "category":"Podvaha"
-            },
-            {
-               "from":20,
-               "to":25,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":25,
-               "to":30,
-               "category":"Nadvaha"
-            },
-            {
-               "from":30,
-               "to":40,
-               "category":"Obezita"
-            },
-            {
-               "from":40,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      },
-      {
-         "ageFrom":35,
-         "ageTo":44,
-         "bmis":[
-            {
-               "from":0,
-               "to":21,
-               "category":"Podvaha"
-            },
-            {
-               "from":21,
-               "to":26,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":26,
-               "to":31,
-               "category":"Nadvaha"
-            },
-            {
-               "from":31,
-               "to":41,
-               "category":"Obezita"
-            },
-            {
-               "from":41,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      },
-      {
-         "ageFrom":45,
-         "ageTo":54,
-         "bmis":[
-            {
-               "from":0,
-               "to":22,
-               "category":"Podvaha"
-            },
-            {
-               "from":22,
-               "to":27,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":27,
-               "to":32,
-               "category":"Nadvaha"
-            },
-            {
-               "from":32,
-               "to":42,
-               "category":"Obezita"
-            },
-            {
-               "from":42,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      },
-      {
-         "ageFrom":55,
-         "ageTo":64,
-         "bmis":[
-            {
-               "from":0,
-               "to":23,
-               "category":"Podvaha"
-            },
-            {
-               "from":23,
-               "to":28,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":28,
-               "to":33,
-               "category":"Nadvaha"
-            },
-            {
-               "from":33,
-               "to":43,
-               "category":"Obezita"
-            },
-            {
-               "from":43,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      },
-      {
-         "ageFrom":65,
-         "ageTo":1000,
-         "bmis":[
-            {
-               "from":0,
-               "to":24,
-               "category":"Podvaha"
-            },
-            {
-               "from":24,
-               "to":29,
-               "category":"Optimalna vaha"
-            },
-            {
-               "from":29,
-               "to":34,
-               "category":"Nadvaha"
-            },
-            {
-               "from":34,
-               "to":44,
-               "category":"Obezita"
-            },
-            {
-               "from":44,
-               "to":1000,
-               "category":"Morbidna obezita"
-            }
-         ]
-      }
-   ],
-   "woman":{
-      "vitamins":[
-         {
-            "name":"Vitamin C",
-            "from":9.0,
-            "to":13.0,
-            "amount":45.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":14.0,
-            "to":18.0,
-            "amount":65.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":19.0,
-            "to":50.0,
-            "amount":75.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":51.0,
-            "to":100.0,
-            "amount":75.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin A",
-            "from":9.0,
-            "to":13.0,
-            "amount":2000.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":14.0,
-            "to":18.0,
-            "amount":2300.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":19.0,
-            "to":50.0,
-            "amount":2300.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":51.0,
-            "to":100.0,
-            "amount":2300.0,
-            "unit":"IU"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":9.0,
-            "to":13.0,
-            "amount":0.9,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.1,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.1,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":9.0,
-            "to":13.0,
-            "amount":0.9,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.1,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.1,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":9.0,
-            "to":13.0,
-            "amount":12.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":14.0,
-            "to":18.0,
-            "amount":14.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":19.0,
-            "to":50.0,
-            "amount":14.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":51.0,
-            "to":100.0,
-            "amount":14.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":9.0,
-            "to":13.0,
-            "amount":4.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":14.0,
-            "to":18.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":19.0,
-            "to":50.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":51.0,
-            "to":100.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":9.0,
-            "to":13.0,
-            "amount":1.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.2,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.5,
-            "unit":"mg"
-         },
-         {
-            "name":"b7",
-            "from":9.0,
-            "to":13.0,
-            "amount":20.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":14.0,
-            "to":18.0,
-            "amount":25.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":19.0,
-            "to":50.0,
-            "amount":30.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":51.0,
-            "to":100.0,
-            "amount":30.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":9.0,
-            "to":13.0,
-            "amount":300.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":14.0,
-            "to":18.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":19.0,
-            "to":50.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":51.0,
-            "to":100.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":9.0,
-            "to":13.0,
-            "amount":1.8,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":14.0,
-            "to":18.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":19.0,
-            "to":50.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":51.0,
-            "to":100.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin D",
-            "from":9.0,
-            "to":13.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":14.0,
-            "to":18.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":19.0,
-            "to":50.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":51.0,
-            "to":100.0,
-            "amount":800.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin E",
-            "from":9.0,
-            "to":13.0,
-            "amount":11.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":14.0,
-            "to":18.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":19.0,
-            "to":50.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":51.0,
-            "to":100.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":9.0,
-            "to":13.0,
-            "amount":60.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":14.0,
-            "to":18.0,
-            "amount":75.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":19.0,
-            "to":50.0,
-            "amount":90.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":51.0,
-            "to":100.0,
-            "amount":90.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Choline",
-            "from":9.0,
-            "to":13.0,
-            "amount":375.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":14.0,
-            "to":18.0,
-            "amount":400.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":19.0,
-            "to":50.0,
-            "amount":425.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":51.0,
-            "to":100.0,
-            "amount":425.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":9.0,
-            "to":13.0,
-            "amount":6000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":14.0,
-            "to":18.0,
-            "amount":8000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":19.0,
-            "to":50.0,
-            "amount":10000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":51.0,
-            "to":100.0,
-            "amount":10000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":9.0,
-            "to":13.0,
-            "amount":12000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":14.0,
-            "to":18.0,
-            "amount":15000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":19.0,
-            "to":50.0,
-            "amount":15000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":51.0,
-            "to":100.0,
-            "amount":15000.0,
-            "unit":"µg"
-         }
+  "fruits": [
+    {
+      "name": "Kiwi",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 40,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 765,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 2.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 65,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 24.8,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 28.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 2477,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
       ]
-   },
-   "man":{
-      "vitamins":[
-         {
-            "name":"Vitamin C",
-            "from":9.0,
-            "to":13.0,
-            "amount":45.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":14.0,
-            "to":18.0,
-            "amount":75.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":19.0,
-            "to":50.0,
-            "amount":90.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin C",
-            "from":51.0,
-            "to":100.0,
-            "amount":90.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin A",
-            "from":9.0,
-            "to":13.0,
-            "amount":2000.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":14.0,
-            "to":18.0,
-            "amount":3000.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":19.0,
-            "to":50.0,
-            "amount":3000.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin A",
-            "from":51.0,
-            "to":100.0,
-            "amount":3000.0,
-            "unit":"IU"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":9.0,
-            "to":13.0,
-            "amount":0.9,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.2,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.2,
-            "unit":"mg"
-         },
-         {
-            "name":"B1 - Thiamin",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.2,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":9.0,
-            "to":13.0,
-            "amount":0.9,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"B2 - Riboflavin",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":9.0,
-            "to":13.0,
-            "amount":12.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":14.0,
-            "to":18.0,
-            "amount":16.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":19.0,
-            "to":50.0,
-            "amount":16.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B3 - Niacin",
-            "from":51.0,
-            "to":100.0,
-            "amount":16.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":9.0,
-            "to":13.0,
-            "amount":4.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":14.0,
-            "to":18.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":19.0,
-            "to":50.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"B5 - Pantothenic Acid",
-            "from":51.0,
-            "to":100.0,
-            "amount":5.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":9.0,
-            "to":13.0,
-            "amount":1.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":14.0,
-            "to":18.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":19.0,
-            "to":50.0,
-            "amount":1.3,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin B6",
-            "from":51.0,
-            "to":100.0,
-            "amount":1.7,
-            "unit":"mg"
-         },
-         {
-            "name":"b7",
-            "from":9.0,
-            "to":13.0,
-            "amount":20.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":14.0,
-            "to":18.0,
-            "amount":25.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":19.0,
-            "to":50.0,
-            "amount":30.0,
-            "unit":"µg"
-         },
-         {
-            "name":"b7",
-            "from":51.0,
-            "to":100.0,
-            "amount":30.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":9.0,
-            "to":13.0,
-            "amount":300.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":14.0,
-            "to":18.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":19.0,
-            "to":50.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"B9 - Folate",
-            "from":51.0,
-            "to":100.0,
-            "amount":400.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":9.0,
-            "to":13.0,
-            "amount":1.8,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":14.0,
-            "to":18.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":19.0,
-            "to":50.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin B12",
-            "from":51.0,
-            "to":100.0,
-            "amount":2.4,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin D",
-            "from":9.0,
-            "to":13.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":14.0,
-            "to":18.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":19.0,
-            "to":50.0,
-            "amount":600.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin D",
-            "from":51.0,
-            "to":100.0,
-            "amount":800.0,
-            "unit":"IU"
-         },
-         {
-            "name":"Vitamin E",
-            "from":9.0,
-            "to":13.0,
-            "amount":11.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":14.0,
-            "to":18.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":19.0,
-            "to":50.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin E",
-            "from":51.0,
-            "to":100.0,
-            "amount":15.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":9.0,
-            "to":13.0,
-            "amount":60.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":14.0,
-            "to":18.0,
-            "amount":75.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":19.0,
-            "to":50.0,
-            "amount":120.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Vitamin K",
-            "from":51.0,
-            "to":100.0,
-            "amount":90.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Choline",
-            "from":9.0,
-            "to":13.0,
-            "amount":375.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":14.0,
-            "to":18.0,
-            "amount":550.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":19.0,
-            "to":50.0,
-            "amount":550.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Choline",
-            "from":51.0,
-            "to":100.0,
-            "amount":550.0,
-            "unit":"mg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":9.0,
-            "to":13.0,
-            "amount":6000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":14.0,
-            "to":18.0,
-            "amount":8000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":19.0,
-            "to":50.0,
-            "amount":10000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lutein + Zeaxanthin",
-            "from":51.0,
-            "to":100.0,
-            "amount":10000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":9.0,
-            "to":13.0,
-            "amount":12000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":14.0,
-            "to":18.0,
-            "amount":15000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":19.0,
-            "to":50.0,
-            "amount":15000.0,
-            "unit":"µg"
-         },
-         {
-            "name":"Lycopene",
-            "from":51.0,
-            "to":100.0,
-            "amount":15000.0,
-            "unit":"µg"
-         }
+    },
+    {
+      "name": "Lichi",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 40,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 765,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 2.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 65,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 24.8,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 28.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 2477,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
       ]
-   }
+    }
+  ],
+  "vegetables": [
+    {
+      "name": "Peas Green",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 40,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 765,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 2.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 65,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 24.8,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 28.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 2477,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Pumpkin",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 9,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 7385,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.6,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 16,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 1.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 1.1,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 8.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 1500,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Spinach",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 28.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 9376,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.7,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 194,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 483,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 18,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 12197,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Beans Snap Yellow",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 16.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 108,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.8,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 37,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Beans Snap Green",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 16.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 690,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.8,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 37,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 14.4,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 15.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 640,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Beans Fava",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 3.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 333,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 2.2,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 148,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Beans Kidney",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 38.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 2,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 2.9,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 59,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Lentils Sprouted",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 16.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 45,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 1.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.6,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 100,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Radish",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 14.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 7,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 25,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 1.3,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 6.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 10,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Cucumber",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 2.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 105,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 7,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0.0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 16.4,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 6.0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 23,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0.0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Pepper Sweet Yellow",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 183.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 200,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.9,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 26,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Pepper Sweet Red",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 128,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 3131,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 46,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 1.6,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 4.9,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 5.6,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 51,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Pepper Sweet Green",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 80.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 370,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.5,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 10,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 7.4,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 5.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 341,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Broccoli",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 89.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 623,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.6,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.6,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 63,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 102,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 18.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 1403,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Brussels Sprouts",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 85,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 754,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.7,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 61,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.9,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 177,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 19.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 1590,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Kohlrabi",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 62,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 36,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 16,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 0.1,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 12.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Lettuce Iceberg",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 2.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 502,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 29,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 24.1,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 6.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 277,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Tomatoes Red",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 12.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 833,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.6,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 15,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 7.9,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 6.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 123,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 2573,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Carrot",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 5.9,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 16705,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 1,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.3,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 19,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 13.2,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 8.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 256,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 1,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Cabbage",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 36.6,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 98,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 43,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 76,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 10.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 30,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Spring Onion",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 18.8,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 997,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.5,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 64,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.5,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 207,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 5.7,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 1137,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    },
+    {
+      "name": "Mung Beans",
+      "vitamins": [
+        {
+          "name": "Vitamin C",
+          "amount": 13.2,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin A",
+          "amount": 21,
+          "unit": "IU"
+        },
+        {
+          "name": "B1 - Thiamin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B2 - Riboflavin",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "B3 - Niacin",
+          "amount": 0.7,
+          "unit": "mg"
+        },
+        {
+          "name": "B5 - Pantothenic Acid",
+          "amount": 0.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin B6",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "b7",
+          "amount": 0.00,
+          "unit": "µg"
+        },
+        {
+          "name": "B9 - Folate",
+          "amount": 61,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin B12",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Vitamin D",
+          "amount": 0,
+          "unit": "IU"
+        },
+        {
+          "name": "Vitamin E",
+          "amount": 0.1,
+          "unit": "mg"
+        },
+        {
+          "name": "Vitamin K",
+          "amount": 33,
+          "unit": "µg"
+        },
+        {
+          "name": "Choline",
+          "amount": 14.4,
+          "unit": "mg"
+        },
+        {
+          "name": "Lutein + Zeaxanthin",
+          "amount": 0,
+          "unit": "µg"
+        },
+        {
+          "name": "Lycopene",
+          "amount": 0,
+          "unit": "µg"
+        }
+      ]
+    }
+  ],
+  "ageWithBmis": [
+    {
+      "ageFrom": 18,
+      "ageTo": 24,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 19,
+          "category": "Podvaha"
+        },
+        {
+          "from": 19,
+          "to": 24,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 24,
+          "to": 29,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 29,
+          "to": 39,
+          "category": "Obezita"
+        },
+        {
+          "from": 39,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    },
+    {
+      "ageFrom": 25,
+      "ageTo": 34,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 20,
+          "category": "Podvaha"
+        },
+        {
+          "from": 20,
+          "to": 25,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 25,
+          "to": 30,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 30,
+          "to": 40,
+          "category": "Obezita"
+        },
+        {
+          "from": 40,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    },
+    {
+      "ageFrom": 35,
+      "ageTo": 44,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 21,
+          "category": "Podvaha"
+        },
+        {
+          "from": 21,
+          "to": 26,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 26,
+          "to": 31,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 31,
+          "to": 41,
+          "category": "Obezita"
+        },
+        {
+          "from": 41,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    },
+    {
+      "ageFrom": 45,
+      "ageTo": 54,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 22,
+          "category": "Podvaha"
+        },
+        {
+          "from": 22,
+          "to": 27,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 27,
+          "to": 32,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 32,
+          "to": 42,
+          "category": "Obezita"
+        },
+        {
+          "from": 42,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    },
+    {
+      "ageFrom": 55,
+      "ageTo": 64,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 23,
+          "category": "Podvaha"
+        },
+        {
+          "from": 23,
+          "to": 28,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 28,
+          "to": 33,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 33,
+          "to": 43,
+          "category": "Obezita"
+        },
+        {
+          "from": 43,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    },
+    {
+      "ageFrom": 65,
+      "ageTo": 1000,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 24,
+          "category": "Podvaha"
+        },
+        {
+          "from": 24,
+          "to": 29,
+          "category": "Optimalna vaha"
+        },
+        {
+          "from": 29,
+          "to": 34,
+          "category": "Nadvaha"
+        },
+        {
+          "from": 34,
+          "to": 44,
+          "category": "Obezita"
+        },
+        {
+          "from": 44,
+          "to": 1000,
+          "category": "Morbidna obezita"
+        }
+      ]
+    }
+  ],
+  "woman": {
+    "vitamins": [
+      {
+        "name": "Vitamin C",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 45.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 65.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 75.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 75.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 2000.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 2300.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 2300.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 2300.0,
+        "unit": "IU"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 0.9,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.1,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.1,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 0.9,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.1,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.1,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 12.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 14.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 14.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 14.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 4.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 1.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.2,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.5,
+        "unit": "mg"
+      },
+      {
+        "name": "b7",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 20.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 25.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 30.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 30.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 300.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 1.8,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 800.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 11.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 60.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 75.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 90.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 90.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Choline",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 375.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 400.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 425.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 425.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 6000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 8000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 10000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 10000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 12000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      }
+    ]
+  },
+  "man": {
+    "vitamins": [
+      {
+        "name": "Vitamin C",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 45.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 75.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 90.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin C",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 90.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 2000.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 3000.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 3000.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin A",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 3000.0,
+        "unit": "IU"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 0.9,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.2,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.2,
+        "unit": "mg"
+      },
+      {
+        "name": "B1 - Thiamin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.2,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 0.9,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "B2 - Riboflavin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 12.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 16.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 16.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B3 - Niacin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 16.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 4.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "B5 - Pantothenic Acid",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 5.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 1.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin B6",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 1.7,
+        "unit": "mg"
+      },
+      {
+        "name": "b7",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 20.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 25.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 30.0,
+        "unit": "µg"
+      },
+      {
+        "name": "b7",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 30.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 300.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "B9 - Folate",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 400.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 1.8,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin B12",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 2.4,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 600.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin D",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 800.0,
+        "unit": "IU"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 11.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin E",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 15.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 60.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 75.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 120.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Vitamin K",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 90.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Choline",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 375.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 550.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 550.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Choline",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 550.0,
+        "unit": "mg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 6000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 8000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 10000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lutein + Zeaxanthin",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 10000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 9.0,
+        "to": 13.0,
+        "amount": 12000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 14.0,
+        "to": 18.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 19.0,
+        "to": 50.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      },
+      {
+        "name": "Lycopene",
+        "from": 51.0,
+        "to": 100.0,
+        "amount": 15000.0,
+        "unit": "µg"
+      }
+    ]
+  }
 }
