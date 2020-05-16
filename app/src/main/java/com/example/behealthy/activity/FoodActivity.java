@@ -91,92 +91,89 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
         floatingActionButton.setVisibility(View.VISIBLE);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-                List<Vegetable> vegetables = jsonProperty.getVegetables(); // TODO - vegetable a fruit prerobit na jeden objekt
-                List<Fruit> fruits = jsonProperty.getFruits();
+        floatingActionButton.setOnClickListener(v -> {
+            JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
+            List<Vegetable> vegetables = jsonProperty.getVegetables(); // TODO - vegetable a fruit prerobit na jeden objekt
+            List<Fruit> fruits = jsonProperty.getFruits();
 
-                List<Vitamin> allVitamins = new ArrayList<>();
+            List<Vitamin> allVitamins = new ArrayList<>();
 
-                String foodsJson = sharedPreferenceEntry.getFoodsJson();
-                List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
+            String foodsJson = sharedPreferenceEntry.getFoodsJson();
+            List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
 
-                for (JsonFood jsonFood : jsonFoodList) {
-                    for (Vegetable vegetable : vegetables) {
-                        if (jsonFood.getName().equals(vegetable.getName())) {
+            for (JsonFood jsonFood : jsonFoodList) {
+                for (Vegetable vegetable : vegetables) {
+                    if (jsonFood.getName().equals(vegetable.getName())) {
 
-                            List<Vitamin> vitamins = new ArrayList<>();
-                            for (Vitamin vitamin : vegetable.getVitamins()) {
-                                double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
-                                double calculatedAmount = vitamin.getAmount() * (amount / 100);
+                        List<Vitamin> vitamins = new ArrayList<>();
+                        for (Vitamin vitamin : vegetable.getVitamins()) {
+                            double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
+                            double calculatedAmount = vitamin.getAmount() * (amount / 100);
 
-                                Vitamin vit = new Vitamin();
-                                vit.setName(vitamin.getName());
-                                vit.setUnit(vitamin.getUnit());
-                                vit.setFrom(vitamin.getFrom());
-                                vit.setTo(vitamin.getTo());
-                                vit.setAmount(calculatedAmount);
-                                vitamins.add(vit);
-                            }
-
-                            allVitamins.addAll(vitamins);
+                            Vitamin vit = new Vitamin();
+                            vit.setName(vitamin.getName());
+                            vit.setUnit(vitamin.getUnit());
+                            vit.setFrom(vitamin.getFrom());
+                            vit.setTo(vitamin.getTo());
+                            vit.setAmount(calculatedAmount);
+                            vitamins.add(vit);
                         }
+
+                        allVitamins.addAll(vitamins);
                     }
-                    // TODO 2 start - po prerobeni vid hore mozes zmazat
-                    for (Fruit fruit : fruits) {
-                        if (jsonFood.getName().equals(fruit.getName())) {
-
-                            List<Vitamin> vitamins = new ArrayList<>();
-                            for (Vitamin vitamin : fruit.getVitamins()) {
-                                double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
-                                double calculatedAmount = vitamin.getAmount() * (amount / 100);
-
-                                Vitamin vit = new Vitamin();
-                                vit.setName(vitamin.getName());
-                                vit.setUnit(vitamin.getUnit());
-                                vit.setFrom(vitamin.getFrom());
-                                vit.setTo(vitamin.getTo());
-                                vit.setAmount(calculatedAmount);
-                                vitamins.add(vit);
-                            }
-
-                            allVitamins.addAll(vitamins);
-                        }
-                    }
-                    // TODO 2 end - po prerobeni vid hore mozes zmazat
                 }
+                // TODO 2 start - po prerobeni vid hore mozes zmazat
+                for (Fruit fruit : fruits) {
+                    if (jsonFood.getName().equals(fruit.getName())) {
 
-                List<Vitamin> calculatedVitamins = new ArrayList<>();
-                for (Vitamin ukazkovyVitamin : vegetables.get(0).getVitamins()) {
+                        List<Vitamin> vitamins = new ArrayList<>();
+                        for (Vitamin vitamin : fruit.getVitamins()) {
+                            double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
+                            double calculatedAmount = vitamin.getAmount() * (amount / 100);
 
-                    Vitamin calculatedVitamin = new Vitamin();
-                    calculatedVitamin.setName(ukazkovyVitamin.getName());
-                    calculatedVitamin.setFrom(ukazkovyVitamin.getFrom());
-                    calculatedVitamin.setTo(ukazkovyVitamin.getTo());
-                    calculatedVitamin.setUnit(ukazkovyVitamin.getUnit());
-
-                    double calculatedAmount = 0;
-
-                    for (Vitamin vit : allVitamins) {
-                        if (ukazkovyVitamin.getName().equals(vit.getName())) {
-                            calculatedAmount = calculatedAmount + vit.getAmount();
+                            Vitamin vit = new Vitamin();
+                            vit.setName(vitamin.getName());
+                            vit.setUnit(vitamin.getUnit());
+                            vit.setFrom(vitamin.getFrom());
+                            vit.setTo(vitamin.getTo());
+                            vit.setAmount(calculatedAmount);
+                            vitamins.add(vit);
                         }
+
+                        allVitamins.addAll(vitamins);
                     }
-
-                    String formattedCalculatedAmount = String.format("%.2f", calculatedAmount).replace(",", ".");
-
-                    calculatedVitamin.setAmount(Double.parseDouble(formattedCalculatedAmount));
-                    calculatedVitamins.add(calculatedVitamin);
                 }
-
-                populateInternalStorage(choosedDate, jsonFoodList);
-
-                Intent startIntent = new Intent(FoodActivity.this, FoodFeedActivity.class);
-                startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) calculatedVitamins);
-                startActivity(startIntent);
+                // TODO 2 end - po prerobeni vid hore mozes zmazat
             }
+
+            List<Vitamin> calculatedVitamins = new ArrayList<>();
+            for (Vitamin ukazkovyVitamin : vegetables.get(0).getVitamins()) {
+
+                Vitamin calculatedVitamin = new Vitamin();
+                calculatedVitamin.setName(ukazkovyVitamin.getName());
+                calculatedVitamin.setFrom(ukazkovyVitamin.getFrom());
+                calculatedVitamin.setTo(ukazkovyVitamin.getTo());
+                calculatedVitamin.setUnit(ukazkovyVitamin.getUnit());
+
+                double calculatedAmount = 0;
+
+                for (Vitamin vit : allVitamins) {
+                    if (ukazkovyVitamin.getName().equals(vit.getName())) {
+                        calculatedAmount = calculatedAmount + vit.getAmount();
+                    }
+                }
+
+                String formattedCalculatedAmount = String.format("%.2f", calculatedAmount).replace(",", ".");
+
+                calculatedVitamin.setAmount(Double.parseDouble(formattedCalculatedAmount));
+                calculatedVitamins.add(calculatedVitamin);
+            }
+
+            populateInternalStorage(choosedDate, jsonFoodList);
+
+            Intent startIntent = new Intent(FoodActivity.this, FoodFeedActivity.class);
+            startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) calculatedVitamins);
+            startActivity(startIntent);
         });
 
         FloatingActionButton addVegetablesLayoutButton = findViewById(R.id.addVegetablesLayoutButton);
@@ -184,23 +181,17 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         FloatingActionButton addFruitsLayoutButton = findViewById(R.id.addFruitsLayoutButton);
         addFruitsLayoutButton.setVisibility(View.VISIBLE);
 
-        addVegetablesLayoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addLayout("Vegetables");
-                addVegetablesLayoutButton.setVisibility(View.INVISIBLE);
-                floatingActionButton.setVisibility(View.INVISIBLE);
-                addFruitsLayoutButton.setVisibility(View.INVISIBLE);
-            }
+        addVegetablesLayoutButton.setOnClickListener(v -> {
+            addLayout("Vegetables");
+            addVegetablesLayoutButton.setVisibility(View.INVISIBLE);
+            floatingActionButton.setVisibility(View.INVISIBLE);
+            addFruitsLayoutButton.setVisibility(View.INVISIBLE);
         });
-        addFruitsLayoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addLayout("Fruits");
-                addFruitsLayoutButton.setVisibility(View.INVISIBLE);
-                floatingActionButton.setVisibility(View.INVISIBLE);
-                addVegetablesLayoutButton.setVisibility(View.INVISIBLE);
-            }
+        addFruitsLayoutButton.setOnClickListener(v -> {
+            addLayout("Fruits");
+            addFruitsLayoutButton.setVisibility(View.INVISIBLE);
+            floatingActionButton.setVisibility(View.INVISIBLE);
+            addVegetablesLayoutButton.setVisibility(View.INVISIBLE);
         });
     }
 
@@ -209,19 +200,23 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         FileReader.createFoodsTextFile(getApplicationContext(), FILE_NAME);
         String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
-        if (!loadedDateJsonFoodsString.isEmpty()) {
-            List<DateJsonFood> dateJsonFoods = FileReader.getDateJsonFoodList(loadedDateJsonFoodsString);
-            dateJsonFoods.forEach(dateJsonFood -> {
-                if (dateJsonFood.getDate().equals(choosedDate)) {
-                    List<JsonFood> jsonFoods = dateJsonFood.getJsonFoods();
-                    jsonFoods.forEach(jsonFood -> {
-                        addSavedLayout(jsonFood);
-                        JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoods);
-                        sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
-                        sharedPreferencesHelper.save(sharedPreferenceEntry);
+        if(loadedDateJsonFoodsString != null){
+            if (!loadedDateJsonFoodsString.isEmpty()) {
+                List<DateJsonFood> dateJsonFoods = FileReader.getDateJsonFoodList(loadedDateJsonFoodsString);
+                if(dateJsonFoods != null){
+                    dateJsonFoods.forEach(dateJsonFood -> {
+                        if (dateJsonFood.getDate().equals(choosedDate)) {
+                            List<JsonFood> jsonFoods = dateJsonFood.getJsonFoods();
+                            jsonFoods.forEach(jsonFood -> {
+                                addSavedLayout(jsonFood);
+                                JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoods);
+                                sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
+                                sharedPreferencesHelper.save(sharedPreferenceEntry);
+                            });
+                        }
                     });
                 }
-            });
+            }
         }
     }
 
@@ -242,21 +237,23 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         DateJsonFood newDateJsonFood = new DateJsonFood(choosedDate, jsonFoodList);
 
         List<DateJsonFood> recalculatedDateJsonFoodList = new ArrayList<>();
-        if (loadedDateJsonFoods.isEmpty()) {
-            recalculatedDateJsonFoodList.add(newDateJsonFood);
-        } else {
-            loadedDateJsonFoods.forEach(loadedDateJsonFood -> {
-                if (loadedDateJsonFood.getDate().equals(choosedDate)) {
-                    loadedDateJsonFood.setJsonFoods(jsonFoodList);
-                    recalculatedDateJsonFoodList.add(loadedDateJsonFood);
-                } else {
-                    recalculatedDateJsonFoodList.add(loadedDateJsonFood);
-                }
-            });
-
-            Optional<DateJsonFood> dateJsonFoodOpt = loadedDateJsonFoods.stream().filter(dateJsonFood -> dateJsonFood.getDate().equals(choosedDate)).findAny();
-            if (!dateJsonFoodOpt.isPresent()) {
+        if(loadedDateJsonFoods != null){
+            if (loadedDateJsonFoods.isEmpty()) {
                 recalculatedDateJsonFoodList.add(newDateJsonFood);
+            } else {
+                loadedDateJsonFoods.forEach(loadedDateJsonFood -> {
+                    if (loadedDateJsonFood.getDate().equals(choosedDate)) {
+                        loadedDateJsonFood.setJsonFoods(jsonFoodList);
+                        recalculatedDateJsonFoodList.add(loadedDateJsonFood);
+                    } else {
+                        recalculatedDateJsonFoodList.add(loadedDateJsonFood);
+                    }
+                });
+
+                Optional<DateJsonFood> dateJsonFoodOpt = loadedDateJsonFoods.stream().filter(dateJsonFood -> dateJsonFood.getDate().equals(choosedDate)).findAny();
+                if (!dateJsonFoodOpt.isPresent()) {
+                    recalculatedDateJsonFoodList.add(newDateJsonFood);
+                }
             }
         }
 
@@ -307,7 +304,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     private LinearLayout createSavedLayout(JsonFood jsonFood) {
         Log.i(TAG, "FoodActivity.createSavedLayout() — create saved layout by jsonFood " + jsonFood);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout.setGravity(Gravity.LEFT);
+        linearLayout.setGravity(Gravity.START);
 
         String[] foodsResourceArray = {jsonFood.getName()};
         ArrayAdapter<String> foodsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, foodsResourceArray);
@@ -334,43 +331,40 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, height);
         addImageButton.setLayoutParams(layoutParams2);
 
-        addImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (check(Optional.empty(), Optional.empty())) {
-                    String jsonString = sharedPreferenceEntry.getFoodsJson();
-                    List<JsonFood> jsonFoodList = JsonFood.toList(jsonString);
+        addImageButton.setOnClickListener(v -> {
+            if (check(Optional.empty(), Optional.empty())) {
+                String jsonString = sharedPreferenceEntry.getFoodsJson();
+                List<JsonFood> jsonFoodList = JsonFood.toList(jsonString);
 
-                    JsonFood jsonFood = new JsonFood(name, grams);
-                    jsonFoodList.add(jsonFood);
+                JsonFood jsonFood1 = new JsonFood(name, grams);
+                jsonFoodList.add(jsonFood1);
 
-                    JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoodList);
-                    sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
-                    sharedPreferencesHelper.save(sharedPreferenceEntry);
+                JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoodList);
+                sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
+                sharedPreferencesHelper.save(sharedPreferenceEntry);
 
-                    v.setVisibility(View.INVISIBLE);
+                v.setVisibility(View.INVISIBLE);
 
-                    FloatingActionButton addVegetablesLayoutButton = findViewById(R.id.addVegetablesLayoutButton);
-                    addVegetablesLayoutButton.setVisibility(View.VISIBLE);
+                FloatingActionButton addVegetablesLayoutButton = findViewById(R.id.addVegetablesLayoutButton);
+                addVegetablesLayoutButton.setVisibility(View.VISIBLE);
 
-                    FloatingActionButton addFruitsLayoutButton = findViewById(R.id.addFruitsLayoutButton);
-                    addFruitsLayoutButton.setVisibility(View.VISIBLE);
+                FloatingActionButton addFruitsLayoutButton = findViewById(R.id.addFruitsLayoutButton);
+                addFruitsLayoutButton.setVisibility(View.VISIBLE);
 
-                    FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-                    floatingActionButton.setVisibility(View.VISIBLE);
+                FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+                floatingActionButton.setVisibility(View.VISIBLE);
 
-                    View foodSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
-                    Spinner foodSpinner = (Spinner) foodSpinnerView;
-                    foodSpinner.setEnabled(false);
+                View foodSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+                Spinner foodSpinner = (Spinner) foodSpinnerView;
+                foodSpinner.setEnabled(false);
 
-                    View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
-                    Spinner grmsSpinner = (Spinner) gramsSpinnerView;
-                    grmsSpinner.setEnabled(false);
+                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+                Spinner grmsSpinner = (Spinner) gramsSpinnerView;
+                grmsSpinner.setEnabled(false);
 
-                    View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
-                    ImageButton removeImageButton = (ImageButton) removeImageButtonView;
-                    removeImageButton.setVisibility(View.VISIBLE);
-                }
+                View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
+                ImageButton removeImageButton = (ImageButton) removeImageButtonView;
+                removeImageButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -382,24 +376,23 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
         removeImageButton.setLayoutParams(layoutParams3);
 
-        removeImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String spinnerValue = null;
-                String gramsSpinnerValue = null;
+        removeImageButton.setOnClickListener(v -> {
+            String spinnerValue = null;
+            String gramsSpinnerValue = null;
 
-                View foodSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+            View foodSpinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
 
-                if (foodSpinnerView instanceof Spinner) {
-                    spinnerValue = ((Spinner) foodSpinnerView).getSelectedItem().toString();
-                }
+            if (foodSpinnerView instanceof Spinner) {
+                spinnerValue = ((Spinner) foodSpinnerView).getSelectedItem().toString();
+            }
 
-                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+            View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
 
-                if (gramsSpinnerView instanceof Spinner) {
-                    gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
-                }
+            if (gramsSpinnerView instanceof Spinner) {
+                gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
+            }
 
+            if (spinnerValue != null && gramsSpinnerValue != null) {
                 if (check(Optional.of(spinnerValue), Optional.of(gramsSpinnerValue))) {
                     String foodsJson = sharedPreferenceEntry.getFoodsJson();
                     List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
@@ -440,7 +433,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     private LinearLayout createLayout(String type) {
         Log.i(TAG, "FoodActivity.createLayout() — create layout by type " + type);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout.setGravity(Gravity.LEFT);
+        linearLayout.setGravity(Gravity.START);
 
         ArrayAdapter<String> arrayAdapter = type.equals(VEGETABLES.label) ? createArrayAdapter(R.array.vegetables) : createArrayAdapter(R.array.fruits);
         ViewGroup.LayoutParams spinnerLayoutParams = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -458,43 +451,40 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         addImageButton.setLayoutParams(addImageButtonLayoutParams);
         addImageButton.setBackgroundColor(Color.TRANSPARENT);
 
-        addImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (check(Optional.empty(), Optional.empty())) {
-                    String jsonString = sharedPreferenceEntry.getFoodsJson();
-                    List<JsonFood> jsonFoodList = JsonFood.toList(jsonString);
+        addImageButton.setOnClickListener(v -> {
+            if (check(Optional.empty(), Optional.empty())) {
+                String jsonString = sharedPreferenceEntry.getFoodsJson();
+                List<JsonFood> jsonFoodList = JsonFood.toList(jsonString);
 
-                    JsonFood jsonFood = new JsonFood(name, grams);
-                    jsonFoodList.add(jsonFood);
+                JsonFood jsonFood = new JsonFood(name, grams);
+                jsonFoodList.add(jsonFood);
 
-                    JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoodList);
-                    sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
-                    sharedPreferencesHelper.save(sharedPreferenceEntry);
+                JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoodList);
+                sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
+                sharedPreferencesHelper.save(sharedPreferenceEntry);
 
-                    v.setVisibility(View.INVISIBLE);
+                v.setVisibility(View.INVISIBLE);
 
-                    FloatingActionButton addVegetablesLayoutButtonView = findViewById(R.id.addVegetablesLayoutButton);
-                    addVegetablesLayoutButtonView.setVisibility(View.VISIBLE);
+                FloatingActionButton addVegetablesLayoutButtonView = findViewById(R.id.addVegetablesLayoutButton);
+                addVegetablesLayoutButtonView.setVisibility(View.VISIBLE);
 
-                    FloatingActionButton addFruitsLayoutButtonView = findViewById(R.id.addFruitsLayoutButton);
-                    addFruitsLayoutButtonView.setVisibility(View.VISIBLE);
+                FloatingActionButton addFruitsLayoutButtonView = findViewById(R.id.addFruitsLayoutButton);
+                addFruitsLayoutButtonView.setVisibility(View.VISIBLE);
 
-                    FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-                    floatingActionButton.setVisibility(View.VISIBLE);
+                FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
+                floatingActionButton.setVisibility(View.VISIBLE);
 
-                    View spinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
-                    Spinner vegSpinner = (Spinner) spinnerView;
-                    vegSpinner.setEnabled(false);
+                View spinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+                Spinner vegSpinner = (Spinner) spinnerView;
+                vegSpinner.setEnabled(false);
 
-                    View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
-                    Spinner grmsSpinner = (Spinner) gramsSpinnerView;
-                    grmsSpinner.setEnabled(false);
+                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+                Spinner grmsSpinner = (Spinner) gramsSpinnerView;
+                grmsSpinner.setEnabled(false);
 
-                    View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
-                    ImageButton removeImageButton = (ImageButton) removeImageButtonView;
-                    removeImageButton.setVisibility(View.VISIBLE);
-                }
+                View removeImageButtonView = ((ViewGroup) v.getParent()).getChildAt(3);
+                ImageButton removeImageButton = (ImageButton) removeImageButtonView;
+                removeImageButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -506,24 +496,23 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(100, 100);
         removeImageButton.setLayoutParams(layoutParams3);
 
-        removeImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String spinnerValue = null;
-                String gramsSpinnerValue = null;
+        removeImageButton.setOnClickListener(v -> {
+            String spinnerValue = null;
+            String gramsSpinnerValue = null;
 
-                View spinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
+            View spinnerView = ((ViewGroup) v.getParent()).getChildAt(0);
 
-                if (spinnerView instanceof Spinner) {
-                    spinnerValue = ((Spinner) spinnerView).getSelectedItem().toString();
-                }
+            if (spinnerView instanceof Spinner) {
+                spinnerValue = ((Spinner) spinnerView).getSelectedItem().toString();
+            }
 
-                View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
+            View gramsSpinnerView = ((ViewGroup) v.getParent()).getChildAt(1);
 
-                if (gramsSpinnerView instanceof Spinner) {
-                    gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
-                }
+            if (gramsSpinnerView instanceof Spinner) {
+                gramsSpinnerValue = ((Spinner) gramsSpinnerView).getSelectedItem().toString();
+            }
 
+            if (spinnerValue != null && gramsSpinnerValue != null) {
                 if (check(Optional.of(spinnerValue), Optional.of(gramsSpinnerValue))) {
                     String jsonString = sharedPreferenceEntry.getFoodsJson();
                     List<JsonFood> jsonFoodList = JsonFood.toList(jsonString);
@@ -564,7 +553,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private ArrayAdapter<String> createArrayAdapter(@ArrayRes int resourceListId) {
-        String[] resourceArray = null;
+        String[] resourceArray;
 
         List<String> resources = Arrays.asList(getResources().getStringArray(resourceListId));
 
@@ -599,8 +588,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private boolean check(Optional<String> nameOpt, Optional<String> gramsOpt) {
         Log.i(TAG, "FoodActivity.check() — check by nameOpt, gramsOpt " + nameOpt + ", " + gramsOpt);
-        String vgtblNm = null;
-        String grms = null;
+        String vgtblNm;
+        String grms;
 
         if (nameOpt.isPresent() && gramsOpt.isPresent()) {
             vgtblNm = nameOpt.get();

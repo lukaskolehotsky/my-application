@@ -776,8 +776,14 @@
 
     <string-array name="fruits">
         <item>Foods</item>
+        <item>Pineapple</item>
+        <item>Raspberries</item>
+        <item>Strawberries</item>
+        <item>Orange</item>
+        <item>Banana</item>
+        <item>Litchis</item>
         <item>Kiwi</item>
-        <item>Lichi</item>
+        <item>Apple</item>
     </string-array>
 
 </resources>
