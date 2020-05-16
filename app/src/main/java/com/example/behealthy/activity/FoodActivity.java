@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,13 +40,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,12 +48,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.example.behealthy.constants.Constants.DAY;
+import static com.example.behealthy.constants.Constants.FOODS;
 import static com.example.behealthy.constants.Constants.FOODS_JSON;
+import static com.example.behealthy.constants.Constants.GRAMS;
+import static com.example.behealthy.constants.Constants.MONTH;
+import static com.example.behealthy.constants.Constants.VEGETABLES;
 import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
+import static com.example.behealthy.constants.Constants.YEAR;
 
 public class FoodActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private MenuHelper menuHelper;
+    private static final String TAG = "FoodActivity";
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
@@ -71,6 +71,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "FoodActivity.onCreate() — on create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
 //delete();
@@ -78,13 +79,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
         Intent intent = getIntent();
-        String year = intent.getStringExtra("YEAR");
-        String month = intent.getStringExtra("MONTH");
-        String day = intent.getStringExtra("DAY");
-        LocalDate choosedDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        int year= intent.getIntExtra(YEAR.label, 0);
+        int month= intent.getIntExtra(MONTH.label, 0);
+        int day= intent.getIntExtra(DAY.label, 0);
+        LocalDate choosedDate = LocalDate.of(year, month, day);
 
         TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText(day + "." + month + "." + year);
+        titleTextView.setText(choosedDate.toString());
 
         populateLayouts(choosedDate);
 
@@ -204,33 +205,30 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void populateLayouts(LocalDate choosedDate) {
-        createFoodsTextFile();
+        Log.i(TAG, "FoodActivity.populateLayouts() — populate layouts by choosedDate " + choosedDate);
+        FileReader.createFoodsTextFile(getApplicationContext(), FILE_NAME);
+        String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
-        String loadedDateJsonFoods = load();
-        List<DateJsonFood> dateJsonFoodList = new ArrayList<>();
-        if (!loadedDateJsonFoods.isEmpty()) {
-            dateJsonFoodList = FileReader.getDateJsonFoodList(loadedDateJsonFoods);
-        }
-
-        for (DateJsonFood dateJsonFood : dateJsonFoodList) {
-            if (dateJsonFood.getDate().equals(choosedDate)) {
-
-                List<JsonFood> jsonFoods = dateJsonFood.getJsonFoods();
-                for (JsonFood jsonFood : jsonFoods) {
-                    addSavedLayout(jsonFood);
+        if (!loadedDateJsonFoodsString.isEmpty()) {
+            List<DateJsonFood> dateJsonFoods = FileReader.getDateJsonFoodList(loadedDateJsonFoodsString);
+            dateJsonFoods.forEach(dateJsonFood -> {
+                if (dateJsonFood.getDate().equals(choosedDate)) {
+                    List<JsonFood> jsonFoods = dateJsonFood.getJsonFoods();
+                    jsonFoods.forEach(jsonFood -> {
+                        addSavedLayout(jsonFood);
+                        JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoods);
+                        sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
+                        sharedPreferencesHelper.save(sharedPreferenceEntry);
+                    });
                 }
-
-                JSONArray jsonFoodListJsonArray = JsonFood.toJson(jsonFoods);
-                sharedPreferencesHelper.populateSharedPreferenceEntry(sharedPreferenceEntry, FOODS_JSON.label, jsonFoodListJsonArray.toString());
-                sharedPreferencesHelper.save(sharedPreferenceEntry);
-            }
+            });
         }
-
     }
 
     private void populateInternalStorage(LocalDate choosedDate, List<JsonFood> jsonFoodList) {
-        createFoodsTextFile();
-        String loadedDateJsonFoodsString = load();
+        Log.i(TAG, "FoodActivity.populateInternalStorage() — populate internal storage by choosedDate, jsonFoodList " + choosedDate + ", " + jsonFoodList);
+        FileReader.createFoodsTextFile(getApplicationContext(), FILE_NAME);
+        String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
         List<DateJsonFood> loadedDateJsonFoods = new ArrayList<>();
         if (loadedDateJsonFoodsString != null) {
@@ -239,15 +237,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-        delete();
+        FileReader.delete(getApplicationContext(), FILE_NAME);
 
-        DateJsonFood newDay = new DateJsonFood();
-        newDay.setDate(choosedDate);
-        newDay.setJsonFoods(jsonFoodList);
+        DateJsonFood newDateJsonFood = new DateJsonFood(choosedDate, jsonFoodList);
 
         List<DateJsonFood> recalculatedDateJsonFoodList = new ArrayList<>();
         if (loadedDateJsonFoods.isEmpty()) {
-            recalculatedDateJsonFoodList.add(newDay);
+            recalculatedDateJsonFoodList.add(newDateJsonFood);
         } else {
             loadedDateJsonFoods.forEach(loadedDateJsonFood -> {
                 if (loadedDateJsonFood.getDate().equals(choosedDate)) {
@@ -260,12 +256,12 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
             Optional<DateJsonFood> dateJsonFoodOpt = loadedDateJsonFoods.stream().filter(dateJsonFood -> dateJsonFood.getDate().equals(choosedDate)).findAny();
             if (!dateJsonFoodOpt.isPresent()) {
-                recalculatedDateJsonFoodList.add(newDay);
+                recalculatedDateJsonFoodList.add(newDateJsonFood);
             }
         }
 
-        save(DateJsonFood.toJson(recalculatedDateJsonFoodList).toString());
-        load();  // TODO - mozes vymazat
+        FileReader.save(getApplicationContext(), DateJsonFood.toJson(recalculatedDateJsonFoodList).toString(), FILE_NAME);
+//        load();
     }
 
     @Override
@@ -273,11 +269,11 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         String value = parent.getItemAtPosition(position).toString();
         String firstItemName = parent.getAdapter().getItem(0).toString();
 
-        if (firstItemName.equals("Foods")) {
+        if (firstItemName.equals(FOODS.label)) {
             name = value;
         }
 
-        if (firstItemName.equals("Grams")) {
+        if (firstItemName.equals(GRAMS.label)) {
             grams = value;
         }
     }
@@ -295,7 +291,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        menuHelper = new MenuHelper(getApplicationContext());
+        MenuHelper menuHelper = new MenuHelper(getApplicationContext());
         Intent startIntent = menuHelper.chooseIntent(item.getItemId());
         startActivity(startIntent);
 
@@ -303,11 +299,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void addSavedLayout(JsonFood jsonFood) {
+        Log.i(TAG, "FoodActivity.addSavedLayout() — add save layout by jsonFood " + jsonFood);
         LinearLayout linearLayout = findViewById(R.id.rootLayout);
         linearLayout.addView(createSavedLayout(jsonFood));
     }
 
     private LinearLayout createSavedLayout(JsonFood jsonFood) {
+        Log.i(TAG, "FoodActivity.createSavedLayout() — create saved layout by jsonFood " + jsonFood);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setGravity(Gravity.LEFT);
 
@@ -434,37 +432,31 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void addLayout(String type) {
+        Log.i(TAG, "FoodActivity.addLayout() — add layout by type " + type);
         LinearLayout linearLayout = findViewById(R.id.rootLayout);
         linearLayout.addView(createLayout(type));
     }
 
     private LinearLayout createLayout(String type) {
+        Log.i(TAG, "FoodActivity.createLayout() — create layout by type " + type);
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
         linearLayout.setGravity(Gravity.LEFT);
 
-        ArrayAdapter<String> arrayAdapter;
-        if(type.equals("Vegetables")){
-            arrayAdapter = createArrayAdapter(R.array.vegetables);
-        } else {
-            arrayAdapter = createArrayAdapter(R.array.fruits);
-        }
-        ArrayAdapter<String> gramsArrayAdapter = createArrayAdapter(R.array.grams);
+        ArrayAdapter<String> arrayAdapter = type.equals(VEGETABLES.label) ? createArrayAdapter(R.array.vegetables) : createArrayAdapter(R.array.fruits);
+        ViewGroup.LayoutParams spinnerLayoutParams = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
 
         Spinner spinner = createSpinner(arrayAdapter);
+        spinner.setLayoutParams(spinnerLayoutParams);
         spinner.setDropDownWidth(450);
 
-        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
-        spinner.setLayoutParams(lp);
+        ArrayAdapter<String> gramsArrayAdapter = createArrayAdapter(R.array.grams);
         Spinner gramsSpinner = createSpinner(gramsArrayAdapter);
 
+        ViewGroup.LayoutParams addImageButtonLayoutParams = new ViewGroup.LayoutParams(100, 100);
         ImageButton addImageButton = new ImageButton(this);
         addImageButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_add_circle_black_24dp));
+        addImageButton.setLayoutParams(addImageButtonLayoutParams);
         addImageButton.setBackgroundColor(Color.TRANSPARENT);
-
-        int width = 100;
-        int height = 100;
-        ViewGroup.LayoutParams layoutParams2 = new ViewGroup.LayoutParams(width, height);
-        addImageButton.setLayoutParams(layoutParams2);
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -511,7 +503,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         removeImageButton.setBackgroundColor(Color.TRANSPARENT);
         removeImageButton.setVisibility(View.INVISIBLE);
 
-        ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(width, height);
+        ViewGroup.LayoutParams layoutParams3 = new ViewGroup.LayoutParams(100, 100);
         removeImageButton.setLayoutParams(layoutParams3);
 
         removeImageButton.setOnClickListener(new View.OnClickListener() {
@@ -576,13 +568,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
         List<String> resources = Arrays.asList(getResources().getStringArray(resourceListId));
 
-        if (resources.contains("Vegetables")) {
+        if (resources.contains(FOODS.label)) {
             List<String> sortedResources = resources.stream().sorted().collect(Collectors.toList());
 
             boolean remove = false;
             int index = 0;
             for (int i = 0; i < sortedResources.size(); i++) {
-                if (sortedResources.get(i).equals("Vegetables")) {
+                if (sortedResources.get(i).equals(FOODS.label)) {
                     index = i;
                     remove = true;
                 }
@@ -591,7 +583,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             if (remove) {
                 sortedResources.remove(index);
                 Collections.reverse(sortedResources);
-                sortedResources.add("Vegetables");
+                sortedResources.add(FOODS.label);
                 Collections.reverse(sortedResources);
             }
 
@@ -606,6 +598,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private boolean check(Optional<String> nameOpt, Optional<String> gramsOpt) {
+        Log.i(TAG, "FoodActivity.check() — check by nameOpt, gramsOpt " + nameOpt + ", " + gramsOpt);
         String vgtblNm = null;
         String grms = null;
 
@@ -617,103 +610,18 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             grms = grams;
         }
 
-        if (vgtblNm.equals("Vegetables") && grms.equals("Grams")) {
-            Toast.makeText(getApplicationContext(), "Choose vegetable and grams", Toast.LENGTH_SHORT).show();
+        if (vgtblNm.equals(FOODS.label) && grms.equals(GRAMS.label)) {
+            Toast.makeText(getApplicationContext(), "Choose food and grams", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (vgtblNm.equals("Vegetables")) {
-            Toast.makeText(getApplicationContext(), "Choose vegetable", Toast.LENGTH_SHORT).show();
+        } else if (vgtblNm.equals(FOODS.label)) {
+            Toast.makeText(getApplicationContext(), "Choose food", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (grms.equals("Grams")) {
+        } else if (grms.equals(GRAMS.label)) {
             Toast.makeText(getApplicationContext(), "Choose grams", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;
         }
-    }
-
-    public void delete() {
-        File file = new File(getFilesDir(), FILE_NAME);
-        if (file.exists()) {
-            deleteFile(FILE_NAME);
-            System.out.println();
-            System.out.println("DELETUJEM" + FILE_NAME);
-            System.out.println();
-        }
-    }
-
-    public void createFoodsTextFile() {
-        File file = new File(getFilesDir(), FILE_NAME);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                System.out.println();
-                System.out.println("CREATUJEM" + FILE_NAME);
-                System.out.println();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void save(String text) {
-        FileOutputStream fos = null;
-
-        try {
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text.getBytes());
-
-            System.out.println();
-            System.out.println("SAVEUJEM" + text);
-            System.out.println();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-    public String load() {
-        FileInputStream fis = null;
-
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-            System.out.println();
-            System.out.println("LOADUJEM" + sb.toString());
-            System.out.println();
-
-            return sb.toString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return null;
     }
 
 }

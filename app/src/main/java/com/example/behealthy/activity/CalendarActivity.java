@@ -1,23 +1,22 @@
 package com.example.behealthy.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CalendarView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
+import com.example.behealthy.utilities.MenuHelper;
 
-import java.util.ArrayList;
+import static com.example.behealthy.constants.Constants.YEAR;
+import static com.example.behealthy.constants.Constants.MONTH;
+import static com.example.behealthy.constants.Constants.DAY;
 
-import static com.example.behealthy.constants.Constants.AGE;
-import static com.example.behealthy.constants.Constants.GENDER;
-import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
-
-public class CalendarActivity extends Activity {
+public class CalendarActivity extends AppCompatActivity {
     CalendarView calendar;
 
     @Override
@@ -59,12 +58,27 @@ public class CalendarActivity extends Activity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
                 Intent startIntent = new Intent(getApplicationContext(), FoodActivity.class);
-                startIntent.putExtra("YEAR", String.valueOf(year));
-                startIntent.putExtra("MONTH", String.valueOf(month+1));
-                startIntent.putExtra("DAY", String.valueOf(day));
+                startIntent.putExtra(YEAR.label, year);
+                startIntent.putExtra(MONTH.label, month + 1);
+                startIntent.putExtra(DAY.label, day);
                 startActivity(startIntent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        MenuHelper menuHelper = new MenuHelper(getApplicationContext());
+        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
+        startActivity(startIntent);
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

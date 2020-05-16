@@ -12,9 +12,15 @@ public enum Constants {
     SECOND_COLUMN("Second"),
     FIRST_COLUMN_NAME_VEGETABLE("Vegetable"),
     FOODS_JSON("FoodsJson"),
+    FOODS("Foods"),
+    GRAMS("Grams"),
+    VEGETABLES("Vegetables"),
     VITAMIN_LIST("VITAMIN_LIST"),
     VITAMIN_NAME("VITAMIN_NAME"),
-    VEGETABLE_NAME("VEGETABLE_NAME")
+    VEGETABLE_NAME("VEGETABLE_NAME"),
+    YEAR("YEAR"),
+    MONTH("MONTH"),
+    DAY("DAY")
     ;
 
     public final String label;

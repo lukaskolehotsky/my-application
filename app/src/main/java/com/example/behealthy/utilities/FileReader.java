@@ -1,6 +1,7 @@
 package com.example.behealthy.utilities;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.AgeWithBmis;
@@ -16,6 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileReader {
+
+    private static final String TAG = "FileReader";
 
     public FileReader(Context context){
         mContext = context;
@@ -316,9 +323,7 @@ public class FileReader {
                     jsonFoodList.add(jsonFood);
                 }
 
-                DateJsonFood dateJsonFood = new DateJsonFood();
-                dateJsonFood.setDate(LocalDate.parse(date));
-                dateJsonFood.setJsonFoods(jsonFoodList);
+                DateJsonFood dateJsonFood = new DateJsonFood(LocalDate.parse(date), jsonFoodList);
 
                 dateJsonFoodList.add(dateJsonFood);
             }
@@ -329,4 +334,79 @@ public class FileReader {
         return null;
     }
 
+
+    public static void delete(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
+        if (file.exists()) {
+            context.deleteFile(fileName);
+            Log.i(TAG, "FileReader.delete() — delete file " + fileName);
+        }
+    }
+
+    public static void createFoodsTextFile(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                Log.i(TAG, "FileReader.createFoodsTextFile() — create file " + fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void save(Context context, String text, String fileName) {
+        FileOutputStream fos = null;
+
+        try {
+            fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
+            fos.write(text.getBytes());
+            Log.i(TAG, "FileReader.save() — save file " + fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public static String load(Context context, String fileName) {
+        FileInputStream fis = null;
+
+        try {
+            fis = context.openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+            Log.i(TAG, "FileReader.load() — load file " + fileName);
+            return sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
 }

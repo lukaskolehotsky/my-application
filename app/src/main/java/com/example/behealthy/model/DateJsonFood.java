@@ -13,6 +13,11 @@ public class DateJsonFood {
 
     private List<JsonFood> jsonFoods;
 
+    public DateJsonFood(LocalDate date, List<JsonFood> jsonFoods) {
+        this.date = date;
+        this.jsonFoods = jsonFoods;
+    }
+
     public LocalDate getDate() {
         return date;
     }
