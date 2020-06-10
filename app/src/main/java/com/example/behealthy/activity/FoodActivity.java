@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +54,6 @@ import static com.example.behealthy.constants.Constants.FOODS_JSON;
 import static com.example.behealthy.constants.Constants.GRAMS;
 import static com.example.behealthy.constants.Constants.MONTH;
 import static com.example.behealthy.constants.Constants.VEGETABLES;
-import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
 import static com.example.behealthy.constants.Constants.YEAR;
 
 public class FoodActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -68,6 +67,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     private String grams = "Grams";
 
     private static final String FILE_NAME = "foods.txt";
+    private static final String FILE_NAME_R_D_D = "recommended_daily_dose.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,95 +85,24 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         LocalDate choosedDate = LocalDate.of(year, month, day);
 
         TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText(choosedDate.toString());
+        titleTextView.setText(choosedDate.getDayOfMonth() + "." + choosedDate.getMonthValue() + "." + choosedDate.getYear());
 
         populateLayouts(choosedDate);
 
+        LinearLayout rootLayout2 = findViewById(R.id.rootLayout2);
+        populateVitamins(rootLayout2);
+
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-        floatingActionButton.setVisibility(View.VISIBLE);
-        floatingActionButton.setOnClickListener(v -> {
-            JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-            List<Vegetable> vegetables = jsonProperty.getVegetables(); // TODO - vegetable a fruit prerobit na jeden objekt
-            List<Fruit> fruits = jsonProperty.getFruits();
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String foodsJson = sharedPreferenceEntry.getFoodsJson();
+                List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
+                populateInternalStorage(choosedDate, jsonFoodList);
 
-            List<Vitamin> allVitamins = new ArrayList<>();
-
-            String foodsJson = sharedPreferenceEntry.getFoodsJson();
-            List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
-
-            for (JsonFood jsonFood : jsonFoodList) {
-                for (Vegetable vegetable : vegetables) {
-                    if (jsonFood.getName().equals(vegetable.getName())) {
-
-                        List<Vitamin> vitamins = new ArrayList<>();
-                        for (Vitamin vitamin : vegetable.getVitamins()) {
-                            double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
-                            double calculatedAmount = vitamin.getAmount() * (amount / 100);
-
-                            Vitamin vit = new Vitamin();
-                            vit.setName(vitamin.getName());
-                            vit.setUnit(vitamin.getUnit());
-                            vit.setFrom(vitamin.getFrom());
-                            vit.setTo(vitamin.getTo());
-                            vit.setAmount(calculatedAmount);
-                            vitamins.add(vit);
-                        }
-
-                        allVitamins.addAll(vitamins);
-                    }
-                }
-                // TODO 2 start - po prerobeni vid hore mozes zmazat
-                for (Fruit fruit : fruits) {
-                    if (jsonFood.getName().equals(fruit.getName())) {
-
-                        List<Vitamin> vitamins = new ArrayList<>();
-                        for (Vitamin vitamin : fruit.getVitamins()) {
-                            double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
-                            double calculatedAmount = vitamin.getAmount() * (amount / 100);
-
-                            Vitamin vit = new Vitamin();
-                            vit.setName(vitamin.getName());
-                            vit.setUnit(vitamin.getUnit());
-                            vit.setFrom(vitamin.getFrom());
-                            vit.setTo(vitamin.getTo());
-                            vit.setAmount(calculatedAmount);
-                            vitamins.add(vit);
-                        }
-
-                        allVitamins.addAll(vitamins);
-                    }
-                }
-                // TODO 2 end - po prerobeni vid hore mozes zmazat
+                rootLayout2.removeAllViewsInLayout();
+                populateVitamins(rootLayout2);
             }
-
-            List<Vitamin> calculatedVitamins = new ArrayList<>();
-            for (Vitamin ukazkovyVitamin : vegetables.get(0).getVitamins()) {
-
-                Vitamin calculatedVitamin = new Vitamin();
-                calculatedVitamin.setName(ukazkovyVitamin.getName());
-                calculatedVitamin.setFrom(ukazkovyVitamin.getFrom());
-                calculatedVitamin.setTo(ukazkovyVitamin.getTo());
-                calculatedVitamin.setUnit(ukazkovyVitamin.getUnit());
-
-                double calculatedAmount = 0;
-
-                for (Vitamin vit : allVitamins) {
-                    if (ukazkovyVitamin.getName().equals(vit.getName())) {
-                        calculatedAmount = calculatedAmount + vit.getAmount();
-                    }
-                }
-
-                String formattedCalculatedAmount = String.format("%.2f", calculatedAmount).replace(",", ".");
-
-                calculatedVitamin.setAmount(Double.parseDouble(formattedCalculatedAmount));
-                calculatedVitamins.add(calculatedVitamin);
-            }
-
-            populateInternalStorage(choosedDate, jsonFoodList);
-
-            Intent startIntent = new Intent(FoodActivity.this, FoodFeedActivity.class);
-            startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) calculatedVitamins);
-            startActivity(startIntent);
         });
 
         FloatingActionButton addVegetablesLayoutButton = findViewById(R.id.addVegetablesLayoutButton);
@@ -195,9 +124,154 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
+    private void populateVitamins(LinearLayout rootLayout2){
+        TextView vitaminTitleTextView = new TextView(getApplicationContext());
+        vitaminTitleTextView.setGravity(Gravity.CENTER);
+        vitaminTitleTextView.setText("Vitamins");
+        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+        vitaminTitleTextView.setTextColor(Color.BLACK);
+        vitaminTitleTextView.setPadding(16, 0, 16, 16);
+
+        rootLayout2.addView(vitaminTitleTextView);
+
+        String recommendedVitaminsString = FileReader.load(getApplicationContext(), FILE_NAME_R_D_D);
+        System.out.println("CECKY - " + recommendedVitaminsString);
+        final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
+
+        List<Vitamin> calculatedVitamins = calculateVitamins();
+        calculatedVitamins.forEach(calculatedVitamin -> {
+            LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setGravity(Gravity.START);
+            linearLayout.setPadding(16, 5, 16, 5);
+
+            TextView vitaminNameTextView = new TextView(getApplicationContext());
+            TextView amountUnitTextView = new TextView(getApplicationContext());
+
+            vitaminNameTextView.setWidth(500);
+            amountUnitTextView.setWidth(280);
+
+            vitaminNameTextView.setTextColor(Color.BLACK);
+            amountUnitTextView.setTextColor(Color.BLACK);
+
+            vitaminNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            amountUnitTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+
+            vitaminNameTextView.setText(calculatedVitamin.getName());
+            amountUnitTextView.setText(calculatedVitamin.getAmount() + "" + calculatedVitamin.getUnit());
+
+            linearLayout.addView(vitaminNameTextView);
+            linearLayout.addView(amountUnitTextView);
+
+            if(recommendedVitaminsString != null){
+
+                TextView percentageTextView = new TextView(getApplicationContext());
+                percentageTextView.setWidth(200);
+                percentageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+
+                final double[] percentage = new double[1];
+
+                recommendedVitamins.forEach(rv -> {
+                    if(rv.getName().equals(calculatedVitamin.getName())){
+                        percentage[0] = calculatedVitamin.getAmount() * 100 / rv.getAmount();
+                        percentageTextView.setText(String.format("%.1f", percentage[0]) + "%");
+                    }
+                });
+
+                if(percentage[0] >= 100){
+                    percentageTextView.setTextColor(Color.GREEN);
+                } else {
+                    percentageTextView.setTextColor(Color.RED);
+                }
+
+                linearLayout.addView(percentageTextView);
+            }
+
+            rootLayout2.addView(linearLayout);
+        });
+    }
+
+    private List<Vitamin> calculateVitamins(){
+        JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
+        List<Vegetable> vegetables = jsonProperty.getVegetables();
+        List<Fruit> fruits = jsonProperty.getFruits();
+
+        List<Vitamin> allVitamins = new ArrayList<>();
+
+        String foodsJson = sharedPreferenceEntry.getFoodsJson();
+        List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
+
+        for (JsonFood jsonFood : jsonFoodList) {
+            for (Vegetable vegetable : vegetables) {
+                if (jsonFood.getName().equals(vegetable.getName())) {
+
+                    List<Vitamin> vitamins = new ArrayList<>();
+                    for (Vitamin vitamin : vegetable.getVitamins()) {
+                        double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
+                        double calculatedAmount = vitamin.getAmount() * (amount / 100);
+
+                        Vitamin vit = new Vitamin();
+                        vit.setName(vitamin.getName());
+                        vit.setUnit(vitamin.getUnit());
+                        vit.setFrom(vitamin.getFrom());
+                        vit.setTo(vitamin.getTo());
+                        vit.setAmount(calculatedAmount);
+                        vitamins.add(vit);
+                    }
+
+                    allVitamins.addAll(vitamins);
+                }
+            }
+            for (Fruit fruit : fruits) {
+                if (jsonFood.getName().equals(fruit.getName())) {
+
+                    List<Vitamin> vitamins = new ArrayList<>();
+                    for (Vitamin vitamin : fruit.getVitamins()) {
+                        double amount = Double.parseDouble(jsonFood.getGrams().replace("g", ""));
+                        double calculatedAmount = vitamin.getAmount() * (amount / 100);
+
+                        Vitamin vit = new Vitamin();
+                        vit.setName(vitamin.getName());
+                        vit.setUnit(vitamin.getUnit());
+                        vit.setFrom(vitamin.getFrom());
+                        vit.setTo(vitamin.getTo());
+                        vit.setAmount(calculatedAmount);
+                        vitamins.add(vit);
+                    }
+
+                    allVitamins.addAll(vitamins);
+                }
+            }
+        }
+
+        List<Vitamin> calculatedVitamins = new ArrayList<>();
+        for (Vitamin ukazkovyVitamin : vegetables.get(0).getVitamins()) {
+
+            Vitamin calculatedVitamin = new Vitamin();
+            calculatedVitamin.setName(ukazkovyVitamin.getName());
+            calculatedVitamin.setFrom(ukazkovyVitamin.getFrom());
+            calculatedVitamin.setTo(ukazkovyVitamin.getTo());
+            calculatedVitamin.setUnit(ukazkovyVitamin.getUnit());
+
+            double calculatedAmount = 0;
+
+            for (Vitamin vit : allVitamins) {
+                if (ukazkovyVitamin.getName().equals(vit.getName())) {
+                    calculatedAmount = calculatedAmount + vit.getAmount();
+                }
+            }
+
+            String formattedCalculatedAmount = String.format("%.2f", calculatedAmount).replace(",", ".");
+
+            calculatedVitamin.setAmount(Double.parseDouble(formattedCalculatedAmount));
+            calculatedVitamins.add(calculatedVitamin);
+        }
+
+        return calculatedVitamins;
+    }
+
     private void populateLayouts(LocalDate choosedDate) {
         Log.i(TAG, "FoodActivity.populateLayouts() — populate layouts by choosedDate " + choosedDate);
-        FileReader.createFoodsTextFile(getApplicationContext(), FILE_NAME);
+        FileReader.createTextFile(getApplicationContext(), FILE_NAME);
         String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
         if(loadedDateJsonFoodsString != null){
@@ -222,7 +296,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void populateInternalStorage(LocalDate choosedDate, List<JsonFood> jsonFoodList) {
         Log.i(TAG, "FoodActivity.populateInternalStorage() — populate internal storage by choosedDate, jsonFoodList " + choosedDate + ", " + jsonFoodList);
-        FileReader.createFoodsTextFile(getApplicationContext(), FILE_NAME);
+        FileReader.createTextFile(getApplicationContext(), FILE_NAME);
         String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
         List<DateJsonFood> loadedDateJsonFoods = new ArrayList<>();

@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +36,8 @@ import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.AGE;
 
 public class DailyFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private static final String FILE_NAME = "recommended_daily_dose.txt";
 
     private MenuHelper menuHelper;
 
@@ -75,6 +76,9 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
                             vitaminList.add(vitamin);
                         }
                     }
+
+                    FileReader.createTextFile(getApplicationContext(), FILE_NAME);
+                    FileReader.save(getApplicationContext(), Vitamin.toJson(vitaminList).toString(), FILE_NAME);
 
                     Intent startIntent = new Intent(DailyFeedActivity.this, VitaminListActivity.class);
                     startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);

@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".activity.CalendarActivity"></activity>
+        <activity
+            android:name=".activity.CalendarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.FoodFeedActivity"
             android:screenOrientation="portrait"

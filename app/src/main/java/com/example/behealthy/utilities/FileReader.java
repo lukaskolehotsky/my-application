@@ -343,12 +343,12 @@ public class FileReader {
         }
     }
 
-    public static void createFoodsTextFile(Context context, String fileName) {
+    public static void createTextFile(Context context, String fileName) {
         File file = new File(context.getFilesDir(), fileName);
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Log.i(TAG, "FileReader.createFoodsTextFile() — create file " + fileName);
+                Log.i(TAG, "FileReader.createTextFile() — create file " + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }

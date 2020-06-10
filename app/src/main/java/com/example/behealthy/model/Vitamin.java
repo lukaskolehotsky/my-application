@@ -3,6 +3,13 @@ package com.example.behealthy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vitamin implements Parcelable {
 
 	private String name;
@@ -104,5 +111,48 @@ public class Vitamin implements Parcelable {
 		dest.writeDouble(to);
 		dest.writeDouble(amount);
 		dest.writeString(unit);
+	}
+
+	public static JSONArray toJson(List<Vitamin> list){
+		JSONArray jsonArray = new JSONArray();
+
+		for(Vitamin v: list){
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject.put("name", v.getName());
+				jsonObject.put("from", v.getFrom());
+				jsonObject.put("to", v.getTo());
+				jsonObject.put("amount", v.getAmount());
+				jsonObject.put("unit", v.getUnit());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
+	public static List<Vitamin> toList(String jsonString){
+		List<Vitamin> vitaminList = new ArrayList<>();
+		if(jsonString != null){
+			try {
+				JSONArray jsonArray = new JSONArray(jsonString);
+				for(int i=0; i<jsonArray.length(); i++){
+					JSONObject jsonObject = jsonArray.getJSONObject(i);
+					Vitamin v = new Vitamin();
+					v.setName(jsonObject.getString("name"));
+					v.setFrom(Double.parseDouble(jsonObject.getString("from")));
+					v.setTo(Double.parseDouble(jsonObject.getString("to")));
+					v.setAmount(Double.parseDouble(jsonObject.getString("amount")));
+					v.setUnit(jsonObject.getString("unit"));
+					vitaminList.add(v);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return vitaminList;
 	}
 }
