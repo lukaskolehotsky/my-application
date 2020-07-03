@@ -1,35 +1,34 @@
 package com.example.behealthy.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
-import com.example.behealthy.adapter.ListViewAdapter;
 import com.example.behealthy.config.JsonProperty;
+import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.utilities.FileReader;
 import com.example.behealthy.utilities.MenuHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.example.behealthy.constants.Constants.FIRST_COLUMN;
-import static com.example.behealthy.constants.Constants.SECOND_COLUMN;
-import static com.example.behealthy.constants.Constants.FIRST_COLUMN_NAME_VEGETABLE;
-import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 import static com.example.behealthy.constants.Constants.VEGETABLE_NAME;
+import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
 public class VitaminsActivity extends AppCompatActivity {
 
@@ -43,45 +42,77 @@ public class VitaminsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String vitaminName = intent.getStringExtra(VITAMIN_NAME.label);
 
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText(vitaminName + " values contained in 100 grams of vegetables");
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-        ArrayList<HashMap<String, String>> hashMapArrayList = new ArrayList<>();
-
         JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
 
-        List<Vegetable> vl = jsonProperty.getVegetables();
+        List<Vegetable> vegetables = jsonProperty.getVegetables();
 
-        for(Vegetable vegetable: vl){
+        HashMap<String, String> hm = new HashMap<>();
+        for(Vegetable vegetable: vegetables){
             for(Vitamin vitamin: vegetable.getVitamins()){
                 if(vitamin.getName().equals(vitaminName)){
-                    HashMap<String, String> vegetableHashMap = new HashMap<>();
-                    vegetableHashMap.put(FIRST_COLUMN.label, vegetable.getName());
-                    vegetableHashMap.put(SECOND_COLUMN.label, vitamin.getAmount() + " " + vitamin.getUnit());
-                    hashMapArrayList.add(vegetableHashMap);
+                    hm.put(vegetable.getName(),vitamin.getAmount() + " " + vitamin.getUnit());
                 }
             }
         }
 
-        ListViewAdapter listViewAdapter = new ListViewAdapter(hashMapArrayList, this);
-
-        listView.setAdapter(listViewAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HashMap<String, String> hashMap = (HashMap<String, String>) parent.getAdapter().getItem(position);
-
-                if(!hashMap.get(FIRST_COLUMN.label).equals(FIRST_COLUMN_NAME_VEGETABLE.label)){
-                    Intent startIntent = new Intent(getApplicationContext(), VegetableDetailActivity.class);
-                    startIntent.putExtra(VEGETABLE_NAME.label, hashMap.get(FIRST_COLUMN.label));
-                    startActivity(startIntent);
-                } else {
-                    Toast.makeText(getBaseContext(), "Please choose vegetable", Toast.LENGTH_SHORT).show();
+        // TODO - dorobit refactor
+        List<Fruit> fruits = jsonProperty.getFruits();
+        for(Fruit fruit: fruits){
+            for(Vitamin vitamin: fruit.getVitamins()){
+                if(vitamin.getName().equals(vitaminName)){
+                    hm.put(fruit.getName(),vitamin.getAmount() + " " + vitamin.getUnit());
                 }
             }
-        });
+        }
+
+        LinearLayout rootLayout2 = findViewById(R.id.rootLayout2);
+        populateVitamins(rootLayout2, vitaminName, hm);
+    }
+
+    private void populateVitamins(LinearLayout rootLayout2, String vitaminName, HashMap<String, String> hm) {
+        TextView vitaminTitleTextView = new TextView(getApplicationContext());
+        vitaminTitleTextView.setGravity(Gravity.CENTER);
+        vitaminTitleTextView.setText(vitaminName + " values contained in 100 grams of vegetables");
+        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        vitaminTitleTextView.setTextColor(Color.BLACK);
+        vitaminTitleTextView.setPadding(16, 0, 16, 16);
+
+        rootLayout2.addView(vitaminTitleTextView);
+
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setGravity(Gravity.START);
+            linearLayout.setPadding(16, 5, 16, 5);
+
+            TextView vitaminNameTextView = new TextView(getApplicationContext());
+            TextView amountUnitTextView = new TextView(getApplicationContext());
+
+            vitaminNameTextView.setWidth(500);
+            amountUnitTextView.setWidth(280);
+
+            vitaminNameTextView.setTextColor(Color.BLACK);
+            amountUnitTextView.setTextColor(Color.BLACK);
+
+            vitaminNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            amountUnitTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+
+            vitaminNameTextView.setText(entry.getKey());
+            amountUnitTextView.setText(entry.getValue());
+
+            linearLayout.addView(vitaminNameTextView);
+            linearLayout.addView(amountUnitTextView);
+
+            linearLayout.setOnClickListener(v -> {
+                View linearLayoutView = ((ViewGroup) v).getChildAt(0);
+                TextView vegetableNameTextView = (TextView) linearLayoutView;
+
+                Intent startIntent = new Intent(getApplicationContext(), VegetableDetailActivity.class);
+                startIntent.putExtra(VEGETABLE_NAME.label, vegetableNameTextView.getText());
+                startActivity(startIntent);
+            });
+
+            rootLayout2.addView(linearLayout);
+        }
     }
 
     @Override

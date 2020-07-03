@@ -135,7 +135,6 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         rootLayout2.addView(vitaminTitleTextView);
 
         String recommendedVitaminsString = FileReader.load(getApplicationContext(), FILE_NAME_R_D_D);
-        System.out.println("CECKY - " + recommendedVitaminsString);
         final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
 
         List<Vitamin> calculatedVitamins = calculateVitamins();

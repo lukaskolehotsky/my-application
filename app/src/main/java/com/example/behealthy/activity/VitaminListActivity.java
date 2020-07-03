@@ -1,32 +1,30 @@
 package com.example.behealthy.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
-import com.example.behealthy.adapter.ListViewAdapter;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.utilities.MenuHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static com.example.behealthy.constants.Constants.FIRST_COLUMN;
-import static com.example.behealthy.constants.Constants.SECOND_COLUMN;
+import static com.example.behealthy.constants.Constants.AGE;
+import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
 import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
-import static com.example.behealthy.constants.Constants.GENDER;
-import static com.example.behealthy.constants.Constants.AGE;
 
 public class VitaminListActivity extends AppCompatActivity {
 
@@ -43,31 +41,53 @@ public class VitaminListActivity extends AppCompatActivity {
         String age = (String) intent.getStringExtra(AGE.label);
         String gender = (String) intent.getStringExtra(GENDER.label);
 
-        TextView titleTextView = (TextView) findViewById(R.id.titleTextView);
-        titleTextView.setText("Recommended daily dose of vitamins for " + age + " year old " + gender);
+        LinearLayout rootLayout2 = findViewById(R.id.rootLayout2);
+        populateVitamins(rootLayout2, age, gender, vitamins);
+    }
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        ArrayList<HashMap<String, String>> hashMapArrayList = new ArrayList<>();
+    private void populateVitamins(LinearLayout rootLayout2, String age, String gender, List<Vitamin> vitamins) {
+        TextView vitaminTitleTextView = new TextView(getApplicationContext());
+        vitaminTitleTextView.setGravity(Gravity.CENTER);
+        vitaminTitleTextView.setText("Recommended daily dose of vitamins for " + age + " year old " + gender);
+        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        vitaminTitleTextView.setTextColor(Color.BLACK);
+        vitaminTitleTextView.setPadding(16, 0, 16, 16);
 
-        for(Vitamin vitamin: vitamins){
-            HashMap<String, String> vitaminHashMap = new HashMap<>();
-            vitaminHashMap.put(FIRST_COLUMN.label, vitamin.getName());
-            vitaminHashMap.put(SECOND_COLUMN.label, vitamin.getAmount() + "" + vitamin.getUnit());
-            hashMapArrayList.add(vitaminHashMap);
-        }
+        rootLayout2.addView(vitaminTitleTextView);
 
-        ListViewAdapter listViewAdapter = new ListViewAdapter(hashMapArrayList, this);
+        vitamins.forEach(vitamin -> {
+            LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setGravity(Gravity.START);
+            linearLayout.setPadding(16, 5, 16, 5);
 
-        listView.setAdapter(listViewAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            HashMap<String, String> hashMap = (HashMap<String, String>) parent.getAdapter().getItem(position);
+            TextView vitaminNameTextView = new TextView(getApplicationContext());
+            TextView amountUnitTextView = new TextView(getApplicationContext());
 
-            Intent startIntent = new Intent(getApplicationContext(), VitaminsActivity.class);
-                startIntent.putExtra(VITAMIN_NAME.label, hashMap.get(FIRST_COLUMN.label));
+            vitaminNameTextView.setWidth(500);
+            amountUnitTextView.setWidth(280);
+
+            vitaminNameTextView.setTextColor(Color.BLACK);
+            amountUnitTextView.setTextColor(Color.BLACK);
+
+            vitaminNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            amountUnitTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+
+            vitaminNameTextView.setText(vitamin.getName());
+            amountUnitTextView.setText(vitamin.getAmount() + "" + vitamin.getUnit());
+
+            linearLayout.addView(vitaminNameTextView);
+            linearLayout.addView(amountUnitTextView);
+
+            linearLayout.setOnClickListener(v -> {
+                View linearLayoutView = ((ViewGroup) v).getChildAt(0);
+                TextView vitaminNameTextView1 = (TextView) linearLayoutView;
+
+                Intent startIntent = new Intent(getApplicationContext(), VitaminsActivity.class);
+                startIntent.putExtra(VITAMIN_NAME.label, vitaminNameTextView1.getText());
                 startActivity(startIntent);
-            }
+            });
+
+            rootLayout2.addView(linearLayout);
         });
     }
 
