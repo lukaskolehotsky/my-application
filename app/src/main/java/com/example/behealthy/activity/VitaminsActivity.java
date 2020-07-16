@@ -20,7 +20,7 @@ import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
-import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 
 import java.util.HashMap;
@@ -33,18 +33,19 @@ import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 public class VitaminsActivity extends AppCompatActivity {
 
     private MenuHelper menuHelper;
+    private JsonService jsonService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vitamins);
 
+        jsonService = new JsonService(getBaseContext());
+
         Intent intent = getIntent();
         String vitaminName = intent.getStringExtra(VITAMIN_NAME.label);
 
-        JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-
-        List<Vegetable> vegetables = jsonProperty.getVegetables();
+        List<Vegetable> vegetables = jsonService.processFile(R.raw.vegetables).getVegetables();
 
         HashMap<String, String> hm = new HashMap<>();
         for(Vegetable vegetable: vegetables){
@@ -56,7 +57,7 @@ public class VitaminsActivity extends AppCompatActivity {
         }
 
         // TODO - dorobit refactor
-        List<Fruit> fruits = jsonProperty.getFruits();
+        List<Fruit> fruits = jsonService.processFile(R.raw.fruits).getFruits();
         for(Fruit fruit: fruits){
             for(Vitamin vitamin: fruit.getVitamins()){
                 if(vitamin.getName().equals(vitaminName)){

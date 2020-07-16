@@ -23,7 +23,7 @@ import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.AgeWithBmis;
 import com.example.behealthy.model.Bmi;
-import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
@@ -40,6 +40,8 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
 
+    private JsonService jsonService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
+
+        jsonService = new JsonService(getBaseContext());
 
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
         createArrayAdapter(R.id.weightSpinner, R.array.weightList);
@@ -70,7 +74,7 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
                     double height = Double.parseDouble(loadedHeight);
                     int age = Integer.parseInt(loadedAge);
 
-                    JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
+                    JsonProperty jsonProperty = jsonService.processFile(R.raw.agewithbmis);
 
                     double calculatedBmi = weight / ((height / 100) * (height / 100));
                     String cat = null;

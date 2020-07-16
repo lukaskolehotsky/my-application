@@ -26,13 +26,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.behealthy.R;
-import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.DateJsonFood;
 import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.JsonFood;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
-import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.service.FileService;
+import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
@@ -60,6 +60,9 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private static final String TAG = "FoodActivity";
 
+    private FileService fileService;
+    private JsonService jsonService;
+
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
 
@@ -77,6 +80,9 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 //delete();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
+
+        fileService = new FileService(getApplicationContext());
+        jsonService = new JsonService(getBaseContext());
 
         Intent intent = getIntent();
         int year= intent.getIntExtra(YEAR.label, 0);
@@ -134,7 +140,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
         rootLayout2.addView(vitaminTitleTextView);
 
-        String recommendedVitaminsString = FileReader.load(getApplicationContext(), FILE_NAME_R_D_D);
+        String recommendedVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
+
         final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
 
         List<Vitamin> calculatedVitamins = calculateVitamins();
@@ -190,9 +197,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private List<Vitamin> calculateVitamins(){
-        JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-        List<Vegetable> vegetables = jsonProperty.getVegetables();
-        List<Fruit> fruits = jsonProperty.getFruits();
+        List<Vegetable> vegetables = jsonService.processFile(R.raw.vegetables).getVegetables();
+        List<Fruit> fruits = jsonService.processFile(R.raw.fruits).getFruits();
 
         List<Vitamin> allVitamins = new ArrayList<>();
 
@@ -270,12 +276,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void populateLayouts(LocalDate choosedDate) {
         Log.i(TAG, "FoodActivity.populateLayouts() — populate layouts by choosedDate " + choosedDate);
-        FileReader.createTextFile(getApplicationContext(), FILE_NAME);
-        String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
+
+        fileService.createFile(FILE_NAME);
+        String loadedDateJsonFoodsString = fileService.loadFile(FILE_NAME);
 
         if(loadedDateJsonFoodsString != null){
             if (!loadedDateJsonFoodsString.isEmpty()) {
-                List<DateJsonFood> dateJsonFoods = FileReader.getDateJsonFoodList(loadedDateJsonFoodsString);
+                List<DateJsonFood> dateJsonFoods = jsonService.getDateJsonFoodList(loadedDateJsonFoodsString);
                 if(dateJsonFoods != null){
                     dateJsonFoods.forEach(dateJsonFood -> {
                         if (dateJsonFood.getDate().equals(choosedDate)) {
@@ -295,17 +302,18 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void populateInternalStorage(LocalDate choosedDate, List<JsonFood> jsonFoodList) {
         Log.i(TAG, "FoodActivity.populateInternalStorage() — populate internal storage by choosedDate, jsonFoodList " + choosedDate + ", " + jsonFoodList);
-        FileReader.createTextFile(getApplicationContext(), FILE_NAME);
-        String loadedDateJsonFoodsString = FileReader.load(getApplicationContext(), FILE_NAME);
 
-        List<DateJsonFood> loadedDateJsonFoods = new ArrayList<>();
+        fileService.createFile(FILE_NAME);
+        String loadedDateJsonFoodsString = fileService.loadFile(FILE_NAME);
+
+                List<DateJsonFood> loadedDateJsonFoods = new ArrayList<>();
         if (loadedDateJsonFoodsString != null) {
             if (!loadedDateJsonFoodsString.isEmpty()) {
-                loadedDateJsonFoods = FileReader.getDateJsonFoodList(loadedDateJsonFoodsString);
+                loadedDateJsonFoods = jsonService.getDateJsonFoodList(loadedDateJsonFoodsString);
             }
         }
 
-        FileReader.delete(getApplicationContext(), FILE_NAME);
+        fileService.deleteFile(FILE_NAME);
 
         DateJsonFood newDateJsonFood = new DateJsonFood(choosedDate, jsonFoodList);
 
@@ -330,7 +338,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-        FileReader.save(getApplicationContext(), DateJsonFood.toJson(recalculatedDateJsonFoodList).toString(), FILE_NAME);
+        fileService.saveFile(DateJsonFood.toJson(recalculatedDateJsonFoodList).toString(), FILE_NAME);
 //        load();
     }
 

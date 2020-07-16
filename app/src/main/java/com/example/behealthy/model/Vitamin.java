@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Vitamin implements Parcelable {
 
@@ -113,6 +114,76 @@ public class Vitamin implements Parcelable {
 		dest.writeString(unit);
 	}
 
+	public static JSONObject toJsonWoman(List<Vitamin> list){
+		JSONObject jsonObject1 = new JSONObject();
+		JSONObject jsonObject2 = new JSONObject();
+
+		JSONArray jsonArray = new JSONArray();
+
+		for(Vitamin v: list){
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject.put("name", v.getName());
+				jsonObject.put("from", v.getFrom());
+				jsonObject.put("to", v.getTo());
+				jsonObject.put("amount", v.getAmount());
+				jsonObject.put("unit", v.getUnit());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			jsonArray.put(jsonObject);
+		}
+
+		try {
+			jsonObject2.put("vitamins", jsonArray);
+		}  catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			jsonObject1.put("woman", jsonObject2);
+		}  catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonObject1;
+	}
+
+	public static JSONObject toJsonMan(List<Vitamin> list){
+		JSONObject jsonObject1 = new JSONObject();
+		JSONObject jsonObject2 = new JSONObject();
+
+		JSONArray jsonArray = new JSONArray();
+
+		for(Vitamin v: list){
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject.put("name", v.getName());
+				jsonObject.put("from", v.getFrom());
+				jsonObject.put("to", v.getTo());
+				jsonObject.put("amount", v.getAmount());
+				jsonObject.put("unit", v.getUnit());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			jsonArray.put(jsonObject);
+		}
+
+		try {
+			jsonObject2.put("vitamins", jsonArray);
+		}  catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			jsonObject1.put("man", jsonObject2);
+		}  catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonObject1;
+	}
+
 	public static JSONArray toJson(List<Vitamin> list){
 		JSONArray jsonArray = new JSONArray();
 
@@ -154,5 +225,22 @@ public class Vitamin implements Parcelable {
 		}
 
 		return vitaminList;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Vitamin vitamin = (Vitamin) o;
+		return Double.compare(vitamin.from, from) == 0 &&
+				Double.compare(vitamin.to, to) == 0 &&
+				Double.compare(vitamin.amount, amount) == 0 &&
+				name.equals(vitamin.name) &&
+				unit.equals(vitamin.unit);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, from, to, amount, unit);
 	}
 }

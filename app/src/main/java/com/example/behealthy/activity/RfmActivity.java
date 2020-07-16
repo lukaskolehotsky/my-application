@@ -23,7 +23,7 @@ import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.AgeWithBmis;
 import com.example.behealthy.model.Bmi;
-import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
@@ -40,6 +40,8 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
 
+    private JsonService jsonService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
+
+        jsonService = new JsonService(getBaseContext());
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
@@ -72,8 +76,6 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
                     double waistCircumference = Double.parseDouble(loadedWaistCircumference);
                     int age = Integer.parseInt(loadedAge);
 
-                    JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-
                     double rfm;
                     String category = null;
 
@@ -83,7 +85,7 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
                         rfm = 64 - (20 * height) / waistCircumference;
                     }
 
-                    for (AgeWithBmis ageWithBmis : jsonProperty.getAgeWithBmis()) {
+                    for (AgeWithBmis ageWithBmis : jsonService.processFile(R.raw.agewithbmis).getAgeWithBmis()) {
                         if (ageWithBmis.getAgeFrom() <= age && ageWithBmis.getAgeTo() >= age) {
                             for (Bmi bmi : ageWithBmis.getBmis()) {
                                 if (bmi.getFrom() < rfm && bmi.getTo() > rfm) {

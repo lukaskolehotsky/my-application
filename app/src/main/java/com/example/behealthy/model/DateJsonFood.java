@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class DateJsonFood {
 
@@ -47,7 +48,6 @@ public class DateJsonFood {
     }
 
     public static JSONObject toJson(List<DateJsonFood> list){
-        JSONObject jsonObjectKKK = new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
         for(DateJsonFood v: list){
@@ -79,4 +79,17 @@ public class DateJsonFood {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateJsonFood that = (DateJsonFood) o;
+        return date.equals(that.date) &&
+                jsonFoods.equals(that.jsonFoods);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, jsonFoods);
+    }
 }

@@ -19,21 +19,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
-import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.Vitamin;
-import com.example.behealthy.utilities.FileReader;
+import com.example.behealthy.service.FileService;
+import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
-import com.example.behealthy.utilities.SharedPreferencesHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
+import com.example.behealthy.utilities.SharedPreferencesHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
-import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.AGE;
+import static com.example.behealthy.constants.Constants.GENDER;
+import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
 
 public class DailyFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -44,6 +44,9 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
 
+    private FileService fileService;
+    private JsonService jsonService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,9 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
+
+        fileService = new FileService(getApplicationContext());
+        jsonService = new JsonService(getBaseContext());
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
@@ -67,8 +73,7 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
                 if (validateSpinnersClick) {
                     int age = Integer.parseInt(loadedAge);
 
-                    JsonProperty jsonProperty = new FileReader(getBaseContext()).processFile(R.raw.locations);
-                    List<Vitamin> vitamins = loadedGender.equals(Constants.WOMAN.label) ? jsonProperty.getWomanVitamins() : jsonProperty.getManVitamins();
+                    List<Vitamin> vitamins = loadedGender.equals(Constants.WOMAN.label) ? jsonService.processFile(R.raw.womanvitamins).getWomanVitamins() : jsonService.processFile(R.raw.manvitamins).getManVitamins();
 
                     List<Vitamin> vitaminList = new ArrayList<>();
                     for (Vitamin vitamin : vitamins) {
@@ -77,8 +82,8 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
                         }
                     }
 
-                    FileReader.createTextFile(getApplicationContext(), FILE_NAME);
-                    FileReader.save(getApplicationContext(), Vitamin.toJson(vitaminList).toString(), FILE_NAME);
+                    fileService.createFile(FILE_NAME);
+                    fileService.saveFile(Vitamin.toJson(vitaminList).toString(), FILE_NAME);
 
                     Intent startIntent = new Intent(DailyFeedActivity.this, VitaminListActivity.class);
                     startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);

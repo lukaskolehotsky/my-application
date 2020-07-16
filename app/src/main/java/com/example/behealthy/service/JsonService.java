@@ -1,7 +1,6 @@
-package com.example.behealthy.utilities;
+package com.example.behealthy.service;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.AgeWithBmis;
@@ -17,10 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,15 +23,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileReader {
+public class JsonService {
 
-    private static final String TAG = "FileReader";
+    private static final String TAG = "JsonService";
 
-    public FileReader(Context context){
-        mContext = context;
-    }
-    private static Context mContext;
+    private static Context context;
     private static int mResourceId;
+
+    public JsonService(Context context) {
+        this.context = context;
+    }
 
     public JsonProperty processFile(int resourceId)
     {
@@ -44,6 +40,7 @@ public class FileReader {
         JsonProperty contentList = null;
 
         String jsonStr = this.readRawTextFile();
+
         try {
             contentList = this.parseJsonFromString(jsonStr);
         } catch(Exception e){
@@ -55,7 +52,7 @@ public class FileReader {
 
     private static String readRawTextFile()
     {
-        InputStream inputStream = mContext.getResources().openRawResource(mResourceId);
+        InputStream inputStream = context.getResources().openRawResource(mResourceId);
 
         InputStreamReader inputreader = new InputStreamReader(inputStream);
         BufferedReader buffreader = new BufferedReader(inputreader);
@@ -74,7 +71,7 @@ public class FileReader {
     }
 
     private JsonProperty parseJsonFromString(String jsonString) throws JSONException {
-        ArrayList ageWithBmisList = getBmisWithDetails(jsonString);
+        ArrayList ageWithBmisList = getAgeWithBmis(jsonString);
         ArrayList womanVitaminsList = getWomanVitaminsList(jsonString);
         ArrayList manVitaminsList = getManVitaminsList(jsonString);
         ArrayList vegetablesList = getVegetablesList(jsonString);
@@ -84,7 +81,96 @@ public class FileReader {
         return jsonProperty;
     }
 
-    private ArrayList getBmisWithDetails(String jsonString) throws JSONException {
+    public ArrayList getDateJsonFoodList(String jsonString) {
+        ArrayList dateJsonFoodList = new ArrayList();
+
+        try {
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONArray dateJsonFoodsArray = contentJson.getJSONArray("dateJsonFoods");
+
+            for (int i = 0; i < dateJsonFoodsArray.length(); i++) {
+                String date = "";
+
+                JSONObject dateJsonFoodsDetails = dateJsonFoodsArray.getJSONObject(i);
+
+                JSONObject dateJsonFoodDetails = dateJsonFoodsDetails.getJSONObject("dateJsonFood");
+
+                if (!dateJsonFoodDetails.isNull("date")) {
+                    date = dateJsonFoodDetails.getString("date");
+                }
+
+                List<JsonFood> jsonFoodList = new ArrayList<>();
+                JSONArray jsonFoodsArray = dateJsonFoodDetails.getJSONArray("jsonFoods");
+                for (int j = 0; j < jsonFoodsArray.length(); j++) {
+                    String name = "";
+                    String grams = "";
+
+                    JSONObject jsonFoodDetails = jsonFoodsArray.getJSONObject(j);
+                    if (!jsonFoodDetails.isNull("name")) {
+                        name = jsonFoodDetails.getString("name");
+                    }
+                    if (!jsonFoodDetails.isNull("grams")) {
+                        grams = jsonFoodDetails.getString("grams");
+                    }
+
+                    JsonFood jsonFood = new JsonFood(name, grams);
+                    jsonFoodList.add(jsonFood);
+                }
+
+                DateJsonFood dateJsonFood = new DateJsonFood(LocalDate.parse(date), jsonFoodList);
+
+                dateJsonFoodList.add(dateJsonFood);
+            }
+            return dateJsonFoodList;
+        } catch (JSONException e) {
+            return new ArrayList();
+        }
+    }
+
+    public ArrayList getFruitsList(String jsonString) {
+        ArrayList fruitsList = new ArrayList();
+
+        try{
+            JSONObject contentJson = new JSONObject(jsonString);
+            JSONArray fruitsArray = contentJson.getJSONArray("fruits");
+
+            for(int i = 0; i < fruitsArray.length(); i++) {
+                String name = "";
+                List<Vitamin> vitamins = new ArrayList<>();
+
+                JSONObject fruitsDetails = fruitsArray.getJSONObject(i);
+
+                if (!fruitsDetails.isNull("name")) { name = fruitsDetails.getString("name"); }
+
+                JSONArray vitaminsArray = fruitsDetails.getJSONArray("vitamins");
+                for(int j = 0; j < vitaminsArray.length(); j++) {
+                    String name2 = "";
+                    double amount = 0.0f;
+                    String unit = "";
+                    double from = 0.0f;
+                    double to = 0.0f;
+
+                    JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
+                    if (!vitaminsDetails.isNull("name")) { name2 = vitaminsDetails.getString("name"); }
+                    if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
+                    if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
+                    if (!vitaminsDetails.isNull("from")) { from = vitaminsDetails.getDouble("from"); }
+                    if (!vitaminsDetails.isNull("to")) { to = vitaminsDetails.getDouble("to"); }
+
+                    Vitamin vitamin = new Vitamin(name2, from, to, amount, unit);
+                    vitamins.add(vitamin);
+                }
+
+                Fruit fruit = new Fruit(name, vitamins);
+                fruitsList.add(fruit);
+            }
+            return fruitsList;
+        } catch (JSONException e) {
+            return new ArrayList();
+        }
+    }
+
+    public ArrayList getAgeWithBmis(String jsonString) throws JSONException {
         ArrayList ageWithBmisList = new ArrayList();
 
         try {
@@ -132,12 +218,11 @@ public class FileReader {
             }
             return ageWithBmisList;
         } catch (JSONException e) {
-            e.printStackTrace();
+            return new ArrayList();
         }
-        return null;
     }
 
-    private ArrayList getWomanVitaminsList(String jsonString){
+    public ArrayList getWomanVitaminsList(String jsonString){
         ArrayList womanVitaminsList = new ArrayList();
 
         try{
@@ -165,12 +250,11 @@ public class FileReader {
             }
             return womanVitaminsList;
         } catch (JSONException e) {
-            e.printStackTrace();
+            return new ArrayList();
         }
-        return null;
     }
 
-    private ArrayList getManVitaminsList(String jsonString){
+    public ArrayList getManVitaminsList(String jsonString){
         ArrayList manVitaminsList = new ArrayList();
 
         try{
@@ -198,12 +282,11 @@ public class FileReader {
             }
             return manVitaminsList;
         } catch (JSONException e) {
-            e.printStackTrace();
+            return new ArrayList();
         }
-        return null;
     }
 
-    private ArrayList getVegetablesList(String jsonString) {
+    public ArrayList getVegetablesList(String jsonString) {
         ArrayList vegetablesList = new ArrayList();
 
         try{
@@ -223,13 +306,15 @@ public class FileReader {
                     String name2 = "";
                     double amount = 0.0f;
                     String unit = "";
-                    int from = 0;
-                    int to = 0;
+                    double from = 0.0f;
+                    double to = 0.0f;
 
                     JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
                     if (!vitaminsDetails.isNull("name")) { name2 = vitaminsDetails.getString("name"); }
                     if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
                     if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
+                    if (!vitaminsDetails.isNull("from")) { from = vitaminsDetails.getDouble("from"); }
+                    if (!vitaminsDetails.isNull("to")) { to = vitaminsDetails.getDouble("to"); }
 
                     Vitamin vitamin = new Vitamin(name2, from, to, amount, unit);
                     vitamins.add(vitamin);
@@ -240,173 +325,8 @@ public class FileReader {
             }
             return vegetablesList;
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private ArrayList getFruitsList(String jsonString) {
-        ArrayList fruitsList = new ArrayList();
-
-        try{
-            JSONObject contentJson = new JSONObject(jsonString);
-            JSONArray fruitsArray = contentJson.getJSONArray("fruits");
-
-            for(int i = 0; i < fruitsArray.length(); i++) {
-                String name = "";
-                List<Vitamin> vitamins = new ArrayList<>();
-
-                JSONObject fruitsDetails = fruitsArray.getJSONObject(i);
-
-                if (!fruitsDetails.isNull("name")) { name = fruitsDetails.getString("name"); }
-
-                JSONArray vitaminsArray = fruitsDetails.getJSONArray("vitamins");
-                for(int j = 0; j < vitaminsArray.length(); j++) {
-                    String name2 = "";
-                    double amount = 0.0f;
-                    String unit = "";
-                    int from = 0;
-                    int to = 0;
-
-                    JSONObject vitaminsDetails = vitaminsArray.getJSONObject(j);
-                    if (!vitaminsDetails.isNull("name")) { name2 = vitaminsDetails.getString("name"); }
-                    if (!vitaminsDetails.isNull("amount")) { amount = vitaminsDetails.getDouble("amount"); }
-                    if (!vitaminsDetails.isNull("unit")) { unit = vitaminsDetails.getString("unit"); }
-
-                    Vitamin vitamin = new Vitamin(name2, from, to, amount, unit);
-                    vitamins.add(vitamin);
-                }
-
-                Fruit fruit = new Fruit(name, vitamins);
-                fruitsList.add(fruit);
-            }
-            return fruitsList;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static ArrayList getDateJsonFoodList(String jsonString) {
-        ArrayList dateJsonFoodList = new ArrayList();
-
-        try {
-            JSONObject contentJson = new JSONObject(jsonString);
-            JSONArray dateJsonFoodsArray = contentJson.getJSONArray("dateJsonFoods");
-
-            for (int i = 0; i < dateJsonFoodsArray.length(); i++) {
-                String date = "";
-
-                JSONObject dateJsonFoodsDetails = dateJsonFoodsArray.getJSONObject(i);
-
-                JSONObject dateJsonFoodDetails = dateJsonFoodsDetails.getJSONObject("dateJsonFood");
-
-                if (!dateJsonFoodDetails.isNull("date")) {
-                    date = dateJsonFoodDetails.getString("date");
-                }
-
-                List<JsonFood> jsonFoodList = new ArrayList<>();
-                JSONArray jsonFoodsArray = dateJsonFoodDetails.getJSONArray("jsonFoods");
-                for (int j = 0; j < jsonFoodsArray.length(); j++) {
-                    String name = "";
-                    String grams = "";
-
-                    JSONObject jsonFoodDetails = jsonFoodsArray.getJSONObject(j);
-                    if (!jsonFoodDetails.isNull("name")) {
-                        name = jsonFoodDetails.getString("name");
-                    }
-                    if (!jsonFoodDetails.isNull("grams")) {
-                        grams = jsonFoodDetails.getString("grams");
-                    }
-
-                    JsonFood jsonFood = new JsonFood(name, grams);
-                    jsonFoodList.add(jsonFood);
-                }
-
-                DateJsonFood dateJsonFood = new DateJsonFood(LocalDate.parse(date), jsonFoodList);
-
-                dateJsonFoodList.add(dateJsonFood);
-            }
-            return dateJsonFoodList;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public static void delete(Context context, String fileName) {
-        File file = new File(context.getFilesDir(), fileName);
-        if (file.exists()) {
-            context.deleteFile(fileName);
-            Log.i(TAG, "FileReader.delete() — delete file " + fileName);
+            return new ArrayList();
         }
     }
 
-    public static void createTextFile(Context context, String fileName) {
-        File file = new File(context.getFilesDir(), fileName);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                Log.i(TAG, "FileReader.createTextFile() — create file " + fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void save(Context context, String text, String fileName) {
-        FileOutputStream fos = null;
-
-        try {
-            fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
-            fos.write(text.getBytes());
-            Log.i(TAG, "FileReader.save() — save file " + fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-    public static String load(Context context, String fileName) {
-        FileInputStream fis = null;
-
-        try {
-            fis = context.openFileInput(fileName);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-            Log.i(TAG, "FileReader.load() — load file " + fileName);
-            return sb.toString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return null;
-    }
 }

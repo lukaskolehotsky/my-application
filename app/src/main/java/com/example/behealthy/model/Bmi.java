@@ -1,5 +1,12 @@
 package com.example.behealthy.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Objects;
+
 public class Bmi {
 
 	private double from;
@@ -43,4 +50,48 @@ public class Bmi {
 		return "Bmi [from=" + from + ", to=" + to + ", category=" + category + "]";
 	}
 
+	public static JSONObject toJson(Bmi bmi){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("from", bmi.getFrom());
+			jsonObject.put("to", bmi.getTo());
+			jsonObject.put("category", bmi.getCategory());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonObject;
+	}
+
+	public static JSONArray toJson(List<Bmi> list){
+		JSONArray jsonArray = new JSONArray();
+
+		for(Bmi v: list){
+			jsonArray.put(Bmi.toJson(v));
+		}
+
+//		JSONObject jsonObjectXX = new JSONObject();
+//		try {
+//			jsonObjectXX.put("bmis", jsonArray);
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
+
+		return jsonArray;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Bmi bmi = (Bmi) o;
+		return Double.compare(bmi.from, from) == 0 &&
+				Double.compare(bmi.to, to) == 0 &&
+				category.equals(bmi.category);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(from, to, category);
+	}
 }

@@ -1,0 +1,190 @@
+{
+  "ageWithBmis": [
+    {
+      "ageFrom": 18,
+      "ageTo": 24,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 19,
+          "category": "Underweight"
+        },
+        {
+          "from": 19,
+          "to": 24,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 24,
+          "to": 29,
+          "category": "Overweight"
+        },
+        {
+          "from": 29,
+          "to": 39,
+          "category": "Obesity"
+        },
+        {
+          "from": 39,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    },
+    {
+      "ageFrom": 25,
+      "ageTo": 34,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 20,
+          "category": "Underweight"
+        },
+        {
+          "from": 20,
+          "to": 25,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 25,
+          "to": 30,
+          "category": "Overweight"
+        },
+        {
+          "from": 30,
+          "to": 40,
+          "category": "Obesity"
+        },
+        {
+          "from": 40,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    },
+    {
+      "ageFrom": 35,
+      "ageTo": 44,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 21,
+          "category": "Underweight"
+        },
+        {
+          "from": 21,
+          "to": 26,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 26,
+          "to": 31,
+          "category": "Overweight"
+        },
+        {
+          "from": 31,
+          "to": 41,
+          "category": "Obesity"
+        },
+        {
+          "from": 41,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    },
+    {
+      "ageFrom": 45,
+      "ageTo": 54,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 22,
+          "category": "Underweight"
+        },
+        {
+          "from": 22,
+          "to": 27,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 27,
+          "to": 32,
+          "category": "Overweight"
+        },
+        {
+          "from": 32,
+          "to": 42,
+          "category": "Obesity"
+        },
+        {
+          "from": 42,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    },
+    {
+      "ageFrom": 55,
+      "ageTo": 64,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 23,
+          "category": "Underweight"
+        },
+        {
+          "from": 23,
+          "to": 28,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 28,
+          "to": 33,
+          "category": "Overweight"
+        },
+        {
+          "from": 33,
+          "to": 43,
+          "category": "Obesity"
+        },
+        {
+          "from": 43,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    },
+    {
+      "ageFrom": 65,
+      "ageTo": 1000,
+      "bmis": [
+        {
+          "from": 0,
+          "to": 24,
+          "category": "Underweight"
+        },
+        {
+          "from": 24,
+          "to": 29,
+          "category": "Optimal weight"
+        },
+        {
+          "from": 29,
+          "to": 34,
+          "category": "Overweight"
+        },
+        {
+          "from": 34,
+          "to": 44,
+          "category": "Obesity"
+        },
+        {
+          "from": 44,
+          "to": 1000,
+          "category": "Morbid obesity"
+        }
+      ]
+    }
+  ]
+}
