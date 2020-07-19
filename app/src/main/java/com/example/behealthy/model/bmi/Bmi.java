@@ -1,4 +1,4 @@
-package com.example.behealthy.model;
+package com.example.behealthy.model.bmi;
 
 import org.json.JSONArray;
 import org.json.JSONException;

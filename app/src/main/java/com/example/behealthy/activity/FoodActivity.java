@@ -99,16 +99,13 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         populateVitamins(rootLayout2);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String foodsJson = sharedPreferenceEntry.getFoodsJson();
-                List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
-                populateInternalStorage(choosedDate, jsonFoodList);
+        floatingActionButton.setOnClickListener(v -> {
+            String foodsJson = sharedPreferenceEntry.getFoodsJson();
+            List<JsonFood> jsonFoodList = JsonFood.toList(foodsJson);
+            populateInternalStorage(choosedDate, jsonFoodList);
 
-                rootLayout2.removeAllViewsInLayout();
-                populateVitamins(rootLayout2);
-            }
+            rootLayout2.removeAllViewsInLayout();
+            populateVitamins(rootLayout2);
         });
 
         FloatingActionButton addVegetablesLayoutButton = findViewById(R.id.addVegetablesLayoutButton);

@@ -1,6 +1,6 @@
 package com.example.behealthy.config;
 
-import com.example.behealthy.model.AgeWithBmis;
+import com.example.behealthy.model.bmi.AgeWithBmis;
 import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;

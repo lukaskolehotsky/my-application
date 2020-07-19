@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.behealthy.R;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.Vitamin;
+import com.example.behealthy.service.DailyFeedService;
 import com.example.behealthy.service.FileService;
 import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
@@ -46,6 +47,7 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
     private FileService fileService;
     private JsonService jsonService;
+    private DailyFeedService dailyFeedService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,40 +59,29 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
         fileService = new FileService(getApplicationContext());
         jsonService = new JsonService(getBaseContext());
+        dailyFeedService = new DailyFeedService(jsonService);
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferenceEntry entry = sharedPreferencesHelper.get();
-                String loadedGender = entry.getGender();
-                String loadedAge = entry.getAge();
+        floatingActionButton.setOnClickListener(v -> {
+            SharedPreferenceEntry entry = sharedPreferencesHelper.get();
+            String loadedGender = entry.getGender();
+            String loadedAge = entry.getAge();
 
-                boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedAge);
-                if (validateSpinnersClick) {
-                    int age = Integer.parseInt(loadedAge);
+            boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedAge);
+            if (validateSpinnersClick) {
 
-                    List<Vitamin> vitamins = loadedGender.equals(Constants.WOMAN.label) ? jsonService.processFile(R.raw.womanvitamins).getWomanVitamins() : jsonService.processFile(R.raw.manvitamins).getManVitamins();
+                List<Vitamin> vitaminList = dailyFeedService.getDailyFeedVitamins(loadedAge, loadedGender);
+                fileService.createFile(FILE_NAME);
+                fileService.saveFile(Vitamin.toJson(vitaminList).toString(), FILE_NAME);
 
-                    List<Vitamin> vitaminList = new ArrayList<>();
-                    for (Vitamin vitamin : vitamins) {
-                        if (vitamin.getFrom() <= age && vitamin.getTo() >= age) {
-                            vitaminList.add(vitamin);
-                        }
-                    }
-
-                    fileService.createFile(FILE_NAME);
-                    fileService.saveFile(Vitamin.toJson(vitaminList).toString(), FILE_NAME);
-
-                    Intent startIntent = new Intent(DailyFeedActivity.this, VitaminListActivity.class);
-                    startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);
-                    startIntent.putExtra(GENDER.label, loadedGender);
-                    startIntent.putExtra(AGE.label, loadedAge);
-                    startActivity(startIntent);
-                }
+                Intent startIntent = new Intent(DailyFeedActivity.this, VitaminListActivity.class);
+                startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);
+                startIntent.putExtra(GENDER.label, loadedGender);
+                startIntent.putExtra(AGE.label, loadedAge);
+                startActivity(startIntent);
             }
         });
     }

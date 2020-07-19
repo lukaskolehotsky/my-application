@@ -3,8 +3,8 @@ package com.example.behealthy.service;
 import android.content.Context;
 
 import com.example.behealthy.config.JsonProperty;
-import com.example.behealthy.model.AgeWithBmis;
-import com.example.behealthy.model.Bmi;
+import com.example.behealthy.model.bmi.AgeWithBmis;
+import com.example.behealthy.model.bmi.Bmi;
 import com.example.behealthy.model.DateJsonFood;
 import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.JsonFood;
@@ -70,7 +70,7 @@ public class JsonService {
         return text.toString();
     }
 
-    private JsonProperty parseJsonFromString(String jsonString) throws JSONException {
+    private JsonProperty parseJsonFromString(String jsonString) {
         ArrayList ageWithBmisList = getAgeWithBmis(jsonString);
         ArrayList womanVitaminsList = getWomanVitaminsList(jsonString);
         ArrayList manVitaminsList = getManVitaminsList(jsonString);
@@ -170,7 +170,7 @@ public class JsonService {
         }
     }
 
-    public ArrayList getAgeWithBmis(String jsonString) throws JSONException {
+    public ArrayList getAgeWithBmis(String jsonString) {
         ArrayList ageWithBmisList = new ArrayList();
 
         try {
