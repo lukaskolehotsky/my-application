@@ -2,7 +2,7 @@ package com.example.behealthy;
 
 import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.Vitamin;
-import com.example.behealthy.service.DailyFeedService;
+import com.example.behealthy.service.DailyDoseService;
 import com.example.behealthy.service.JsonService;
 
 import org.junit.Assert;
@@ -19,20 +19,20 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DailyFeedServiceTest {
+public class DailyDoseServiceTest {
 
     @InjectMocks
-    private DailyFeedService dailyFeedService;
+    private DailyDoseService dailyDoseService;
 
     @Mock
     private JsonService jsonService;
 
     @Test
-    public void testGetDailyFeedVitamins() {
+    public void testGetDailyDoseVitamins() {
         JsonProperty jsonProperty = new JsonProperty(Collections.emptyList(), Collections.emptyList(), generateManVitamins(),Collections.emptyList(),Collections.emptyList());
         when(jsonService.processFile(R.raw.manvitamins)).thenReturn(jsonProperty);
 
-        List<Vitamin> response = this.dailyFeedService.getDailyFeedVitamins("32", "man");
+        List<Vitamin> response = this.dailyDoseService.getDailyDoseVitamins("32", "man");
 
         Assert.assertEquals(1, response.size());
         Assert.assertEquals("Vitamin C", response.get(0).getName());

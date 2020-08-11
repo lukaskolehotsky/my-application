@@ -4,7 +4,7 @@
 
     <item android:id="@+id/bmiItem" android:title="BMI" />
     <item android:id="@+id/rfmItem" android:title="RFM" />
-    <item android:id="@+id/vitaminsItem" android:title="Vitamins" />
+    <item android:id="@+id/dailyDoseItem" android:title="Daily dose" />
     <item android:id="@+id/calendarItem" android:title="Calendar" />
 
 </menu>

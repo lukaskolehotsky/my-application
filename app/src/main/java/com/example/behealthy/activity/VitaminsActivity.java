@@ -2,6 +2,7 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -16,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
-import com.example.behealthy.config.JsonProperty;
 import com.example.behealthy.model.Fruit;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
@@ -73,7 +73,8 @@ public class VitaminsActivity extends AppCompatActivity {
     private void populateVitamins(LinearLayout rootLayout2, String vitaminName, HashMap<String, String> hm) {
         TextView vitaminTitleTextView = new TextView(getApplicationContext());
         vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText(vitaminName + " values contained in 100 grams of vegetables");
+        vitaminTitleTextView.setText(vitaminName + " in 100 / g");
+        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
         vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         vitaminTitleTextView.setTextColor(Color.BLACK);
         vitaminTitleTextView.setPadding(16, 0, 16, 16);

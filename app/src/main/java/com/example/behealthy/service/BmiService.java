@@ -35,7 +35,9 @@ public class BmiService {
         BmiCategory bmiCategory = new BmiCategory();
 
         DecimalFormat df = new DecimalFormat("#.##");
-        calculatedBmi = Double.valueOf(df.format(calculatedBmi));
+        String formattedCalculatedBmi = df.format(calculatedBmi).replace(",", ".");
+        double dd = Double.parseDouble(formattedCalculatedBmi);
+        calculatedBmi = dd;
 
         bmiCategory.setCalculatedBmi(calculatedBmi);
         bmiCategory.setCategory(category);

@@ -2,6 +2,7 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.behealthy.constants.Constants.VEGETABLE_NAME;
@@ -63,12 +65,16 @@ public class VegetableDetailActivity extends AppCompatActivity {
     private void populateVitamins(LinearLayout rootLayout2, String vegetableName, List<Vitamin> vitamins) {
         TextView vitaminTitleTextView = new TextView(getApplicationContext());
         vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText("Amount of vitamins in 100 grams of " + vegetableName);
+        vitaminTitleTextView.setText("Vitamins in 100 / g of " + vegetableName);
+        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
         vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         vitaminTitleTextView.setTextColor(Color.BLACK);
         vitaminTitleTextView.setPadding(16, 0, 16, 16);
 
         rootLayout2.addView(vitaminTitleTextView);
+
+        Comparator<Vitamin> comparator = (Vitamin v1, Vitamin v2) -> Double.valueOf(v1.getAmount()).compareTo(v2.getAmount());
+        vitamins.sort(comparator.reversed());
 
         vitamins.forEach(vitamin -> {
             LinearLayout linearLayout = new LinearLayout(getApplicationContext());

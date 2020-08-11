@@ -43,7 +43,7 @@ public class RfmService {
         RfmCategory rfmCategory = new RfmCategory();
 
         DecimalFormat df = new DecimalFormat("#.##");
-        calculatedRfm = Double.valueOf(df.format(calculatedRfm));
+        calculatedRfm = Double.valueOf(df.format(calculatedRfm).replace(",", "."));
 
         rfmCategory.setCalculatedRfm(calculatedRfm);
         rfmCategory.setCategory(category);

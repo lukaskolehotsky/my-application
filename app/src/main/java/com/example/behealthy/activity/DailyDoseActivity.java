@@ -2,15 +2,21 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.ArrayRes;
@@ -21,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.behealthy.R;
 import com.example.behealthy.constants.Constants;
 import com.example.behealthy.model.Vitamin;
-import com.example.behealthy.service.DailyFeedService;
+import com.example.behealthy.service.DailyDoseService;
 import com.example.behealthy.service.FileService;
 import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
@@ -36,7 +42,7 @@ import static com.example.behealthy.constants.Constants.AGE;
 import static com.example.behealthy.constants.Constants.GENDER;
 import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
 
-public class DailyFeedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class DailyDoseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String FILE_NAME = "recommended_daily_dose.txt";
 
@@ -47,19 +53,23 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
 
     private FileService fileService;
     private JsonService jsonService;
-    private DailyFeedService dailyFeedService;
+    private DailyDoseService dailyDoseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_feed);
+        setContentView(R.layout.activity_daily_dose);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
         fileService = new FileService(getApplicationContext());
         jsonService = new JsonService(getBaseContext());
-        dailyFeedService = new DailyFeedService(jsonService);
+        dailyDoseService = new DailyDoseService(jsonService);
+
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        titleTextView.setText("Calculate vitamin daily dose");
+        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
@@ -73,11 +83,12 @@ public class DailyFeedActivity extends AppCompatActivity implements AdapterView.
             boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedAge);
             if (validateSpinnersClick) {
 
-                List<Vitamin> vitaminList = dailyFeedService.getDailyFeedVitamins(loadedAge, loadedGender);
+                List<Vitamin> vitaminList = dailyDoseService.getDailyDoseVitamins(loadedAge, loadedGender);
+                fileService.deleteFile(FILE_NAME);
                 fileService.createFile(FILE_NAME);
                 fileService.saveFile(Vitamin.toJson(vitaminList).toString(), FILE_NAME);
 
-                Intent startIntent = new Intent(DailyFeedActivity.this, VitaminListActivity.class);
+                Intent startIntent = new Intent(DailyDoseActivity.this, VitaminListActivity.class);
                 startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);
                 startIntent.putExtra(GENDER.label, loadedGender);
                 startIntent.putExtra(AGE.label, loadedAge);

@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.example.behealthy.R;
 import com.example.behealthy.activity.BmiActivity;
 import com.example.behealthy.activity.CalendarActivity;
-import com.example.behealthy.activity.DailyFeedActivity;
+import com.example.behealthy.activity.DailyDoseActivity;
 import com.example.behealthy.activity.RfmActivity;
 
 public class MenuHelper {
@@ -18,8 +18,8 @@ public class MenuHelper {
     }
 
     public Intent chooseIntent(int itemId){
-        if(itemId == R.id.vitaminsItem){
-            return new Intent(packageContext, DailyFeedActivity.class);
+        if(itemId == R.id.dailyDoseItem){
+            return new Intent(packageContext, DailyDoseActivity.class);
         }
 
         if(itemId == R.id.rfmItem){
