@@ -2,6 +2,7 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -48,6 +49,10 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
         jsonService = new JsonService(getBaseContext());
         rfmService = new RfmService(jsonService);
+
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        titleTextView.setText("Calculate RFM");
+        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);

@@ -2,6 +2,7 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -55,6 +56,10 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
         jsonService = new JsonService(getBaseContext());
         bmiService = new BmiService(jsonService);
+
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        titleTextView.setText("Calculate BMI");
+        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
 
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
         createArrayAdapter(R.id.weightSpinner, R.array.weightList);
