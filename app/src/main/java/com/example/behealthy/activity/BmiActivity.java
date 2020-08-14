@@ -26,6 +26,9 @@ import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class BmiActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -38,10 +41,14 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
     private JsonService jsonService;
     private BmiService bmiService;
 
+    AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmi);
+
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
@@ -75,6 +82,10 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
                 categoryTextView.setText(bmiCategory.getCategory());
             }
         });
+
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
     }
 
