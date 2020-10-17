@@ -69,6 +69,7 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
 
         TextView titleTextView = findViewById(R.id.titleTextView);
         titleTextView.setText("Calculate vitamin daily dose");
+        titleTextView.setText("Calculate vitamin daily dose");
         titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
 
         TextView existingDailyDoseTextView = findViewById(R.id.existDailyDoseTextView);
@@ -79,21 +80,21 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
 
         LinearLayout vitaminsLayout = findViewById(R.id.rootLayout2);
         String genderAgeVitaminsString = null;
-
         try {
             genderAgeVitaminsString = fileService.loadFile(FILE_NAME);
         } catch (Exception e) {
             fileService.createFile(FILE_NAME);
         }
 
-        GenderAgeVitamins genderAgeVitamins = GenderAgeVitamins.toObject(genderAgeVitaminsString);
-
         if (genderAgeVitaminsString == null) {
             existingDailyDoseTextView.setVisibility(View.VISIBLE);
         } else {
-            existingDailyDoseTextView.setVisibility(View.INVISIBLE);
-            populateVitamins(vitaminsLayout, genderAgeVitamins);
-            createRemoveExistingCalculationLayout(vitaminsLayout);
+            GenderAgeVitamins genderAgeVitamins = GenderAgeVitamins.toObject(genderAgeVitaminsString);
+            if (genderAgeVitamins.getGenderAge() != null && genderAgeVitamins.getVitamins() != null) {
+                existingDailyDoseTextView.setVisibility(View.INVISIBLE);
+                populateVitamins(vitaminsLayout, genderAgeVitamins);
+                createRemoveExistingCalculationLayout(vitaminsLayout);
+            }
         }
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
@@ -108,7 +109,10 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
                 fileService.createFile(FILE_NAME);
 
                 GenderAgeVitamins existingGenderAgeVitamins = new GenderAgeVitamins();
-                existingGenderAgeVitamins.setGenderAge(new GenderAge(loadedGender, loadedAge));
+                GenderAge genderAge = new GenderAge();
+                genderAge.setGender(loadedGender);
+                genderAge.setAge(loadedAge);
+                existingGenderAgeVitamins.setGenderAge(genderAge);
                 existingGenderAgeVitamins.setVitamins(dailyDoseVitamins);
 
                 fileService.saveFile(GenderAgeVitamins.toJson(existingGenderAgeVitamins).toString(), FILE_NAME);

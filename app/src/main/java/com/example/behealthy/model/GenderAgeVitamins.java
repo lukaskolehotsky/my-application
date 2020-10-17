@@ -58,8 +58,10 @@ public class GenderAgeVitamins {
 
             try {
                 GenderAgeVitamins v = new GenderAgeVitamins();
-                v.setGenderAge(GenderAge.toObject(jsonObject.getString("genderAge")));
-                v.setVitamins(Vitamin.toList(jsonObject.getJSONArray("vitamins").toString()));
+                if (jsonObject != null) {
+                    v.setGenderAge(GenderAge.toObject(jsonObject.getString("genderAge")));
+                    v.setVitamins(Vitamin.toList(jsonObject.getJSONArray("vitamins").toString()));
+                }
                 return v;
             } catch (JSONException e) {
                 e.printStackTrace();

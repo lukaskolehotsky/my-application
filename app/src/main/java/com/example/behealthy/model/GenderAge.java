@@ -9,20 +9,11 @@ public class GenderAge {
 
     private String age;
 
-    private GenderAge() {
-
-    }
-
-    public GenderAge(String gender, String age) {
-        this.gender = gender;
-        this.age = age;
-    }
-
     public String getGender() {
         return gender;
     }
 
-    private void setGender(String gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
