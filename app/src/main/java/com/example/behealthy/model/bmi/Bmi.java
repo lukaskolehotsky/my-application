@@ -70,13 +70,6 @@ public class Bmi {
 			jsonArray.put(Bmi.toJson(v));
 		}
 
-//		JSONObject jsonObjectXX = new JSONObject();
-//		try {
-//			jsonObjectXX.put("bmis", jsonArray);
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-
 		return jsonArray;
 	}
 

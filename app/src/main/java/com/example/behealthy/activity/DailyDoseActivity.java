@@ -5,16 +5,18 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.behealthy.R;
 import com.example.behealthy.constants.Constants;
+import com.example.behealthy.model.GenderAge;
+import com.example.behealthy.model.GenderAgeVitamins;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.service.DailyDoseService;
 import com.example.behealthy.service.FileService;
@@ -34,13 +38,9 @@ import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.behealthy.constants.Constants.AGE;
-import static com.example.behealthy.constants.Constants.GENDER;
-import static com.example.behealthy.constants.Constants.VITAMIN_LIST;
 
 public class DailyDoseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -71,8 +71,30 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
         titleTextView.setText("Calculate vitamin daily dose");
         titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
 
+        TextView existingDailyDoseTextView = findViewById(R.id.existDailyDoseTextView);
+        existingDailyDoseTextView.setText("No recommended daily dose.");
+
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
+
+        LinearLayout vitaminsLayout = findViewById(R.id.rootLayout2);
+        String genderAgeVitaminsString = null;
+
+        try {
+            genderAgeVitaminsString = fileService.loadFile(FILE_NAME);
+        } catch (Exception e) {
+            fileService.createFile(FILE_NAME);
+        }
+
+        GenderAgeVitamins genderAgeVitamins = GenderAgeVitamins.toObject(genderAgeVitaminsString);
+
+        if (genderAgeVitaminsString == null) {
+            existingDailyDoseTextView.setVisibility(View.VISIBLE);
+        } else {
+            existingDailyDoseTextView.setVisibility(View.INVISIBLE);
+            populateVitamins(vitaminsLayout, genderAgeVitamins);
+            createRemoveExistingCalculationLayout(vitaminsLayout);
+        }
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
         floatingActionButton.setOnClickListener(v -> {
@@ -80,21 +102,102 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
             String loadedGender = entry.getGender();
             String loadedAge = entry.getAge();
 
-            boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedAge);
-            if (validateSpinnersClick) {
-
-                List<Vitamin> vitaminList = dailyDoseService.getDailyDoseVitamins(loadedAge, loadedGender);
+            if (validateSpinnersClick(loadedGender, loadedAge)) {
+                List<Vitamin> dailyDoseVitamins = dailyDoseService.getDailyDoseVitamins(loadedAge, loadedGender);
                 fileService.deleteFile(FILE_NAME);
                 fileService.createFile(FILE_NAME);
-                fileService.saveFile(Vitamin.toJson(vitaminList).toString(), FILE_NAME);
 
-                Intent startIntent = new Intent(DailyDoseActivity.this, VitaminListActivity.class);
-                startIntent.putParcelableArrayListExtra(VITAMIN_LIST.label, (ArrayList<? extends Parcelable>) vitaminList);
-                startIntent.putExtra(GENDER.label, loadedGender);
-                startIntent.putExtra(AGE.label, loadedAge);
-                startActivity(startIntent);
+                GenderAgeVitamins existingGenderAgeVitamins = new GenderAgeVitamins();
+                existingGenderAgeVitamins.setGenderAge(new GenderAge(loadedGender, loadedAge));
+                existingGenderAgeVitamins.setVitamins(dailyDoseVitamins);
+
+                fileService.saveFile(GenderAgeVitamins.toJson(existingGenderAgeVitamins).toString(), FILE_NAME);
+
+                existingDailyDoseTextView.setVisibility(View.INVISIBLE);
+                populateVitamins(vitaminsLayout, existingGenderAgeVitamins);
+                createRemoveExistingCalculationLayout(vitaminsLayout);
             }
         });
+    }
+
+    private void createRemoveExistingCalculationLayout(LinearLayout vitaminLayout) {
+        LinearLayout removeExistingCalculationLayout = findViewById(R.id.rootLayoutRemoveId);
+
+        if (findViewById(R.id.removeButtonId) == null) {
+            Button removeExistingCalculationButton = new Button(this);
+            removeExistingCalculationButton.setId(R.id.removeButtonId);
+            removeExistingCalculationButton.setText("Remove existing calculation");
+
+            removeExistingCalculationLayout.addView(removeExistingCalculationButton);
+
+            removeExistingCalculationButton.setOnClickListener(v -> {
+                vitaminLayout.removeAllViewsInLayout();
+                fileService.deleteFile(FILE_NAME);
+
+                ScrollView scrollView = findViewById(R.id.scrollViewId);
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+
+                TextView existDailyDoseTextView = findViewById(R.id.existDailyDoseTextView);
+                existDailyDoseTextView.setVisibility(View.VISIBLE);
+
+                removeButton();
+            });
+        }
+    }
+
+    private void removeButton() {
+        LinearLayout removeExistingCalculationLayout = findViewById(R.id.rootLayoutRemoveId);
+        removeExistingCalculationLayout.removeAllViewsInLayout();
+    }
+
+    private void populateVitamins(LinearLayout vitaminsLayout, GenderAgeVitamins genderAgeVitamins) {
+        GenderAge genderAge = genderAgeVitamins.getGenderAge();
+        TextView vitaminTitleTextView = new TextView(getApplicationContext());
+        vitaminTitleTextView.setGravity(Gravity.CENTER);
+        vitaminTitleTextView.setText("Your last calculated daily dose for " + genderAge.getAge() + " years old " + genderAge.getGender());
+        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
+        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        vitaminTitleTextView.setTextColor(Color.BLACK);
+        vitaminTitleTextView.setPadding(16, 0, 16, 16);
+
+        vitaminsLayout.removeAllViewsInLayout();
+        vitaminsLayout.addView(vitaminTitleTextView);
+
+        genderAgeVitamins.getVitamins().forEach(dailyDoseVitamin -> {
+            LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setGravity(Gravity.START);
+            linearLayout.setPadding(16, 5, 16, 5);
+
+            TextView vitaminNameTextView = new TextView(getApplicationContext());
+            TextView amountUnitTextView = new TextView(getApplicationContext());
+
+            vitaminNameTextView.setWidth(500);
+            amountUnitTextView.setWidth(280);
+
+            vitaminNameTextView.setTextColor(Color.BLACK);
+            amountUnitTextView.setTextColor(Color.BLACK);
+
+            vitaminNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+            amountUnitTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+
+            vitaminNameTextView.setText(dailyDoseVitamin.getName());
+            amountUnitTextView.setText(dailyDoseVitamin.getAmount() + "" + dailyDoseVitamin.getUnit());
+
+            linearLayout.addView(vitaminNameTextView);
+            linearLayout.addView(amountUnitTextView);
+
+            linearLayout.setOnClickListener(v -> {
+                View linearLayoutView = ((ViewGroup) v).getChildAt(0);
+                TextView vitaminNameTextView1 = (TextView) linearLayoutView;
+
+                Intent startIntent = new Intent(getApplicationContext(), VitaminsActivity.class);
+                startIntent.putExtra(VITAMIN_NAME.label, vitaminNameTextView1.getText());
+                startActivity(startIntent);
+            });
+
+            vitaminsLayout.addView(linearLayout);
+        });
+
     }
 
     @Override

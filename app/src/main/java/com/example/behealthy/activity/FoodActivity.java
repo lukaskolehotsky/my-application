@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import com.example.behealthy.R;
 import com.example.behealthy.model.DateJsonFood;
 import com.example.behealthy.model.Fruit;
+import com.example.behealthy.model.GenderAgeVitamins;
 import com.example.behealthy.model.JsonFood;
 import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
@@ -137,11 +138,24 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
         rootLayout2.addView(vitaminTitleTextView);
 
-        String recommendedVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
+//        String recommendedVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
+        String genderAgeVitaminsString = null;
+        try {
+            genderAgeVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
+        } catch (Exception e) {
+            System.out.println("recommended_daily_dose.txt does not exist");
+        }
+        GenderAgeVitamins genderAgeVitamins = GenderAgeVitamins.toObject(genderAgeVitaminsString);
 
-        final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
+//        final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
+        List<Vitamin> recommendedVitamins = new ArrayList<>();
+        if (genderAgeVitamins != null) {
+            recommendedVitamins = genderAgeVitamins.getVitamins();
+        }
 
         List<Vitamin> calculatedVitamins = calculateVitamins();
+        String finalGenderAgeVitaminsString = genderAgeVitaminsString;
+        List<Vitamin> finalRecommendedVitamins = recommendedVitamins;
         calculatedVitamins.forEach(calculatedVitamin -> {
             LinearLayout linearLayout = new LinearLayout(getApplicationContext());
             linearLayout.setGravity(Gravity.START);
@@ -165,7 +179,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             linearLayout.addView(vitaminNameTextView);
             linearLayout.addView(amountUnitTextView);
 
-            if(recommendedVitaminsString != null){
+            if(finalGenderAgeVitaminsString != null){
 
                 TextView percentageTextView = new TextView(getApplicationContext());
                 percentageTextView.setWidth(200);
@@ -173,7 +187,7 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 final double[] percentage = new double[1];
 
-                recommendedVitamins.forEach(rv -> {
+                finalRecommendedVitamins.forEach(rv -> {
                     if(rv.getName().equals(calculatedVitamin.getName())){
                         percentage[0] = calculatedVitamin.getAmount() * 100 / rv.getAmount();
                         percentageTextView.setText(String.format("%.1f", percentage[0]) + "%");

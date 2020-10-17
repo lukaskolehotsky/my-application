@@ -31,10 +31,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.VitaminListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activity.DailyDoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
