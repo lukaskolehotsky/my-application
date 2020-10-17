@@ -187,12 +187,14 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 final double[] percentage = new double[1];
 
-                finalRecommendedVitamins.forEach(rv -> {
-                    if(rv.getName().equals(calculatedVitamin.getName())){
-                        percentage[0] = calculatedVitamin.getAmount() * 100 / rv.getAmount();
-                        percentageTextView.setText(String.format("%.1f", percentage[0]) + "%");
-                    }
-                });
+                if (finalRecommendedVitamins != null) {
+                    finalRecommendedVitamins.forEach(rv -> {
+                        if(rv.getName().equals(calculatedVitamin.getName())){
+                            percentage[0] = calculatedVitamin.getAmount() * 100 / rv.getAmount();
+                            percentageTextView.setText(String.format("%.1f", percentage[0]) + "%");
+                        }
+                    });
+                }
 
                 if(percentage[0] >= 100){
                     percentageTextView.setTextColor(Color.GREEN);
