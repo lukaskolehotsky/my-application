@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class FileService {
 
-    private static final String TAG = "FileService";
+    private static final String TAG = "FileService.class";
 
     private Context context;
 
@@ -22,11 +22,12 @@ public class FileService {
     }
 
     public void createFile(String fileName) {
+        Log.i(TAG, "createFile: fileName=" + fileName);
+
         File file = new File(context.getFilesDir(), fileName);
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Log.i(TAG, "FileService.createTextFile() — create file " + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -34,12 +35,13 @@ public class FileService {
     }
 
     public void saveFile(String text, String fileName) {
+        Log.i(TAG, "saveFile: text=" + text + ", fileName=" + fileName);
+
         FileOutputStream fos = null;
 
         try {
             fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
             fos.write(text.getBytes());
-            Log.i(TAG, "FileService.save() — save file " + fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -57,6 +59,8 @@ public class FileService {
     }
 
     public String loadFile(String fileName) {
+        Log.i(TAG, "loadFile: fileName=" + fileName);
+
         FileInputStream fis = null;
 
         try {
@@ -69,10 +73,9 @@ public class FileService {
             while ((text = br.readLine()) != null) {
                 sb.append(text).append("\n");
             }
-            Log.i(TAG, "FileService.load() — load file " + fileName);
             return sb.toString();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.e(TAG, "loadFile: fileName=" + fileName + " FileNotFoundException");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -89,10 +92,11 @@ public class FileService {
     }
 
     public void deleteFile(String fileName) {
+        Log.i(TAG, "deleteFile: fileName=" + fileName);
+
         File file = new File(context.getFilesDir(), fileName);
         if (file.exists()) {
             context.deleteFile(fileName);
-            Log.i(TAG, "FileService.delete() — delete file " + fileName);
         }
     }
 

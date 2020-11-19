@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -37,6 +38,7 @@ import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.example.behealthy.utilities.UtilsHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -61,6 +63,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private static final String TAG = "FoodActivity";
 
+    private UtilsHelper utilsHelper;
+
     private FileService fileService;
     private JsonService jsonService;
 
@@ -76,14 +80,16 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "FoodActivity.onCreate() — on create");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
-//delete();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
-        fileService = new FileService(getApplicationContext());
+        utilsHelper = new UtilsHelper();
         jsonService = new JsonService(getBaseContext());
+        fileService = new FileService(getApplicationContext());
 
         Intent intent = getIntent();
         int year= intent.getIntExtra(YEAR.label, 0);
@@ -91,8 +97,8 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         int day= intent.getIntExtra(DAY.label, 0);
         LocalDate choosedDate = LocalDate.of(year, month, day);
 
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText(choosedDate.getDayOfMonth() + "." + choosedDate.getMonthValue() + "." + choosedDate.getYear());
+        utilsHelper.createTitle(findViewById(R.id.titleTextView), "Choose the food you ate today", (float) 22, 20, 20);
+        utilsHelper.createTitle(findViewById(R.id.dateTitleTextView), choosedDate.getDayOfMonth() + "." + choosedDate.getMonthValue() + "." + choosedDate.getYear(), (float) 20, 20, 20);
 
         populateLayouts(choosedDate);
 
@@ -126,19 +132,31 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
             floatingActionButton.setVisibility(View.INVISIBLE);
             addVegetablesLayoutButton.setVisibility(View.INVISIBLE);
         });
+
+        addCalculateRecommendedDailyDose();
+    }
+
+    private void addCalculateRecommendedDailyDose() {
+        LinearLayout recommendedDailyDoseLayout = findViewById(R.id.recommendedDailyDoseLayout);
+
+        Button recommendedDailyDoseButton = new Button(this);
+        recommendedDailyDoseButton.setId(R.id.recommendedDailyDoseButtonId);
+        recommendedDailyDoseButton.setText("Calculate recommended daily dose");
+        recommendedDailyDoseLayout.addView(recommendedDailyDoseButton);
+
+        recommendedDailyDoseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), DailyDoseActivity.class);
+                startActivity(startIntent);
+            }
+        });
     }
 
     private void populateVitamins(LinearLayout rootLayout2){
-        TextView vitaminTitleTextView = new TextView(getApplicationContext());
-        vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText("Vitamins");
-        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-        vitaminTitleTextView.setTextColor(Color.BLACK);
-        vitaminTitleTextView.setPadding(16, 0, 16, 16);
-
+        TextView vitaminTitleTextView = utilsHelper.createTitle(new TextView(getApplicationContext()), "Vitamins", (float) 20, 20, 20);
         rootLayout2.addView(vitaminTitleTextView);
 
-//        String recommendedVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
         String genderAgeVitaminsString = null;
         try {
             genderAgeVitaminsString = fileService.loadFile(FILE_NAME_R_D_D);
@@ -147,7 +165,6 @@ public class FoodActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         GenderAgeVitamins genderAgeVitamins = GenderAgeVitamins.toObject(genderAgeVitaminsString);
 
-//        final List<Vitamin> recommendedVitamins = Vitamin.toList(recommendedVitaminsString);
         List<Vitamin> recommendedVitamins = new ArrayList<>();
         if (genderAgeVitamins != null) {
             recommendedVitamins = genderAgeVitamins.getVitamins();

@@ -2,7 +2,6 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.ArrayRes;
@@ -27,6 +25,7 @@ import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.example.behealthy.utilities.UtilsHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -34,15 +33,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class BmiActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private MenuHelper menuHelper;
+    private static final String TITLE = "Calculate BMI";
+    private static final int MARGIN_BOTTOM = 20;
+    private static final Float TEXT_SIZE = 22F;
+    private static final int MARGIN_TOP = 70;
 
+    private BmiService bmiService;
+    private UtilsHelper utilsHelper;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
-
-    private JsonService jsonService;
-    private BmiService bmiService;
-
-    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +49,18 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_bmi);
 
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
-        jsonService = new JsonService(getBaseContext());
+        JsonService jsonService = new JsonService(getBaseContext());
         bmiService = new BmiService(jsonService);
 
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText("Calculate BMI");
-        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
+        utilsHelper = new UtilsHelper();
+        utilsHelper.createTitle(findViewById(R.id.titleTextView), TITLE, TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
 
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
         createArrayAdapter(R.id.weightSpinner, R.array.weightList);
@@ -67,8 +68,6 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
         floatingActionButton.setOnClickListener(v -> {
-            TextView bmiTextView = findViewById(R.id.bmiTextView);
-            TextView categoryTextView = findViewById(R.id.categoryTextView);
 
             SharedPreferenceEntry entry = sharedPreferencesHelper.get();
             String loadedWeight = entry.getWeight();
@@ -83,15 +82,10 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
                 BmiCategory bmiCategory = bmiService.calculateBmi(weight, height, age);
 
-                bmiTextView.setText(String.valueOf(bmiCategory.getCalculatedBmi()));
-                categoryTextView.setText(bmiCategory.getCategory());
+                utilsHelper.createTitle(findViewById(R.id.bmiTextView), String.valueOf(bmiCategory.getCalculatedBmi()), TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
+                utilsHelper.createTitle(findViewById(R.id.categoryTextView), bmiCategory.getCategory(), TEXT_SIZE, 20, MARGIN_BOTTOM);
             }
         });
-
-        adView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
     }
 
     @Override
@@ -102,7 +96,7 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        menuHelper = new MenuHelper(getApplicationContext());
+        MenuHelper menuHelper = new MenuHelper(getApplicationContext());
         Intent startIntent = menuHelper.chooseIntent(item.getItemId());
         startActivity(startIntent);
 
@@ -161,5 +155,4 @@ public class BmiActivity extends AppCompatActivity implements AdapterView.OnItem
             return true;
         }
     }
-
 }

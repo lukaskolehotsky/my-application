@@ -7,82 +7,77 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".activity.BmiActivity">
 
+    <ScrollView
+        android:id="@+id/scrollViewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="titleTextView"/>
+
+            <Spinner
+                android:id="@+id/ageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleTextView"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorAccent"
+                android:entries="@array/ageList"
+                android:paddingRight="10dp"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/weightSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ageSpinner"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorAccent"
+                android:entries="@array/weightList"
+                android:paddingRight="10dp"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/heightSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/weightSpinner"
+                android:background="@color/colorAccent"
+                android:entries="@array/heightList"
+                android:paddingRight="10dp"
+                android:spinnerMode="dialog"/>
+
+            <TextView
+                android:id="@+id/bmiTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/categoryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bmiTextView"/>
+
+        </LinearLayout>
+    </ScrollView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="kkk" />
-
-        <Spinner
-            android:id="@+id/ageSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleTextView"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
-            android:entries="@array/ageList"
-            android:paddingRight="10dp"
-            android:spinnerMode="dialog"/>
-
-        <Spinner
-            android:id="@+id/weightSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ageSpinner"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/colorAccent"
-            android:entries="@array/weightList"
-            android:paddingRight="10dp"
-            android:spinnerMode="dialog"/>
-
-        <Spinner
-            android:id="@+id/heightSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_below="@+id/weightSpinner"
-            android:background="@color/colorAccent"
-            android:entries="@array/heightList"
-            android:paddingRight="10dp"
-            android:spinnerMode="dialog"/>
-
-        <TextView
-            android:id="@+id/bmiTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_centerInParent="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-        <TextView
-            android:id="@+id/categoryTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bmiTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_centerInParent="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -100,10 +95,13 @@ tools:context=".activity.BmiActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/ic_done_black_24dp"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="6dp"
-        app:fabSize="normal"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:fabSize="normal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,9 +3,9 @@ package com.example.behealthy.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -37,43 +37,54 @@ import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.example.behealthy.utilities.UtilsHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
 import java.util.List;
+
+import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
 public class DailyDoseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String FILE_NAME = "recommended_daily_dose.txt";
+    private static final String TITLE = "Calculate vitamin daily dose";
+    private static final String TAG = "DailyDoseActivity.class";
+    private static final int MARGIN_BOTTOM = 20;
+    private static final Float TEXT_SIZE = 22F;
+    private static final int MARGIN_TOP = 70;
 
-    private MenuHelper menuHelper;
-
+    private UtilsHelper utilsHelper;
+    private FileService fileService;
+    private DailyDoseService dailyDoseService;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
 
-    private FileService fileService;
-    private JsonService jsonService;
-    private DailyDoseService dailyDoseService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: savedInstanceState=" + savedInstanceState);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_dose);
+
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
         fileService = new FileService(getApplicationContext());
-        jsonService = new JsonService(getBaseContext());
+        JsonService jsonService = new JsonService(getBaseContext());
         dailyDoseService = new DailyDoseService(jsonService);
 
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText("Calculate vitamin daily dose");
-        titleTextView.setText("Calculate vitamin daily dose");
-        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
+        utilsHelper = new UtilsHelper();
+        utilsHelper.createTitle(findViewById(R.id.titleTextView), TITLE, TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
 
-        TextView existingDailyDoseTextView = findViewById(R.id.existDailyDoseTextView);
-        existingDailyDoseTextView.setText("No recommended daily dose.");
+        TextView existingDailyDoseTextView = utilsHelper.createTitle(findViewById(R.id.existDailyDoseTextView), "No recommended daily dose.", TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
@@ -125,6 +136,8 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void createRemoveExistingCalculationLayout(LinearLayout vitaminLayout) {
+        Log.i(TAG, "createRemoveExistingCalculationLayout: vitaminLayout=" + vitaminLayout);
+
         LinearLayout removeExistingCalculationLayout = findViewById(R.id.rootLayoutRemoveId);
 
         if (findViewById(R.id.removeButtonId) == null) {
@@ -150,19 +163,18 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void removeButton() {
+        Log.i(TAG, "removeButton");
+
         LinearLayout removeExistingCalculationLayout = findViewById(R.id.rootLayoutRemoveId);
         removeExistingCalculationLayout.removeAllViewsInLayout();
     }
 
     private void populateVitamins(LinearLayout vitaminsLayout, GenderAgeVitamins genderAgeVitamins) {
+        Log.i(TAG, "populateVitamins: vitaminsLayout=" + vitaminsLayout + ", genderAgeVitamins=" + genderAgeVitamins);
+
         GenderAge genderAge = genderAgeVitamins.getGenderAge();
-        TextView vitaminTitleTextView = new TextView(getApplicationContext());
-        vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText("Your last calculated daily dose for " + genderAge.getAge() + " years old " + genderAge.getGender());
-        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
-        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        vitaminTitleTextView.setTextColor(Color.BLACK);
-        vitaminTitleTextView.setPadding(16, 0, 16, 16);
+
+        TextView vitaminTitleTextView = utilsHelper.createTitle(new TextView(getApplicationContext()), "Your last calculated daily dose for " + genderAge.getAge() + " years old " + genderAge.getGender(), TEXT_SIZE, 20, MARGIN_BOTTOM);
 
         vitaminsLayout.removeAllViewsInLayout();
         vitaminsLayout.addView(vitaminTitleTextView);
@@ -212,7 +224,7 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        menuHelper = new MenuHelper(getApplicationContext());
+        MenuHelper menuHelper = new MenuHelper(getApplicationContext());
         Intent startIntent = menuHelper.chooseIntent(item.getItemId());
         startActivity(startIntent);
 
@@ -220,6 +232,8 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
     }
 
     public void createArrayAdapter(@IdRes int spinnerId, @ArrayRes int resourceListId) {
+        Log.i(TAG, "createArrayAdapter: spinnerId=" + spinnerId + ", resourceListId=" + resourceListId);
+
         Spinner spinner = findViewById(spinnerId);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -246,6 +260,8 @@ public class DailyDoseActivity extends AppCompatActivity implements AdapterView.
     }
 
     private boolean validateSpinnersClick(String loadedGender, String loadedAge) {
+        Log.i(TAG, "validateSpinnersClick: gender=" + loadedGender + ", age=" + loadedAge);
+
         if (loadedGender.equals(Constants.GENDER.label) && loadedAge.equals(Constants.AGE.label)) {
             Toast.makeText(getBaseContext(), "Please choose gender, age", Toast.LENGTH_SHORT).show();
             return false;

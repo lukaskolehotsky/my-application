@@ -2,7 +2,6 @@ package com.example.behealthy.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.ArrayRes;
@@ -27,32 +25,42 @@ import com.example.behealthy.service.RfmService;
 import com.example.behealthy.utilities.MenuHelper;
 import com.example.behealthy.utilities.SharedPreferenceEntry;
 import com.example.behealthy.utilities.SharedPreferencesHelper;
+import com.example.behealthy.utilities.UtilsHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RfmActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private MenuHelper menuHelper;
+    private static final String TITLE = "Calculate RFM";
+    private static final int MARGIN_BOTTOM = 20;
+    private static final Float TEXT_SIZE = 22F;
+    private static final int MARGIN_TOP = 70;
 
+    private RfmService rfmService;
+    private UtilsHelper utilsHelper;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private SharedPreferenceEntry sharedPreferenceEntry = new SharedPreferenceEntry();
-
-    private JsonService jsonService;
-    private RfmService rfmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rfm);
 
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferencesHelper = new SharedPreferencesHelper(sharedPreferences);
 
-        jsonService = new JsonService(getBaseContext());
+        JsonService jsonService = new JsonService(getBaseContext());
         rfmService = new RfmService(jsonService);
 
-        TextView titleTextView = findViewById(R.id.titleTextView);
-        titleTextView.setText("Calculate RFM");
-        titleTextView.setTypeface(titleTextView.getTypeface(), Typeface.BOLD);
+        utilsHelper = new UtilsHelper();
+        utilsHelper.createTitle(findViewById(R.id.titleTextView), TITLE, TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
 
         createArrayAdapter(R.id.genderSpinner, R.array.genderList);
         createArrayAdapter(R.id.ageSpinner, R.array.ageList);
@@ -60,25 +68,19 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
         createArrayAdapter(R.id.waistCircumferenceSpinner, R.array.waistCircumferenceList);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab_1);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView rfmTextView = findViewById(R.id.rfmTextView);
-                TextView categoryTextView = findViewById(R.id.categoryTextView);
+        floatingActionButton.setOnClickListener(v -> {
+            SharedPreferenceEntry entry = sharedPreferencesHelper.get();
+            String loadedGender = entry.getGender();
+            String loadedHeight = entry.getHeight();
+            String loadedWaistCircumference = entry.getWaistCircumference();
+            String loadedAge = entry.getAge();
 
-                SharedPreferenceEntry entry = sharedPreferencesHelper.get();
-                String loadedGender = entry.getGender();
-                String loadedHeight = entry.getHeight();
-                String loadedWaistCircumference = entry.getWaistCircumference();
-                String loadedAge = entry.getAge();
+            boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedHeight, loadedWaistCircumference, loadedAge);
+            if (validateSpinnersClick) {
+                RfmCategory rfmCategory = rfmService.calculateRfm(loadedHeight, loadedWaistCircumference, loadedAge, loadedGender);
 
-                boolean validateSpinnersClick = validateSpinnersClick(loadedGender, loadedHeight, loadedWaistCircumference, loadedAge);
-                if (validateSpinnersClick) {
-                    RfmCategory rfmCategory = rfmService.calculateRfm(loadedHeight, loadedWaistCircumference, loadedAge, loadedGender);
-
-                    rfmTextView.setText(String.valueOf(rfmCategory.getCalculatedRfm()));
-                    categoryTextView.setText(rfmCategory.getCategory());
-                }
+                utilsHelper.createTitle(findViewById(R.id.rfmTextView), String.valueOf(rfmCategory.getCalculatedRfm()), TEXT_SIZE, MARGIN_TOP, MARGIN_BOTTOM);
+                utilsHelper.createTitle(findViewById(R.id.categoryTextView), rfmCategory.getCategory(), TEXT_SIZE, 20, MARGIN_BOTTOM);
             }
         });
     }
@@ -91,7 +93,7 @@ public class RfmActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        menuHelper = new MenuHelper(getApplicationContext());
+        MenuHelper menuHelper = new MenuHelper(getApplicationContext());
         Intent startIntent = menuHelper.chooseIntent(item.getItemId());
         startActivity(startIntent);
 

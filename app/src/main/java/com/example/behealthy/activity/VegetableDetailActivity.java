@@ -20,6 +20,7 @@ import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
+import com.example.behealthy.utilities.UtilsHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,8 +30,9 @@ import static com.example.behealthy.constants.Constants.VEGETABLE_NAME;
 
 public class VegetableDetailActivity extends AppCompatActivity {
 
-    private MenuHelper menuHelper;
     private JsonService jsonService;
+    private UtilsHelper utilsHelper;
+    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +65,8 @@ public class VegetableDetailActivity extends AppCompatActivity {
     }
 
     private void populateVitamins(LinearLayout rootLayout2, String vegetableName, List<Vitamin> vitamins) {
-        TextView vitaminTitleTextView = new TextView(getApplicationContext());
-        vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText("Vitamins in 100 / g of " + vegetableName);
-        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
-        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        vitaminTitleTextView.setTextColor(Color.BLACK);
-        vitaminTitleTextView.setPadding(16, 0, 16, 16);
-
+        utilsHelper = new UtilsHelper();
+        TextView vitaminTitleTextView = utilsHelper.createTitle(new TextView(getApplicationContext()), "Vitamins in 100 / g of " + vegetableName, (float) 22, 70, 20);
         rootLayout2.addView(vitaminTitleTextView);
 
         Comparator<Vitamin> comparator = (Vitamin v1, Vitamin v2) -> Double.valueOf(v1.getAmount()).compareTo(v2.getAmount());

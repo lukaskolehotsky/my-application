@@ -19,11 +19,12 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal"
-                android:gravity="center|center_horizontal"
-                android:text="titleTextView"
-                android:layout_marginTop="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                android:text="titleTextView"/>
+            <TextView
+                android:id="@+id/dateTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="dateTitleTextView"/>
 
             <LinearLayout
                 android:id="@+id/rootLayout"
@@ -73,6 +74,19 @@
                     app:fabSize="mini"
                     app:layout_constraintTop_toBottomOf="@+id/rootLayout" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/recommendedDailyDoseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
             <LinearLayout
                 android:id="@+id/rootLayout2"

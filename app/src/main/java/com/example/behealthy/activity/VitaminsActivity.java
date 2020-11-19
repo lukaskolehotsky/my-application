@@ -22,6 +22,7 @@ import com.example.behealthy.model.Vegetable;
 import com.example.behealthy.model.Vitamin;
 import com.example.behealthy.service.JsonService;
 import com.example.behealthy.utilities.MenuHelper;
+import com.example.behealthy.utilities.UtilsHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,9 @@ import static com.example.behealthy.constants.Constants.VITAMIN_NAME;
 
 public class VitaminsActivity extends AppCompatActivity {
 
-    private MenuHelper menuHelper;
     private JsonService jsonService;
+    private UtilsHelper utilsHelper;
+    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +73,8 @@ public class VitaminsActivity extends AppCompatActivity {
     }
 
     private void populateVitamins(LinearLayout rootLayout2, String vitaminName, HashMap<String, String> hm) {
-        TextView vitaminTitleTextView = new TextView(getApplicationContext());
-        vitaminTitleTextView.setGravity(Gravity.CENTER);
-        vitaminTitleTextView.setText(vitaminName + " in 100 / g");
-        vitaminTitleTextView.setTypeface(vitaminTitleTextView.getTypeface(), Typeface.BOLD);
-        vitaminTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        vitaminTitleTextView.setTextColor(Color.BLACK);
-        vitaminTitleTextView.setPadding(16, 0, 16, 16);
-
+        utilsHelper = new UtilsHelper();
+        TextView vitaminTitleTextView = utilsHelper.createTitle(new TextView(getApplicationContext()), vitaminName + " in 100 / g", (float) 22, 70, 20);
         rootLayout2.addView(vitaminTitleTextView);
 
         for (Map.Entry<String, String> entry : hm.entrySet()) {
