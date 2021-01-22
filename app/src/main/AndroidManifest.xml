@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.behealthy">
+    package="svk.health.behealthy">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
@@ -15,35 +15,35 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
-            android:name=".activity.CalendarActivity"
+            android:name="svk.health.behealthy.activity.CalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.FoodActivity"
+            android:name="svk.health.behealthy.activity.FoodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.VegetableDetailActivity"
+            android:name="svk.health.behealthy.activity.VegetableDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.VitaminsActivity"
+            android:name="svk.health.behealthy.activity.VitaminsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.DailyDoseActivity"
+            android:name="svk.health.behealthy.activity.DailyDoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.RfmActivity"
+            android:name="svk.health.behealthy.activity.RfmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.BmiActivity"
+            android:name="svk.health.behealthy.activity.BmiActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="svk.health.behealthy.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>

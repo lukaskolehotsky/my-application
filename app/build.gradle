@@ -1,7 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\lukas\\Desktop\\keystore\\keystore.jks')
+            keyAlias = 'upld_key'
+            storePassword 'Stralisko6?'
+            keyPassword 'Stralisko66?'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -11,11 +21,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.behealthy"
+        applicationId "svk.health.behealthy"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
 
     buildTypes {
@@ -25,6 +35,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -48,8 +59,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.android.support:appcompat-v7:29.0.0'
+    implementation 'com.google.android.gms:play-services-ads:17.0.0'
 
-    implementation 'com.google.android.gms:play-services-ads:11.0.0'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:core:1.0.0'

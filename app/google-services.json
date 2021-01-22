@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "360782279397",
+    "project_id": "be-healthy-2c4ab",
+    "storage_bucket": "be-healthy-2c4ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360782279397:android:0e038ae0a8129943b99a0c",
+        "android_client_info": {
+          "package_name": "svk.health.behealthy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360782279397-eis81vcsl3j1ccpsrclst6lmsrge96pn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "svk.health.behealthy",
+            "certificate_hash": "dd0500f35bcbf528843d38ed63ced11e6728e182"
+          }
+        },
+        {
+          "client_id": "360782279397-91it5scd5594dvufi1dkv67888p3874q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWiMRv66toz9-IRgWFhvj8rvOIapkeW8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360782279397-91it5scd5594dvufi1dkv67888p3874q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
