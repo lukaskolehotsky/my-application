@@ -788,4 +788,5 @@
         <item>Apple</item>
     </string-array>
 
+    <string name="dashboard_title">Dashboard</string>
 </resources>

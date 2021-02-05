@@ -2,14 +2,11 @@ package svk.health.behealthy.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import svk.health.behealthy.R;
-import svk.health.behealthy.utilities.MenuHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -17,7 +14,6 @@ import com.google.android.gms.ads.MobileAds;
 public class MainActivity extends AppCompatActivity {
 
     AdView adView;
-    private MenuHelper menuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +25,36 @@ public class MainActivity extends AppCompatActivity {
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+        LinearLayout linearLayout0 = findViewById(R.id.dashboard_header_id);
+        linearLayout0.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(startIntent);
+        });
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        menuHelper = new MenuHelper(getApplicationContext());
-        Intent startIntent = menuHelper.chooseIntent(item.getItemId());
-        startActivity(startIntent);
+        LinearLayout linearLayout1 = findViewById(R.id.dashboard_img_1);
+        linearLayout1.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getApplicationContext(), BmiActivity.class);
+            startActivity(startIntent);
+        });
 
-        return super.onOptionsItemSelected(item);
+        LinearLayout linearLayout2 = findViewById(R.id.dashboard_img_2);
+        linearLayout2.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getApplicationContext(), RfmActivity.class);
+            startActivity(startIntent);
+        });
+
+        LinearLayout linearLayout3 = findViewById(R.id.dashboard_img_3);
+        linearLayout3.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getApplicationContext(), DailyDoseActivity.class);
+            startActivity(startIntent);
+        });
+
+        LinearLayout linearLayout4 = findViewById(R.id.dashboard_img_4);
+        linearLayout4.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+            startActivity(startIntent);
+        });
     }
 
 }
